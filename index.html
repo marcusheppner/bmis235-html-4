@@ -2,327 +2,252 @@
 <!--
   Author: Marcus Heppner
   GU username: marcusheppner
-  Course: BMIS 235 - HTML-3
+  Course: BMIS 235 - HTML-4
+  Page: Home - synopsis, context, themes, characters, author
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="Marcus Heppner">
-<title>Marcus Heppner's Fantasy Football Hall of Fame</title>
-
-<!-- this one line connects the page to the stylesheet -->
+<title>Reading Mrs. Dalloway - A Study Tool</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- ===== MENU ============================================================
-     The menu is four links. Each link wraps an image instead of words.
-     Build it once on this page, check that every link works,
-     then copy the whole <nav> block and paste it over the menu on the
-     other three pages, so every page has the exact same menu.
-     ===================================================================== -->
 <nav>
-    <a href="index.html"><img src="home1.png" alt="Home"></a>
-    <a href="ekeler.html"><img src="ekeler.png" alt="Austin Ekeler (2022)"></a>
-    <a href="burrow.html"><img src="burrow.png" alt="Joe Burrow (2026)"></a>
-    <a href="wilson.html"><img src="wilson.png" alt="Michael Wilson (2025)"></a>
+    <a class="brand" href="index.html">Reading Mrs. Dalloway</a>
+    <a class="active" href="index.html">Home</a>
+    <a href="scenes.html">Key Scenes</a>
+    <a href="podcast.html">Podcast</a>
+    <a href="notes.html">Class Notes Chat</a>
 </nav>
 
-<h1>Marcus Heppner's Fantasy Football Hall of Fame</h1>
-<p>My top 3 fantasy football players that I have had the opportunity to manage in my time playing fantasy football.</p>
-<p>Criteria is based on the quality of their peak performance, as well as their contributions to team success.</p>
-<p>For more fantasy football data, click here: <a href="https://fantasydata.com">Fantasy Data</a></p>
-<p>For inquiries regarding player rankings, <a href="mailto:mheppner@zagmail.gonzaga.edu">Email me</a></p>
+<header class="hero">
+    <div class="kicker">Virginia Woolf &middot; 1925 &middot; Read through a disability lens</div>
+    <h1>Mrs. Dalloway, in plain English</h1>
+    <p>A study tool for a hard book. Start here for the big picture. Then go scene by scene, argue with
+       the podcast hosts, and send your class notes into the chat to connect them to the novel.</p>
+    <div class="toc">
+        <a href="#synopsis">Synopsis</a>
+        <a href="#how-to-read">How to read it</a>
+        <a href="#context">Context</a>
+        <a href="#themes">Themes</a>
+        <a href="#characters">Characters</a>
+        <a href="#woolf">Virginia Woolf</a>
+    </div>
+</header>
 
-<!-- ============================================================
-     HTML: the three player cards. Each card is a button with a
-     front (name) and a back (stats). Edit the numbers right here.
-     ============================================================ -->
-<div class="showcase">
-  <div class="showcase hof">
-  <div class="hof-title">The Hall of Famers</div>
-  <div class="hof-hint">Click a card to flip it</div>
+<main>
 
-  <div class="hof-row">
+<!-- ===== SYNOPSIS ===== -->
+<section id="synopsis">
+    <h2>Synopsis: one day in June</h2>
+    <div class="plain"><strong>In one sentence:</strong> On one Wednesday in June 1923, a wealthy London woman named
+        Clarissa Dalloway gets ready for a party. Meanwhile, a young veteran named Septimus Smith, whom she never meets,
+        is breaking down from war trauma, and the two stories meet at her party that night.</div>
 
-    <!-- Card 1: Austin Ekeler -->
-    <div class="hof-card" role="button" tabindex="0" aria-pressed="false">
-      <div class="hof-inner">
-        <div class="hof-face hof-front">
-          <span class="hof-corner hof-tl">'22</span>
-          <span class="hof-corner hof-br">'22</span>
-          <span class="hof-name">Austin<br>Ekeler</span>
-          <span class="hof-pos">RB · Chargers</span>
-          <span class="hof-tap">Click to flip ↻</span>
-        </div>
-        <div class="hof-face hof-back">
-          <span class="hof-corner hof-tl">'22</span>
-          <span class="hof-corner hof-br">'22</span>
-          <span class="hof-back-title">2022 Season</span>
-          <span class="hof-stat"><b>915</b> rush yards</span>
-          <span class="hof-stat"><b>13</b> rush TDs</span>
-          <span class="hof-stat"><b>107</b> receptions</span>
-          <span class="hof-stat"><b>722</b> rec yards</span>
-          <span class="hof-stat"><b>18</b> total TDs</span>
-          <span class="hof-note">Led the NFL in TDs</span>
-        </div>
-      </div>
+    <p>The whole novel takes place over a single day. Not much "happens" in the usual sense. Instead, the narration
+       slides from one person's mind to another as they walk through London. They remember the past, judge each other,
+       and notice the clocks striking the hour. The plot is mostly inside people's heads.</p>
+
+    <ul class="timeline">
+        <li><span class="time">Morning</span><br>Clarissa, 51 and recovering from an illness, walks through Westminster to buy
+            flowers. A car backfires on Bond Street, and a plane writes an advertisement in smoke across the sky. Everyone
+            on the street sees the same things, and that lets the narration jump between strangers. One of them is Septimus.</li>
+        <li><span class="time">Late morning</span><br>Peter Walsh, whom Clarissa refused to marry 30 years ago, shows up
+            unannounced, just back from India. Old feelings come up. He leaves upset and walks to Regent's Park, remembering
+            their youth at Bourton, her family's country house.</li>
+        <li><span class="time">Midday</span><br>Septimus and his Italian wife Rezia sit in Regent's Park. He hallucinates his dead
+            friend Evans. At noon they see Sir William Bradshaw, a famous doctor, who decides Septimus must be sent away to a
+            "home" in the country, away from his wife.</li>
+        <li><span class="time">Afternoon</span><br>Clarissa's husband Richard lunches with Lady Bruton and buys Clarissa roses,
+            but can't bring himself to say "I love you." Their daughter Elizabeth goes shopping with her tutor, Miss Kilman,
+            who resents Clarissa. Then Elizabeth rides a bus up the Strand alone.</li>
+        <li><span class="time">Early evening</span><br>Septimus has a quiet, happy hour helping Rezia make a hat. When Dr. Holmes
+            arrives to take him away, Septimus jumps from the window and dies.</li>
+        <li><span class="time">Night</span><br>Clarissa's party. The Prime Minister comes, and so do old friends, including Sally Seton,
+            the girl Clarissa once loved. Lady Bradshaw mentions a young man who killed himself. Clarissa goes into a small
+            room alone, thinks about his death, and feels a strange closeness to him. Then she goes back to her guests.
+            The book ends with Peter seeing her: "For there she was."</li>
+    </ul>
+</section>
+
+<!-- ===== HOW TO READ ===== -->
+<section id="how-to-read">
+    <h2>How to read stream of consciousness</h2>
+    <p>Woolf uses <em>free indirect discourse</em>. The narrator speaks in the third person ("she thought") but borrows the
+       character's own voice, mood, and jumps in logic. Here are a few habits that make it easier:</p>
+    <div class="grid">
+        <div class="card"><h3>1. Find the "camera"</h3><p>Every few paragraphs, ask: <em>whose head am I in right now?</em>
+            The switch usually happens when two people notice the same thing, like a bell, a car, or a plane.</p></div>
+        <div class="card"><h3>2. Separate now from then</h3><p>Characters remember Bourton (around 1890) in the middle of walking
+            through London (1923). If a paragraph mentions Sally, a fountain, or a terrace, it's probably a memory.</p></div>
+        <div class="card"><h3>3. Follow the clocks</h3><p>Big Ben strikes throughout the day: "the leaden circles dissolved in the air."
+            The striking clock is your timestamp and pulls everyone back to the present.</p></div>
+        <div class="card"><h3>4. Don't decode every line</h3><p>Some passages are about a feeling, not information. Read for
+            mood first (dread, joy, irritation), then go back for detail.</p></div>
+    </div>
+</section>
+
+<!-- ===== CONTEXT ===== -->
+<section id="context">
+    <h2>Historical context</h2>
+    <div class="grid">
+        <div class="card"><h3>After the Great War</h3><p>The novel is set in 1923, five years after World War I ended. Britain
+            lost almost a million soldiers. On the surface, London has returned to parties and shopping, but grief and
+            damage sit just underneath. Septimus is what the parties are trying not to see.</p></div>
+        <div class="card"><h3>"Shell shock"</h3><p>Thousands of veterans came home with what we'd now call PTSD. At the time,
+            doctors often treated it as weakness, cowardice, or a lack of willpower. Treatment meant rest, isolation, and
+            being told to "pull yourself together." That is exactly what Holmes and Bradshaw do to Septimus.</p></div>
+        <div class="card"><h3>Class and Empire</h3><p>The Dalloways belong to the governing class. Richard is a Conservative MP,
+            the Prime Minister attends the party, and Peter has served in colonial India. Woolf shows how this class keeps
+            control through manners, institutions, and medicine.</p></div>
+        <div class="card"><h3>Modernism</h3><p>Writers like Woolf, James Joyce (<em>Ulysses</em>, 1922, which is also set on one day), and
+            T. S. Eliot broke from traditional storytelling. They tried to capture how consciousness actually feels:
+            fragmented, looping, and shaped by memory.</p></div>
+    </div>
+</section>
+
+<!-- ===== THEMES ===== -->
+<section id="themes">
+    <h2>Major themes</h2>
+
+    <div class="card" style="margin-bottom:16px">
+        <h3>Mental illness, disability &amp; medical power</h3>
+        <p>Septimus's suffering is real, but the doctors treat it as a moral failure. Holmes says there's "nothing the matter."
+           Bradshaw worships the goddess <strong>"Proportion"</strong> and her sister <strong>"Conversion"</strong>, which
+           means forcing people back into "normal" behavior. Woolf satirizes medicine as social control: whoever doesn't fit
+           gets isolated. Clarissa's own illness, her weakened heart, and her aging body add a quieter thread about bodies
+           that are no longer "well."</p>
+        <p class="plain"><strong>Class-discussion angle:</strong> Who gets to define "sane" in this book? Is Septimus's
+           madness only illness, or does it also let him see things the "healthy" characters refuse to see?</p>
     </div>
 
-    <!-- Card 2: Joe Burrow -->
-    <div class="hof-card" role="button" tabindex="0" aria-pressed="false">
-      <div class="hof-inner">
-        <div class="hof-face hof-front">
-          <span class="hof-corner hof-tl">'26</span>
-          <span class="hof-corner hof-br">'26</span>
-          <span class="hof-name">Joe<br>Burrow</span>
-          <span class="hof-pos">QB · Bengals</span>
-          <span class="hof-tap">Click to flip ↻</span>
-        </div>
-        <div class="hof-face hof-back">
-          <span class="hof-corner hof-tl">'26</span>
-          <span class="hof-corner hof-br">'26</span>
-          <span class="hof-back-title">2026 Season</span>
-          <span class="hof-stat"><b>2,115</b> pass yards</span>
-          <span class="hof-stat"><b>20</b> pass TDs</span>
-          <span class="hof-stat"><b>6</b> INTs</span>
-          <span class="hof-stat"><b>7</b> games</span>
-          <span class="hof-note">Season in progress</span>
-        </div>
-      </div>
+    <div class="grid">
+        <div class="card"><h3>Time &amp; memory</h3><p>Clock time (Big Ben, the ticking of Harley Street) versus inner time,
+            where one moment can hold thirty years. The past is never really past.</p></div>
+        <div class="card"><h3>Isolation vs. connection</h3><p>Everyone is locked in their own mind, but the city keeps linking them
+            through shared sights and sounds. Clarissa's parties are her "offering," her attempt to bring people together.</p></div>
+        <div class="card"><h3>Death &amp; the will to live</h3><p>"Fear no more the heat o' the sun," a line from Shakespeare's
+            <em>Cymbeline</em>, runs through both Clarissa's and Septimus's minds. One chooses life, the other death, and the
+            novel puts their choices side by side.</p></div>
+        <div class="card"><h3>Love, desire &amp; repression</h3><p>Clarissa chose safe Richard over passionate Peter. Her kiss
+            with Sally Seton remains "the most exquisite moment of her whole life." Woolf hints at a queer desire that the
+            society around her has no room for.</p></div>
+        <div class="card"><h3>Social class &amp; conformity</h3><p>Hugh Whitbread, Lady Bruton, and Bradshaw represent a
+            system that rewards appearances. Clarissa both enjoys this world and feels hollow inside it.</p></div>
+        <div class="card"><h3>The self as many selves</h3><p>Clarissa is seen differently by Peter, Richard, Sally, Elizabeth,
+            and Miss Kilman. Identity in this book is something spread across other people's perceptions.</p></div>
     </div>
+</section>
 
-    <!-- Card 3: Michael Wilson -->
-    <div class="hof-card" role="button" tabindex="0" aria-pressed="false">
-      <div class="hof-inner">
-        <div class="hof-face hof-front">
-          <span class="hof-corner hof-tl">'25</span>
-          <span class="hof-corner hof-br">'25</span>
-          <span class="hof-name">Michael<br>Wilson</span>
-          <span class="hof-pos">WR · Cardinals</span>
-          <span class="hof-tap">Click to flip ↻</span>
+<!-- ===== CHARACTERS ===== -->
+<section id="characters">
+    <h2>Characters &amp; what they do for the themes</h2>
+    <p>In this novel, characters work as <em>literary devices</em>. They mirror, contrast with, or comment on each other.
+       The most important pairing is that <strong>Septimus is Clarissa's double</strong>. Woolf later said she first planned for
+       Clarissa to die, and added Septimus to carry that fate instead.</p>
+
+    <div class="grid">
+        <div class="card">
+            <div class="role">Protagonist</div><h3>Clarissa Dalloway</h3>
+            <p>51, upper-class hostess and wife of an MP. She's sensitive and loves life, but she's also guarded, conventional,
+               and afraid of her own feelings. She's recovering from an illness that weakened her heart.</p>
+            <p class="device"><strong>Device:</strong> The "sane" mirror of Septimus. She shows how a person survives by
+               conforming, and what that costs her.</p>
         </div>
-        <div class="hof-face hof-back">
-          <span class="hof-corner hof-tl">'25</span>
-          <span class="hof-corner hof-br">'25</span>
-          <span class="hof-back-title">2025 Season</span>
-          <span class="hof-stat"><b>78</b> receptions</span>
-          <span class="hof-stat"><b>1,006</b> rec yards</span>
-          <span class="hof-stat"><b>7</b> TDs</span>
-          <span class="hof-stat"><b>124</b> targets</span>
-          <span class="hof-stat"><b>12.9</b> yds / catch</span>
-          <span class="hof-note">First 1,000-yard season</span>
+        <div class="card">
+            <div class="role">The double</div><h3>Septimus Warren Smith</h3>
+            <p>About 30. A former clerk and poetry lover who volunteered for the war. He watched his officer friend Evans die,
+               felt nothing, and now hallucinates, hears birds sing in Greek, and thinks he has a message for the world.</p>
+            <p class="device"><strong>Device:</strong> The war's hidden cost made visible. He's the center of the disability
+               theme and a critique of how society treats minds that don't fit.</p>
         </div>
-      </div>
+        <div class="card">
+            <div class="role">Caregiver</div><h3>Lucrezia "Rezia" Smith</h3>
+            <p>Septimus's young Italian wife, a hat-maker. She's lonely, homesick, and exhausted from caring for him. "I am alone; I am alone!"</p>
+            <p class="device"><strong>Device:</strong> Shows the burden on caregivers and what love can and can't do against
+               illness and institutions.</p>
+        </div>
+        <div class="card">
+            <div class="role">The road not taken</div><h3>Peter Walsh</h3>
+            <p>53, Clarissa's old suitor, just back from India and in love with a married woman there. He's emotional,
+               critical, and always fiddling with his pocketknife.</p>
+            <p class="device"><strong>Device:</strong> The passionate life Clarissa refused. He also gives us an outside
+               view of her.</p>
+        </div>
+        <div class="card">
+            <div class="role">Lost love</div><h3>Sally Seton</h3>
+            <p>Clarissa's wild, daring friend from Bourton. Now she's "Lady Rosseter," a conventional mother of five sons.</p>
+            <p class="device"><strong>Device:</strong> Youthful freedom and queer desire, and how time and marriage tamed both.</p>
+        </div>
+        <div class="card">
+            <div class="role">Safety</div><h3>Richard Dalloway</h3>
+            <p>Clarissa's husband, a decent and dull Conservative MP. He loves her but can't say so.</p>
+            <p class="device"><strong>Device:</strong> Stability and emotional reserve, the "proper" English marriage.</p>
+        </div>
+        <div class="card">
+            <div class="role">Antagonists</div><h3>Dr. Holmes &amp; Sir William Bradshaw</h3>
+            <p>Holmes is a cheerful GP who insists nothing is wrong. Bradshaw is a powerful Harley Street specialist who prescribes
+               isolation and "a sense of proportion."</p>
+            <p class="device"><strong>Device:</strong> Medicine as power and conformity. They are Woolf's satire of the doctors
+               who treated her.</p>
+        </div>
+        <div class="card">
+            <div class="role">The resentful outsider</div><h3>Doris Kilman</h3>
+            <p>Elizabeth's tutor. She's poor, bitter, and religious, and she lost her job during the war because of her German
+               ancestry. She hates Clarissa and wants to possess Elizabeth's soul.</p>
+            <p class="device"><strong>Device:</strong> Another "conversion" force, like Bradshaw. Her body and hunger also make her
+               an outsider figure.</p>
+        </div>
+        <div class="card">
+            <div class="role">The future</div><h3>Elizabeth Dalloway</h3>
+            <p>17. She's quiet, beautiful, and unsure. She'd rather be in the country, and on a bus ride she imagines having a career.</p>
+            <p class="device"><strong>Device:</strong> A new generation of women with possibilities Clarissa never had.</p>
+        </div>
+        <div class="card">
+            <div class="role">The establishment</div><h3>Hugh Whitbread &amp; Lady Bruton</h3>
+            <p>Hugh is a polished, empty courtier. Lady Bruton is a commanding aristocrat obsessed with sending young people to Canada.</p>
+            <p class="device"><strong>Device:</strong> The hollow, self-satisfied ruling class.</p>
+        </div>
     </div>
+</section>
 
-  </div>
-</div>
+<!-- ===== AUTHOR ===== -->
+<section id="woolf">
+    <h2>Virginia Woolf (1882&ndash;1941)</h2>
+    <div class="plain"><strong>Why her life matters here:</strong> Woolf lived with severe mental illness (most scholars
+        describe it today as bipolar disorder) and was treated by doctors much like Bradshaw. Septimus's story draws directly
+        on her experience.</div>
 
-<!-- ============================================================
-     CSS: centering, playing-card shape, colors and the flip.
-     Every rule starts with .showcase so nothing else changes.
-     ============================================================ -->
-<style>
-  .showcase.hof {
-    font-family: Optima, Candara, "Segoe UI", sans-serif;
-    color: #154861;
-    text-align: center;
-    width: 100%;
-    max-width: 900px;
-    margin: 30px auto;
-    box-sizing: border-box;
-  }
-  .showcase.hof .hof-title {
-    font-size: 26px;
-    font-weight: bold;
-  }
-  .showcase.hof .hof-hint {
-    font-size: 15px;
-    font-weight: normal;
-    margin: 4px 0 10px;
-  }
+    <div class="grid">
+        <div class="card"><h3>Early life</h3><p>Born Adeline Virginia Stephen in London. Her father, Sir Leslie Stephen, was a
+            famous editor and critic. She was educated at home in his library. Her mother died when Virginia was 13, and
+            Virginia had her first breakdown afterward. More losses followed, including her half-sister Stella and her
+            father in 1904. After her father's death, she had another severe breakdown.</p></div>
+        <div class="card"><h3>Bloomsbury &amp; marriage</h3><p>She was a central figure in the Bloomsbury Group, a circle of
+            artists and intellectuals. She married the writer Leonard Woolf in 1912. In 1917 they founded the Hogarth Press,
+            which published <em>Mrs. Dalloway</em> as well as T. S. Eliot's <em>The Waste Land</em>.</p></div>
+        <div class="card"><h3>Illness &amp; "the rest cure"</h3><p>During her episodes, doctors prescribed bed rest,
+            isolation, heavy feeding, and no reading or writing. She found this treatment controlling. Bradshaw's
+            "Proportion" is widely read as her portrait of those doctors. Her 1926 essay <em>On Being Ill</em> argues that
+            illness deserves serious literary attention.</p></div>
+        <div class="card"><h3>Career</h3><p>Major works include <em>Jacob's Room</em> (1922), <em>Mrs. Dalloway</em> (1925),
+            <em>To the Lighthouse</em> (1927), <em>Orlando</em> (1928, inspired by her relationship with Vita Sackville-West),
+            <em>A Room of One's Own</em> (1929), and <em>The Waves</em> (1931).</p></div>
+        <div class="card"><h3>Writing the novel</h3><p>It started as a short story, "Mrs. Dalloway in Bond Street" (1923).
+            Its working title was <em>The Hours</em>. Woolf wrote that she wanted to show "life and death, sanity and insanity"
+            side by side.</p></div>
+        <div class="card"><h3>Death</h3><p>In March 1941, during World War II and fearing another episode, Woolf took her own
+            life by drowning in the River Ouse near her home in Sussex. Her death often comes up in discussions of
+            Septimus, but critics warn against reading the novel only as autobiography.</p></div>
+    </div>
+</section>
 
-  /* cards side by side, centered, with space between */
-  .showcase.hof .hof-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 48px;
-    padding: 20px;
-  }
+</main>
 
-  /* playing-card size (2.5 x 3.5 ratio) */
-  .showcase.hof .hof-card {
-    flex: 0 0 180px;
-    width: 180px;
-    height: 252px;
-    perspective: 1000px;
-    cursor: pointer;
-  }
-  .showcase.hof .hof-card:focus-visible {
-    outline: 3px solid #154861;
-    outline-offset: 6px;
-    border-radius: 14px;
-  }
-
-  /* the part that spins */
-  .showcase.hof .hof-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s ease;
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-  }
-  .showcase.hof .hof-card.is-flipped .hof-inner {
-    transform: rotateY(180deg);
-  }
-
-  /* both sides: dark blue card, baby blue text, card-style frame */
-  .showcase.hof .hof-face {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 26px 14px;
-    background-color: #154861;
-    color: #C2E6F5;
-    border-radius: 12px;
-    border: 2px solid #C2E6F5;
-    box-shadow: 0 0 0 4px #154861, 0 8px 16px rgba(0, 0, 0, 0.25);
-    outline: 1px solid rgba(194, 230, 245, 0.5);
-    outline-offset: -9px;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    transition: visibility 0s 0.3s;
-  }
-
-  /* back starts turned around and hidden */
-  .showcase.hof .hof-back {
-    transform: rotateY(180deg);
-    visibility: hidden;
-  }
-  .showcase.hof .hof-card.is-flipped .hof-back {
-    visibility: visible;
-  }
-  .showcase.hof .hof-card.is-flipped .hof-front {
-    visibility: hidden;
-  }
-
-  /* year in the corners, like a playing card's number */
-  .showcase.hof .hof-corner {
-    position: absolute;
-    font-size: 16px;
-    font-weight: bold;
-  }
-  .showcase.hof .hof-tl {
-    top: 14px;
-    left: 16px;
-  }
-  .showcase.hof .hof-br {
-    bottom: 14px;
-    right: 16px;
-    transform: rotate(180deg);
-  }
-
-  /* front text */
-  .showcase.hof .hof-name {
-    font-size: 26px;
-    font-weight: bold;
-    line-height: 1.15;
-  }
-  .showcase.hof .hof-pos {
-    font-size: 14px;
-    font-weight: normal;
-    margin-top: 10px;
-  }
-  .showcase.hof .hof-tap {
-    font-size: 12px;
-    font-weight: normal;
-    margin-top: 18px;
-    opacity: 0.75;
-  }
-
-  /* back text: stats stacked one on top of the other */
-  .showcase.hof .hof-back-title {
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 1px solid #C2E6F5;
-    padding-bottom: 4px;
-    margin-bottom: 8px;
-  }
-  .showcase.hof .hof-stat {
-    display: block;
-    font-size: 15px;
-    font-weight: normal;
-    padding: 2px 0;
-  }
-  .showcase.hof .hof-stat b {
-    font-size: 17px;
-    font-weight: bold;
-  }
-  .showcase.hof .hof-note {
-    font-size: 12px;
-    font-weight: normal;
-    font-style: italic;
-    margin-top: 8px;
-    opacity: 0.85;
-  }
-
-  /* phones: cards stay side by side; swipe left and right to see all three */
-  @media (max-width: 680px) {
-    .showcase.hof .hof-row {
-      justify-content: flex-start;
-      gap: 24px;
-      overflow-x: auto;
-    }
-  }
-
-  /* instant flip for people who turn off animations */
-  @media (prefers-reduced-motion: reduce) {
-    .showcase.hof .hof-inner {
-      transition: none;
-    }
-  }
-</style>
-
-<!-- ============================================================
-     JavaScript: click a card (or press Enter/Space on it) to flip
-     it to the stats, and click again to flip it back.
-     ============================================================ -->
-<script>
-  (function () {
-    var cards = document.querySelectorAll(".showcase.hof .hof-card");
-    for (var i = 0; i < cards.length; i++) {
-      (function (card) {
-        function flip() {
-          var flipped = card.classList.toggle("is-flipped");
-          card.setAttribute("aria-pressed", flipped ? "true" : "false");
-        }
-        card.addEventListener("click", flip);
-        card.addEventListener("keydown", function (e) {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            flip();
-          }
-        });
-      })(cards[i]);
-    }
-  })();
-</script>
-</div>
-
-<!-- Footer: fill in your name -->
-<footer>Built by Marcus Heppner &middot; BMIS 235</footer>
+<footer>Built by Marcus Heppner for BMIS 235 &middot; Study aid only; always check the text itself.</footer>
 
 </body>
 </html>

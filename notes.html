@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+  Author: Marcus Heppner
+  GU username: marcusheppner
+  Course: BMIS 235 - HTML-4
+  Page: Class notes chat - send in notes, get them linked to themes, characters and scenes
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Marcus Heppner">
+<title>Class Notes Chat - Reading Mrs. Dalloway</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+    <a class="brand" href="index.html">Reading Mrs. Dalloway</a>
+    <a href="index.html">Home</a>
+    <a href="scenes.html">Key Scenes</a>
+    <a href="podcast.html">Podcast</a>
+    <a class="active" href="notes.html">Class Notes Chat</a>
+</nav>
+
+<header class="hero">
+    <div class="kicker">Your notebook, connected to the novel</div>
+    <h1>Class Notes Chat</h1>
+    <p>Type a note from class, like a professor's point, a question, or something a classmate said. The chat links it to
+       the themes, characters, and scenes it fits and gives you a follow-up question. Over time, the tracker
+       shows which themes your class keeps coming back to.</p>
+</header>
+
+<main>
+<div class="chat-wrap">
+    <div class="chat">
+        <div class="messages" id="messages"></div>
+        <form class="composer" id="composer">
+            <textarea id="input" placeholder="e.g. Prof said Bradshaw's 'proportion' is about forcing people to be normal"></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <aside class="sidebar">
+        <div class="card">
+            <h3>Theme tracker</h3>
+            <p class="note-tip">How often each theme shows up in your notes.</p>
+            <div id="tracker"></div>
+        </div>
+        <div class="card">
+            <h3>Your notes</h3>
+            <p class="note-tip"><span id="count">0</span> notes saved in this browser.</p>
+            <div class="row">
+                <button class="ghost" id="export" type="button">Download notes</button>
+                <button class="ghost" id="clear" type="button">Clear</button>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Try sending</h3>
+            <p class="note-tip">"Septimus as Clarissa's double"<br>"why does Big Ben keep striking?"<br>
+               "class talked about Sally and queerness"<br>"Woolf's rest cure"</p>
+        </div>
+    </aside>
+</div>
+</main>
+
+<footer>This chat runs in your browser and matches your notes to a built-in guide to the novel. It is not an AI model.</footer>
+
+<script src="notes.js"></script>
+</body>
+</html>

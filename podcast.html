@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+  Author: Marcus Heppner
+  GU username: marcusheppner
+  Course: BMIS 235 - HTML-4
+  Page: Podcast - two hosts debate a question, then you record your own take
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Marcus Heppner">
+<title>Podcast - Reading Mrs. Dalloway</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+    <a class="brand" href="index.html">Reading Mrs. Dalloway</a>
+    <a href="index.html">Home</a>
+    <a href="scenes.html">Key Scenes</a>
+    <a class="active" href="podcast.html">Podcast</a>
+    <a href="notes.html">Class Notes Chat</a>
+</nav>
+
+<header class="hero">
+    <div class="kicker">The Dalloway Debates</div>
+    <h1>Wrestle with an idea out loud</h1>
+    <p>Pick an episode. Two hosts argue opposite sides: <strong>Vera</strong> reads closely and generously, and
+       <strong>Theo</strong> pushes back. Listen (your browser reads it aloud) or read the transcript, then record
+       or write your own answer.</p>
+</header>
+
+<main>
+
+<section>
+    <h2>Episodes</h2>
+    <div class="episodes" id="episodes"></div>
+</section>
+
+<section id="player" hidden>
+    <h2 id="ep-title"></h2>
+    <p id="ep-question" class="plain"></p>
+    <div class="row">
+        <button id="play">&#9654; Play episode</button>
+        <button id="stop" class="ghost" disabled>&#9632; Stop</button>
+        <span class="note-tip" id="voice-note"></span>
+    </div>
+
+    <div class="transcript" id="transcript"></div>
+
+    <div class="your-turn">
+        <h3>Your turn: be the third host</h3>
+        <ol id="prompts"></ol>
+        <div class="row">
+            <button id="rec">&#9679; Record my take</button>
+            <span class="note-tip" id="rec-status"></span>
+        </div>
+        <div class="recordings" id="recordings"></div>
+        <p style="margin-top:16px"><label for="written"><strong>Or write it out</strong> (saved in this browser):</label></p>
+        <textarea id="written" rows="5" placeholder="Where do you land? Which host was more convincing, and what scene backs you up?"></textarea>
+        <p class="note-tip" id="saved-msg"></p>
+    </div>
+</section>
+
+</main>
+
+<footer>Voices use your browser's built-in text-to-speech. Recordings stay on your device until you download them.</footer>
+
+<script src="podcast.js"></script>
+</body>
+</html>

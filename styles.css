@@ -1,77 +1,272 @@
-/* =====================================================================
-   styles.css  ·  YOUR BRAND
-   ---------------------------------------------------------------------
-   This one file is your brand guide. Every page that links to it gets
-   the same font, the same colors and the same spacing.
-   Change a color here once, and every page changes.
+/*
+  Author: Marcus Heppner
+  Course: BMIS 235 - HTML-4
+  One stylesheet for every page of the Mrs. Dalloway study tool.
+*/
 
-   Use the same font and colors you picked for your Excel menu images,
-   so the menu and the pages look like one brand.
-   ===================================================================== */
+:root {
+    --paper: #f7f2e8;
+    --paper-2: #efe6d4;
+    --ink: #2b2530;
+    --muted: #6b6270;
+    --plum: #5b2a4e;
+    --plum-soft: #8a4f78;
+    --sage: #5f7a63;
+    --line: #d9ccb4;
+    --card: #fffdf8;
+    --radius: 10px;
+}
+
+* { box-sizing: border-box; }
 
 body {
-    font-family: Optima, Candara, "Segoe UI", sans-serif;
-    font-weight: bold;
-    background-color: #C2E6F5;
-    color: #154861;
     margin: 0;
-    padding: 0 20px 40px 20px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1.65;
 }
 
-/* the menu at the top of every page */
+/* ===== MENU ===== */
 nav {
-    background-color: #154861;
-    padding: 14px;
-    text-align: center;
-    margin: 0 -20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 22px;
+    padding: 14px 6vw;
+    background: var(--plum);
 }
-
-/* links in the page text */
-a {
-    color: #2E5D8C;
-}
-
-a:hover {
-    color: #154861;
-    text-decoration: none;
-}
-
-/* every image inside the menu is forced to the same height.
-   If your images still look different sizes, their WIDTHS are
-   different: go back to Excel and make every cell the same size. */
-nav img {
-    height: 50px;
-    margin: 4px;
-    vertical-align: middle;
-}
-
-/* no underline or border around the image links */
-nav a {
-    text-decoration: none;
-}
-
-h1 {
-    color: #154861;
-    text-align: center;
-    font-size: 44px;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    border-bottom: 3px solid #154861;
-    padding-bottom: 10px;
-}
-
-p {
-    max-width: 600px;
-    margin: 20px auto;
+nav .brand {
+    color: #fff;
+    font-style: italic;
     font-size: 20px;
-    line-height: 1.5;
-    text-align: center;
+    margin-right: auto;
+    text-decoration: none;
+}
+nav a {
+    color: #f3e4ee;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+}
+nav a:hover, nav a.active { border-bottom-color: #f3e4ee; color: #fff; }
+
+/* ===== PAGE LAYOUT ===== */
+header.hero {
+    padding: 64px 6vw 40px;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-2);
+}
+header.hero h1 {
+    font-size: clamp(34px, 5vw, 56px);
+    font-weight: normal;
+    margin: 0 0 10px;
+    color: var(--plum);
+    line-height: 1.15;
+}
+header.hero p { max-width: 720px; margin: 0; color: var(--muted); }
+.kicker {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--plum-soft);
+    margin-bottom: 8px;
 }
 
-footer {
-    text-align: center;
+main { padding: 24px 6vw 80px; max-width: 1100px; margin: 0 auto; }
+section { margin: 48px 0; scroll-margin-top: 80px; }
+.scene { scroll-margin-top: 80px; }
+h2 {
+    font-weight: normal;
+    font-size: 30px;
+    color: var(--plum);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 6px;
+    margin-bottom: 18px;
+}
+h3 { font-size: 21px; margin: 0 0 6px; }
+a { color: var(--plum); }
+
+/* in-page table of contents */
+.toc { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.toc a, .chip {
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
-    color: #154861;
-    margin-top: 40px;
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid var(--plum-soft);
+    border-radius: 999px;
+    color: var(--plum);
+    background: var(--card);
+}
+.toc a:hover { background: var(--plum); color: #fff; }
+
+/* plain-English callout */
+.plain {
+    background: var(--card);
+    border-left: 4px solid var(--sage);
+    padding: 14px 18px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 18px 0;
+}
+.plain strong { color: var(--sage); }
+
+/* cards */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+.card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+}
+.card .role {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: var(--plum-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+}
+.card p { margin: 8px 0; }
+.card .device { font-size: 16px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 8px; }
+
+blockquote {
+    margin: 18px 0;
+    padding: 4px 0 4px 18px;
+    border-left: 3px solid var(--plum-soft);
+    font-style: italic;
+    color: var(--plum);
+}
+
+/* timeline for the day */
+.timeline { list-style: none; padding: 0; margin: 0; border-left: 2px solid var(--line); }
+.timeline li { padding: 0 0 18px 20px; position: relative; }
+.timeline li::before {
+    content: "";
+    position: absolute;
+    left: -7px; top: 9px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--plum-soft);
+}
+.timeline .time { font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: var(--muted); }
+
+/* scenes page */
+.part { margin-bottom: 40px; }
+.scene {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    gap: 14px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+}
+.scene .num { font-size: 28px; color: var(--plum-soft); line-height: 1; }
+.scene .who { font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: var(--muted); }
+.scene .status {
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    background: var(--paper-2);
+    border-radius: 4px;
+    padding: 2px 8px;
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+/* buttons and forms */
+button, .btn {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    background: var(--plum);
+    color: #fff;
+    cursor: pointer;
+}
+button:hover { background: var(--plum-soft); }
+button.ghost { background: transparent; color: var(--plum); border: 1px solid var(--plum-soft); }
+button.ghost:hover { background: var(--paper-2); }
+button:disabled { opacity: 0.45; cursor: default; }
+textarea, select, input[type="text"] {
+    width: 100%;
+    font-family: Georgia, serif;
+    font-size: 17px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--ink);
+}
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+/* podcast page */
+.episodes { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.episode-btn {
+    text-align: left;
+    background: var(--card);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    font-family: Georgia, serif;
+    font-size: 17px;
+    padding: 14px;
+}
+.episode-btn small { display: block; color: var(--muted); font-family: Arial, sans-serif; font-size: 13px; margin-top: 4px; }
+.episode-btn.active, .episode-btn:hover { border-color: var(--plum); background: #fff; color: var(--ink); }
+.transcript { margin-top: 18px; }
+.line { padding: 10px 14px; border-radius: 8px; margin-bottom: 8px; }
+.line .speaker { font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.06em; }
+.line.a { background: #f4e9f0; }
+.line.a .speaker { color: var(--plum); }
+.line.b { background: #e9f0ea; }
+.line.b .speaker { color: var(--sage); }
+.line.speaking { outline: 2px solid var(--plum-soft); }
+.your-turn { background: var(--card); border: 2px dashed var(--plum-soft); border-radius: var(--radius); padding: 18px; margin-top: 18px; }
+.your-turn ol { margin: 8px 0 14px; }
+.recordings audio { width: 100%; margin-top: 8px; }
+
+/* notes chat page */
+.chat-wrap { display: grid; grid-template-columns: 1fr 280px; gap: 22px; align-items: start; }
+.chat {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    min-height: 460px;
+}
+.messages { flex: 1; overflow-y: auto; padding: 18px; }
+.msg { max-width: 88%; margin-bottom: 14px; padding: 12px 14px; border-radius: 12px; }
+.msg.user { margin-left: auto; background: var(--plum); color: #fff; border-bottom-right-radius: 2px; }
+.msg.bot { background: var(--paper-2); border-bottom-left-radius: 2px; }
+.msg.bot h4 { margin: 10px 0 2px; font-size: 15px; font-family: Arial, sans-serif; color: var(--plum); }
+.msg.bot h4:first-child { margin-top: 0; }
+.msg.bot p { margin: 4px 0; }
+.msg .stamp { display: block; font-size: 12px; opacity: 0.7; margin-top: 6px; font-family: Arial, sans-serif; }
+.composer { border-top: 1px solid var(--line); padding: 12px; display: flex; gap: 10px; }
+.composer textarea { height: 64px; resize: vertical; }
+.sidebar .card { margin-bottom: 16px; }
+.bar { display: flex; align-items: center; gap: 8px; margin: 6px 0; font-size: 15px; }
+.bar span:first-child { width: 120px; flex-shrink: 0; }
+.bar .fill { height: 10px; background: var(--plum-soft); border-radius: 5px; min-width: 2px; }
+.note-tip { font-size: 15px; color: var(--muted); }
+
+footer { text-align: center; color: var(--muted); font-size: 14px; padding: 30px; border-top: 1px solid var(--line); }
+
+@media (max-width: 800px) {
+    .chat-wrap { grid-template-columns: 1fr; }
+    body { font-size: 17px; }
 }
