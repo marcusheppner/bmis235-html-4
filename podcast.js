@@ -104,12 +104,23 @@ const EPISODES = [
 
 const HOSTS = { a: "Vera", b: "Theo" };
 
+// Short host pickups after you interject (no AI, just keeps the conversation flowing).
+const PICKUPS = [
+    ["a", "Good point. Let's keep that in mind as we go."],
+    ["b", "Hold onto that. It might change how you hear the next part."],
+    ["a", "That's worth bringing to class. Okay, picking back up."],
+    ["b", "Fair question. Let's see if the rest of this answers it."],
+];
+
 // --- small helpers for browser storage (can fail in some browsers, so wrap it) ---
 function load(key, fallback) {
     try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; }
 }
 function save(key, value) {
     try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch (e) { return false; }
+}
+function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; });
 }
 
 const epList = document.getElementById("episodes");
@@ -125,8 +136,9 @@ EPISODES.forEach(function (ep, i) {
 });
 
 function openEpisode(ep, btn) {
-    stopSpeaking();
+    stopAll();
     current = ep;
+    pos = 0;
     document.querySelectorAll(".episode-btn").forEach(function (x) { x.classList.remove("active"); });
     btn.classList.add("active");
     player.hidden = false;
@@ -139,8 +151,18 @@ function openEpisode(ep, btn) {
         const div = document.createElement("div");
         div.className = "line " + l[0];
         div.id = "line-" + i;
-        div.innerHTML = '<div class="speaker">' + HOSTS[l[0]] + "</div>" + l[1];
+        div.innerHTML = '<div class="speaker">' + HOSTS[l[0]] + "</div>" + l[1] +
+            '<div><button type="button" class="respond-link">&#8627; Respond here</button></div>';
+        div.querySelector(".respond-link").addEventListener("click", function () {
+            interject(i, false);
+        });
         t.appendChild(div);
+    });
+
+    // Bring back interjections you typed or that were transcribed on an earlier visit.
+    load("podcast-interjections-" + ep.id, []).forEach(function (saved) {
+        const anchor = document.getElementById("line-" + saved.after);
+        if (anchor) placeAfter(anchor, savedBubble(saved));
     });
 
     const p = document.getElementById("prompts");
@@ -150,19 +172,26 @@ function openEpisode(ep, btn) {
     document.getElementById("written").value = load("podcast-written-" + ep.id, "");
     document.getElementById("saved-msg").textContent = "";
     document.getElementById("recordings").innerHTML = "";
+    setControls();
     player.scrollIntoView({ behavior: "smooth" });
 }
 
-// --- read aloud with two different voices ---
+// ======================================================================
+//  PLAYBACK: one line at a time, so we can pause anywhere and resume
+// ======================================================================
 const synth = window.speechSynthesis;
 const playBtn = document.getElementById("play");
 const stopBtn = document.getElementById("stop");
+const interjectBtn = document.getElementById("interject");
 const voiceNote = document.getElementById("voice-note");
 
-if (!synth) {
-    playBtn.disabled = true;
-    voiceNote.textContent = "Your browser can't read aloud. Use the transcript below.";
-}
+let pos = 0;           // index of the next line to speak
+let playing = false;   // hosts are talking right now
+let paused = false;    // paused for an interjection
+let lineDone = true;   // did the current line finish before we paused?
+let pickupCount = 0;
+
+if (!synth) voiceNote.textContent = "Your browser can't read aloud. Read the transcript and use \"Respond here\" on any line.";
 
 function pickVoices() {
     const voices = synth ? synth.getVoices().filter(function (v) { return v.lang && v.lang.indexOf("en") === 0; }) : [];
@@ -171,56 +200,277 @@ function pickVoices() {
     return { a: pool[0] || null, b: pool[1] || pool[0] || null };
 }
 
-function stopSpeaking() {
-    if (synth) synth.cancel();
+function highlight(i) {
     document.querySelectorAll(".line.speaking").forEach(function (x) { x.classList.remove("speaking"); });
-    playBtn.disabled = !synth;
-    stopBtn.disabled = true;
+    const el = document.getElementById("line-" + i);
+    if (el) el.classList.add("speaking");
+}
+
+function sayLine(speaker, text, onDone) {
+    const v = pickVoices();
+    const u = new SpeechSynthesisUtterance(text);
+    if (v[speaker]) u.voice = v[speaker];
+    u.pitch = speaker === "a" ? 1.1 : 0.85;
+    u.rate = 0.98;
+    u.onend = onDone;
+    synth.speak(u);
+}
+
+function speakNext() {
+    if (!playing || !current) return;
+    if (pos >= current.lines.length) { finish(); return; }
+    const i = pos;
+    const l = current.lines[i];
+    highlight(i);
+    lineDone = false;
+    sayLine(l[0], l[1], function () {
+        if (!playing || pos !== i) return;   // stopped or paused mid-line
+        lineDone = true;
+        pos = i + 1;
+        speakNext();
+    });
+}
+
+function finish() {
+    playing = false;
+    paused = false;
+    pos = 0;
+    highlight(-1);
+    setControls();
+    document.querySelector(".your-turn").scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function stopAll() {
+    playing = false;
+    paused = false;
+    if (synth) synth.cancel();
+    highlight(-1);
+    setControls();
+}
+
+function setControls() {
+    playBtn.disabled = !synth || playing;
+    playBtn.innerHTML = paused ? "&#9654; Resume" : (pos > 0 ? "&#9654; Continue" : "&#9654; Play episode");
+    stopBtn.disabled = !playing && !paused;
+    interjectBtn.disabled = !playing;
 }
 
 playBtn.addEventListener("click", function () {
-    if (!current) return;
-    stopSpeaking();
-    const v = pickVoices();
-    playBtn.disabled = true;
-    stopBtn.disabled = false;
-    current.lines.forEach(function (l, i) {
-        const u = new SpeechSynthesisUtterance(l[1]);
-        if (v[l[0]]) u.voice = v[l[0]];
-        u.pitch = l[0] === "a" ? 1.1 : 0.85;
-        u.rate = 0.98;
-        u.onstart = function () {
-            document.querySelectorAll(".line.speaking").forEach(function (x) { x.classList.remove("speaking"); });
-            const el = document.getElementById("line-" + i);
-            if (el) el.classList.add("speaking");
-        };
-        if (i === current.lines.length - 1) u.onend = stopSpeaking;
-        synth.speak(u);
-    });
+    if (!current || !synth) return;
+    closeOpenComposer();
+    paused = false;
+    playing = true;
+    setControls();
+    speakNext();
 });
-stopBtn.addEventListener("click", stopSpeaking);
+stopBtn.addEventListener("click", function () { closeOpenComposer(); pos = 0; stopAll(); });
+interjectBtn.addEventListener("click", function () {
+    // Attach to the line being spoken (or the one that just finished).
+    const at = lineDone ? Math.max(0, pos - 1) : pos;
+    interject(at, true);
+});
 
-// --- record your own take ---
-const recBtn = document.getElementById("rec");
-const recStatus = document.getElementById("rec-status");
-let recorder = null;
-let chunks = [];
+// ======================================================================
+//  INTERJECTIONS: record (with live transcript where supported) or type
+// ======================================================================
+const canRecord = !!(navigator.mediaDevices && window.MediaRecorder);
+const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let openComposer = null;   // only one interjection box open at a time
 
-if (!navigator.mediaDevices || !window.MediaRecorder) {
-    recBtn.disabled = true;
-    recStatus.textContent = "Recording isn't supported in this browser. Write your take instead.";
+function placeAfter(anchor, el) {
+    // Put it after the anchor line and after any interjections already attached to that line.
+    let ref = anchor;
+    while (ref.nextElementSibling && ref.nextElementSibling.classList.contains("you")) ref = ref.nextElementSibling;
+    ref.after(el);
 }
 
-recBtn.addEventListener("click", async function () {
-    if (recorder && recorder.state === "recording") { recorder.stop(); return; }
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+function savedBubble(saved) {
+    const div = document.createElement("div");
+    div.className = "line you";
+    div.innerHTML = '<div class="speaker">You &middot; ' + escapeHtml(saved.when) + "</div>" + escapeHtml(saved.text);
+    return div;
+}
+
+function closeOpenComposer() {
+    if (openComposer) openComposer.cancel();
+}
+
+function interject(afterIndex, fromPlayback) {
+    if (!current) return;
+    closeOpenComposer();
+
+    // Pause the hosts.
+    const wasPlaying = playing || fromPlayback;
+    if (playing) {
+        playing = false;
+        paused = true;
+        if (synth) synth.cancel();
+        // pos already points at the next line (or the interrupted one, which replays on resume)
+        setControls();
+    }
+
+    const anchor = document.getElementById("line-" + afterIndex);
+    const box = document.createElement("div");
+    box.className = "line you composing";
+    box.innerHTML =
+        '<div class="speaker">You &middot; interjecting</div>' +
+        '<p class="note-tip ij-status"></p>' +
+        '<p class="ij-live"></p>' +
+        '<div class="row">' +
+            (canRecord ? '<button type="button" class="ij-rec">&#9679; Record</button>' : "") +
+            '<button type="button" class="ghost ij-type">Type instead</button>' +
+        "</div>" +
+        '<textarea class="ij-text" rows="3" hidden placeholder="Your question or point..."></textarea>' +
+        '<div class="ij-audio"></div>' +
+        '<div class="row" style="margin-top:10px">' +
+            '<button type="button" class="ij-done">' + (wasPlaying ? "Done, resume podcast" : "Save interjection") + "</button>" +
+            '<button type="button" class="ghost ij-cancel">Cancel</button>' +
+        "</div>";
+    placeAfter(anchor, box);
+    box.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    const status = box.querySelector(".ij-status");
+    const live = box.querySelector(".ij-live");
+    const recBtn = box.querySelector(".ij-rec");
+    const text = box.querySelector(".ij-text");
+    let recorder = null, stream = null, chunks = [], recog = null, transcript = "", audioUrl = null;
+
+    status.textContent = canRecord ? "Record a question or reaction, or type it." : "Recording isn't supported here. Type your interjection.";
+    if (!canRecord) text.hidden = false;
+
+    function stopRecording() {
+        if (recorder && recorder.state === "recording") recorder.stop();
+        if (recog) { try { recog.stop(); } catch (e) {} }
+    }
+
+    async function startRecording() {
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        } catch (err) {
+            status.textContent = "Microphone access was blocked. Type your interjection instead.";
+            text.hidden = false;
+            return;
+        }
         recorder = new MediaRecorder(stream);
         chunks = [];
         recorder.ondataavailable = function (e) { chunks.push(e.data); };
         recorder.onstop = function () {
             stream.getTracks().forEach(function (t) { t.stop(); });
             const blob = new Blob(chunks, { type: recorder.mimeType || "audio/webm" });
+            audioUrl = URL.createObjectURL(blob);
+            box.querySelector(".ij-audio").innerHTML = '<audio controls src="' + audioUrl + '"></audio>';
+            recBtn.innerHTML = "&#9679; Re-record";
+            status.textContent = transcript ? "Recorded. Edit the transcript below if it misheard you." : "Recorded.";
+            if (transcript) { text.hidden = false; text.value = transcript.trim(); }
+        };
+        recorder.start();
+        recBtn.innerHTML = "&#9632; Stop recording";
+        status.textContent = "Recording... speak your question or point.";
+
+        // Live transcript where the browser supports it (Chrome, Edge, Safari).
+        if (Recognition) {
+            transcript = "";
+            recog = new Recognition();
+            recog.continuous = true;
+            recog.interimResults = true;
+            recog.lang = "en-US";
+            recog.onresult = function (e) {
+                let finalText = "", interim = "";
+                for (let k = 0; k < e.results.length; k++) {
+                    if (e.results[k].isFinal) finalText += e.results[k][0].transcript + " ";
+                    else interim += e.results[k][0].transcript;
+                }
+                transcript = finalText + interim;
+                live.textContent = transcript;
+            };
+            recog.onerror = function () { /* transcript is optional */ };
+            try { recog.start(); } catch (e) {}
+        }
+    }
+
+    if (recBtn) recBtn.addEventListener("click", function () {
+        if (recorder && recorder.state === "recording") stopRecording();
+        else { live.textContent = ""; startRecording(); }
+    });
+    box.querySelector(".ij-type").addEventListener("click", function () { text.hidden = false; text.focus(); });
+
+    function teardown() {
+        stopRecording();
+        openComposer = null;
+    }
+
+    box.querySelector(".ij-cancel").addEventListener("click", function () {
+        controller.cancel();
+        if (wasPlaying) resumeAfter(false);
+    });
+
+    box.querySelector(".ij-done").addEventListener("click", function () {
+        stopRecording();
+        // Give the recorder a moment to finish writing the clip.
+        setTimeout(function () {
+            const typed = text.value.trim() || transcript.trim();
+            if (!typed && !audioUrl) { status.textContent = "Record or type something first, or press Cancel."; return; }
+            teardown();
+            const when = new Date().toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+            box.classList.remove("composing");
+            box.innerHTML = '<div class="speaker">You &middot; ' + escapeHtml(when) + "</div>" +
+                (typed ? "<p>" + escapeHtml(typed) + "</p>" : "<p class=\"note-tip\">(voice only)</p>") +
+                (audioUrl ? '<audio controls src="' + audioUrl + '"></audio>' +
+                    '<a href="' + audioUrl + '" download="dalloway-' + current.id + '-interjection.webm">Download clip</a>' : "");
+            if (typed) {
+                const list = load("podcast-interjections-" + current.id, []);
+                list.push({ after: afterIndex, text: typed, when: when });
+                save("podcast-interjections-" + current.id, list);
+            }
+            if (wasPlaying) resumeAfter(true);
+        }, 300);
+    });
+
+    const controller = {
+        cancel: function () { teardown(); box.remove(); },
+    };
+    openComposer = controller;
+
+    // From the Interject button, start recording right away (or open the text box).
+    if (fromPlayback) {
+        if (canRecord) startRecording(); else text.focus();
+    }
+}
+
+function resumeAfter(withPickup) {
+    if (!current || !synth) { setControls(); return; }
+    paused = false;
+    playing = true;
+    setControls();
+    if (withPickup) {
+        const p = PICKUPS[pickupCount++ % PICKUPS.length];
+        sayLine(p[0], p[1], speakNext);
+    } else {
+        speakNext();
+    }
+}
+
+// --- record your own take at the end ---
+const recBtn = document.getElementById("rec");
+const recStatus = document.getElementById("rec-status");
+let endRecorder = null;
+let endChunks = [];
+
+if (!canRecord) {
+    recBtn.disabled = true;
+    recStatus.textContent = "Recording isn't supported in this browser. Write your take instead.";
+}
+
+recBtn.addEventListener("click", async function () {
+    if (endRecorder && endRecorder.state === "recording") { endRecorder.stop(); return; }
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        endRecorder = new MediaRecorder(stream);
+        endChunks = [];
+        endRecorder.ondataavailable = function (e) { endChunks.push(e.data); };
+        endRecorder.onstop = function () {
+            stream.getTracks().forEach(function (t) { t.stop(); });
+            const blob = new Blob(endChunks, { type: endRecorder.mimeType || "audio/webm" });
             const url = URL.createObjectURL(blob);
             const wrap = document.createElement("div");
             const stamp = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
@@ -230,7 +480,7 @@ recBtn.addEventListener("click", async function () {
             recBtn.innerHTML = "&#9679; Record another take";
             recStatus.textContent = "Saved below. Download it if you want to keep it.";
         };
-        recorder.start();
+        endRecorder.start();
         recBtn.innerHTML = "&#9632; Stop recording";
         recStatus.textContent = "Recording...";
     } catch (err) {

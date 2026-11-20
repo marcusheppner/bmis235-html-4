@@ -233,6 +233,19 @@ textarea, select, input[type="text"] {
 .line.b { background: #e9f0ea; }
 .line.b .speaker { color: var(--sage); }
 .line.speaking { outline: 2px solid var(--plum-soft); }
+.line.you { background: #fff; border: 1px dashed var(--plum-soft); margin-left: 32px; }
+.line.you .speaker { color: var(--ink); }
+.line.you audio { width: 100%; margin: 6px 0; }
+.line.you textarea { margin-top: 8px; }
+.line.composing { border-style: solid; border-width: 2px; }
+.ij-live { font-style: italic; color: var(--muted); margin: 4px 0; }
+.respond-link {
+    background: none; color: var(--muted); padding: 2px 0; margin-top: 4px;
+    font-size: 13px; opacity: 0; transition: opacity .15s;
+}
+.respond-link:hover { background: none; color: var(--plum); }
+.line:hover .respond-link, .respond-link:focus { opacity: 1; }
+@media (hover: none) { .respond-link { opacity: 1; } }
 .your-turn { background: var(--card); border: 2px dashed var(--plum-soft); border-radius: var(--radius); padding: 18px; margin-top: 18px; }
 .your-turn ol { margin: 8px 0 14px; }
 .recordings audio { width: 100%; margin-top: 8px; }
