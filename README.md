@@ -11,7 +11,9 @@ Live site (once GitHub Pages is on): https://marcusheppner.github.io/bmis235-htm
 ## Pages
 
 - `index.html`: Home. Synopsis, how to read stream of consciousness, historical context, themes, characters as literary devices, and Virginia Woolf's life.
-- `scenes.html`: Key scenes. A map of 19 key moments in order (breakdowns coming later).
+- `scenes.html`: Key scenes and monologues. 19 scenes and 17 monologues in order, each linking to its breakdown.
+- `breakdown.html` + `breakdown.js` + `breakdowns.js`: One page that shows any breakdown (`breakdown.html?id=scene-05`, `?id=mono-03`). It covers what happens, why it matters, key quotes with their underlying meaning, a page-number finder (photograph your book page), and a box for your own close reading. All content lives in `breakdowns.js`.
+- `ocr.js`: Shared photo-reading helpers (Tesseract.js) used by the page finder.
 - `podcast.html` + `podcast.js`: Two hosts debate a question about the novel (read aloud by the browser), then you record or write your own take.
 - `notes.html` + `notes.js`: Class notes chat. Send in typed notes or photos of handwritten notes and get them linked to themes, characters, scenes, and your earlier notes.
 - `styles.css`: Shared styles for every page.

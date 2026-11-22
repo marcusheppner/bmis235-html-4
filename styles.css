@@ -298,3 +298,33 @@ footer { text-align: center; color: var(--muted); font-size: 14px; padding: 30px
     .chat-wrap { grid-template-columns: 1fr; }
     body { font-size: 17px; }
 }
+
+/* links from the scene list to breakdowns */
+.status-link {
+    display: inline-block; margin-top: 8px;
+    font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;
+    color: #fff; background: var(--plum); text-decoration: none;
+    border-radius: 6px; padding: 5px 12px;
+}
+.status-link:hover { background: var(--plum-soft); }
+
+/* breakdown page */
+.edition-card { margin-bottom: 18px; background: var(--paper-2); }
+.quote-card { margin-bottom: 16px; }
+.quote-top { display: flex; gap: 16px; align-items: flex-start; }
+.quote-top blockquote { flex: 1; margin: 0; font-size: 20px; }
+.page-box { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.page-input { width: 62px !important; text-align: center; padding: 8px 6px !important; }
+.cam-btn { padding: 8px 10px; line-height: 0; }
+.page-msg { margin: 6px 0 0; min-height: 0; }
+.page-msg button { padding: 3px 8px; font-size: 13px; margin-left: 6px; }
+.meaning { margin: 12px 0 8px; }
+.meaning strong { color: var(--sage); }
+.close-reading summary { cursor: pointer; font-family: Arial, sans-serif; font-size: 14px; color: var(--plum); }
+.close-reading textarea { margin-top: 8px; }
+.pager { justify-content: space-between; margin-top: 24px; }
+.ghost-link { text-decoration: none; background: transparent; color: var(--plum); border: 1px solid var(--plum-soft); }
+.ghost-link:hover { background: var(--paper-2); }
+#related .chip { text-decoration: none; }
+#themes { margin-top: 12px; }
+@media (max-width: 640px) { .quote-top { flex-direction: column; } }

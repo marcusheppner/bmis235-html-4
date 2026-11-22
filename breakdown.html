@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--
+  Author: Marcus Heppner
+  GU username: marcusheppner
+  Course: BMIS 235 - HTML-4
+  Page: One scene/monologue breakdown. Which one is chosen by the link, e.g. breakdown.html?id=scene-05
+  The content lives in breakdowns.js.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Marcus Heppner">
+<title>Breakdown - Reading Mrs. Dalloway</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+    <a class="brand" href="index.html">Reading Mrs. Dalloway</a>
+    <a href="index.html">Home</a>
+    <a class="active" href="scenes.html">Key Scenes</a>
+    <a href="podcast.html">Podcast</a>
+    <a href="notes.html">Class Notes Chat</a>
+</nav>
+
+<header class="hero">
+    <div class="kicker" id="kicker"></div>
+    <h1 id="title"></h1>
+    <p id="who"></p>
+    <div class="toc">
+        <a href="#happens">What happens</a>
+        <a href="#quotes">Key quotes</a>
+        <a id="back" href="scenes.html">&larr; All scenes</a>
+    </div>
+</header>
+
+<main id="content">
+
+<section id="happens">
+    <h2>What happens &amp; what it conveys</h2>
+    <div id="happens-text"></div>
+    <div class="plain"><strong>Why it matters:</strong> <span id="matters"></span></div>
+    <div class="row" id="themes"></div>
+</section>
+
+<section id="quotes">
+    <h2>Key quotes</h2>
+    <div class="card edition-card">
+        <div class="row" style="align-items:flex-start">
+            <div style="flex:1; min-width:240px">
+                <h3>Find the page numbers in your copy</h3>
+                <p class="note-tip">Tap a camera button and photograph the page of your book. The site reads the
+                   page, checks for <em>every</em> quote below at once, and fills in the page numbers it finds. You can
+                   also type a page number yourself. Page numbers are saved in this browser.</p>
+            </div>
+            <div style="width:240px">
+                <label for="edition" class="note-tip">Your edition (optional)</label>
+                <input type="text" id="edition" placeholder="e.g. Harcourt, 1981">
+            </div>
+        </div>
+        <p class="note-tip" id="scan-status"></p>
+    </div>
+    <div id="quote-list"></div>
+</section>
+
+<section id="related-wrap">
+    <h2>Related</h2>
+    <div class="row" id="related"></div>
+    <div class="row pager">
+        <a class="btn ghost-link" id="prev" href="#">&larr; Previous</a>
+        <a class="btn ghost-link" id="next" href="#">Next &rarr;</a>
+    </div>
+</section>
+
+</main>
+
+<input type="file" id="page-photo" accept="image/*" hidden>
+
+<footer>Quotes checked against the 1925 Harcourt text. Page numbers vary by edition, so scan your own copy.</footer>
+
+<script src="breakdowns.js"></script>
+<script src="ocr.js"></script>
+<script src="breakdown.js"></script>
+</body>
+</html>
