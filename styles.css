@@ -4,6 +4,8 @@
   One stylesheet for every page of the Mrs. Dalloway study tool.
 */
 
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Josefin+Sans:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap");
+
 :root {
     --paper: #f7f2e8;
     --paper-2: #efe6d4;
@@ -23,7 +25,7 @@ body {
     margin: 0;
     background: var(--paper);
     color: var(--ink);
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: var(--serif);
     font-size: 18px;
     line-height: 1.65;
 }
@@ -50,7 +52,7 @@ nav .brand {
 nav a {
     color: #f3e4ee;
     text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--sans);
     font-size: 15px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -74,7 +76,7 @@ header.hero h1 {
 }
 header.hero p { max-width: 720px; margin: 0; color: var(--muted); }
 .kicker {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--sans);
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
@@ -99,7 +101,7 @@ a { color: var(--plum); }
 /* in-page table of contents */
 .toc { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 .toc a, .chip {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--sans);
     font-size: 14px;
     text-decoration: none;
     padding: 6px 12px;
@@ -129,7 +131,7 @@ a { color: var(--plum); }
     padding: 20px;
 }
 .card .role {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--sans);
     font-size: 13px;
     color: var(--plum-soft);
     text-transform: uppercase;
@@ -158,7 +160,7 @@ blockquote {
     border-radius: 50%;
     background: var(--plum-soft);
 }
-.timeline .time { font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: var(--muted); }
+.timeline .time { font-family: var(--sans); font-size: 14px; color: var(--muted); }
 
 /* scenes page */
 .part { margin-bottom: 40px; }
@@ -175,10 +177,10 @@ blockquote {
 .scene.mono { border-left: 4px solid var(--plum-soft); }
 .scene.mono blockquote { margin: 8px 0; font-size: 19px; }
 .scene .num { font-size: 28px; color: var(--plum-soft); line-height: 1; }
-.scene .who { font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: var(--muted); }
+.scene .who { font-family: var(--sans); font-size: 13px; color: var(--muted); }
 .scene .status {
     display: inline-block;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--sans);
     font-size: 12px;
     background: var(--paper-2);
     border-radius: 4px;
@@ -189,7 +191,7 @@ blockquote {
 
 /* buttons and forms */
 button, .btn {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--sans);
     font-size: 15px;
     border: none;
     border-radius: 8px;
@@ -204,7 +206,7 @@ button.ghost:hover { background: var(--paper-2); }
 button:disabled { opacity: 0.45; cursor: default; }
 textarea, select, input[type="text"] {
     width: 100%;
-    font-family: Georgia, serif;
+    font-family: var(--serif);
     font-size: 17px;
     padding: 10px 12px;
     border: 1px solid var(--line);
@@ -221,15 +223,15 @@ textarea, select, input[type="text"] {
     background: var(--card);
     color: var(--ink);
     border: 1px solid var(--line);
-    font-family: Georgia, serif;
+    font-family: var(--serif);
     font-size: 17px;
     padding: 14px;
 }
-.episode-btn small { display: block; color: var(--muted); font-family: Arial, sans-serif; font-size: 13px; margin-top: 4px; }
+.episode-btn small { display: block; color: var(--muted); font-family: var(--sans); font-size: 13px; margin-top: 4px; }
 .episode-btn.active, .episode-btn:hover { border-color: var(--plum); background: #fff; color: var(--ink); }
 .transcript { margin-top: 18px; }
 .line { padding: 10px 14px; border-radius: 8px; margin-bottom: 8px; }
-.line .speaker { font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.06em; }
+.line .speaker { font-family: var(--sans); font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.06em; }
 .line.a { background: #f4e9f0; }
 .line.a .speaker { color: var(--plum); }
 .line.b { background: #e9f0ea; }
@@ -267,10 +269,10 @@ textarea, select, input[type="text"] {
 .msg { max-width: 88%; margin-bottom: 14px; padding: 12px 14px; border-radius: 12px; }
 .msg.user { margin-left: auto; background: var(--plum); color: #fff; border-bottom-right-radius: 2px; }
 .msg.bot { background: var(--paper-2); border-bottom-left-radius: 2px; }
-.msg.bot h4 { margin: 10px 0 2px; font-size: 15px; font-family: Arial, sans-serif; color: var(--plum); }
+.msg.bot h4 { margin: 10px 0 2px; font-size: 15px; font-family: var(--sans); color: var(--plum); }
 .msg.bot h4:first-child { margin-top: 0; }
 .msg.bot p { margin: 4px 0; }
-.msg .stamp { display: block; font-size: 12px; opacity: 0.7; margin-top: 6px; font-family: Arial, sans-serif; }
+.msg .stamp { display: block; font-size: 12px; opacity: 0.7; margin-top: 6px; font-family: var(--sans); }
 .composer { border-top: 1px solid var(--line); padding: 12px; display: flex; gap: 10px; }
 .composer textarea { height: 64px; resize: vertical; }
 .sidebar .card { margin-bottom: 16px; }
@@ -286,7 +288,7 @@ textarea, select, input[type="text"] {
 .photo-btn:hover { border-color: var(--plum-soft); background: #fff; }
 .photo-label .icon-camera { vertical-align: -2px; }
 .note-photo { display: block; max-width: 100%; max-height: 260px; border-radius: 8px; margin-bottom: 8px; }
-.photo-label { display: block; font-family: Arial, sans-serif; font-size: 13px; opacity: 0.85; margin-bottom: 4px; }
+.photo-label { display: block; font-family: var(--sans); font-size: 13px; opacity: 0.85; margin-bottom: 4px; }
 .msg.photo-review { background: var(--card); color: var(--ink); border: 2px solid var(--plum-soft); max-width: 92%; }
 .msg.photo-review textarea { margin: 8px 0; }
 .ocr-progress { height: 8px; background: var(--paper-2); border-radius: 4px; overflow: hidden; margin: 8px 0; }
@@ -302,7 +304,7 @@ footer { text-align: center; color: var(--muted); font-size: 14px; padding: 30px
 /* links from the scene list to breakdowns */
 .status-link {
     display: inline-block; margin-top: 8px;
-    font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;
+    font-family: var(--sans); font-size: 14px; font-weight: bold;
     color: #fff; background: var(--plum); text-decoration: none;
     border-radius: 6px; padding: 5px 12px;
 }
@@ -320,7 +322,7 @@ footer { text-align: center; color: var(--muted); font-size: 14px; padding: 30px
 .page-msg button { padding: 3px 8px; font-size: 13px; margin-left: 6px; }
 .meaning { margin: 12px 0 8px; }
 .meaning strong { color: var(--sage); }
-.close-reading summary { cursor: pointer; font-family: Arial, sans-serif; font-size: 14px; color: var(--plum); }
+.close-reading summary { cursor: pointer; font-family: var(--sans); font-size: 14px; color: var(--plum); }
 .close-reading textarea { margin-top: 8px; }
 .pager { justify-content: space-between; margin-top: 24px; }
 .ghost-link { text-decoration: none; background: transparent; color: var(--plum); border: 1px solid var(--plum-soft); }
@@ -328,3 +330,172 @@ footer { text-align: center; color: var(--muted); font-size: 14px; padding: 30px
 #related .chip { text-decoration: none; }
 #themes { margin-top: 12px; }
 @media (max-width: 640px) { .quote-top { flex-direction: column; } }
+
+
+/* =====================================================================
+   GILDED THEME  -  1920s London: emerald, black, gold leaf, Art Deco.
+   Everything below overrides the plain theme above. Delete this whole
+   block to go back to the original look.
+   ===================================================================== */
+:root {
+    --paper: #f4eddc;          /* ivory stationery */
+    --paper-2: #e9dec3;
+    --ink: #1d1b16;
+    --muted: #5e574a;
+    --plum: #143a30;           /* deep emerald (main accent) */
+    --plum-soft: #a8843a;      /* gold (secondary accent) */
+    --sage: #7b2d2d;           /* oxblood */
+    --line: #cdb98a;
+    --card: #fbf7ec;
+    --radius: 2px;
+    --gold: #b8963e;
+    --gold-light: #e2c983;
+    --night: #0d211b;
+    --serif: "EB Garamond", Georgia, serif;
+    --display: "Playfair Display", Georgia, serif;
+    --sans: "Josefin Sans", "Futura", Arial, sans-serif;
+}
+
+body {
+    font-size: 19px;
+    background:
+        radial-gradient(circle at 50% 0, rgba(184,150,62,.08), transparent 60%),
+        var(--paper);
+}
+
+/* --- the menu: black lacquer and gold --- */
+nav {
+    background: var(--night);
+    border-bottom: 1px solid var(--gold);
+    box-shadow: 0 3px 0 var(--night), 0 4px 0 var(--gold);
+    padding: 16px 6vw;
+}
+nav .brand {
+    font-family: var(--display);
+    color: var(--gold-light);
+    letter-spacing: .04em;
+    font-size: 22px;
+}
+nav a { color: #d8cfb8; letter-spacing: .18em; font-size: 13px; padding-top: 6px; }
+nav a:hover, nav a.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+
+/* --- hero: emerald with an Art Deco sunburst --- */
+header.hero {
+    position: relative;
+    text-align: center;
+    padding: 80px 6vw 56px;
+    color: #efe6cf;
+    background:
+        repeating-conic-gradient(from 0deg at 50% 115%, rgba(226,201,131,.07) 0deg 4deg, transparent 4deg 8deg),
+        radial-gradient(ellipse at 50% 115%, #1f5546 0%, var(--plum) 45%, var(--night) 100%);
+    border-bottom: 1px solid var(--gold);
+    box-shadow: inset 0 -6px 0 var(--night), inset 0 -7px 0 var(--gold);
+}
+header.hero::before, header.hero::after {      /* gold corner brackets */
+    content: ""; position: absolute; width: 46px; height: 46px; border: 1px solid var(--gold); opacity: .8;
+}
+header.hero::before { top: 22px; left: 22px; border-right: 0; border-bottom: 0; }
+header.hero::after  { top: 22px; right: 22px; border-left: 0; border-bottom: 0; }
+header.hero h1 {
+    font-family: var(--display);
+    color: var(--gold-light);
+    font-size: clamp(36px, 5.5vw, 62px);
+    letter-spacing: .01em;
+    text-shadow: 0 2px 18px rgba(0,0,0,.35);
+}
+header.hero p { color: #e3dac4; margin: 0 auto; }
+header.hero strong { color: var(--gold-light); }
+.kicker { color: var(--gold); letter-spacing: .3em; font-size: 12px; }
+.kicker::before, .kicker::after { content: " \25C6 "; color: var(--gold); letter-spacing: 0; }
+.toc { justify-content: center; }
+.toc a, .chip {
+    border-radius: 0;
+    border-color: var(--gold);
+    letter-spacing: .08em;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+header.hero .toc a { background: transparent; color: var(--gold-light); }
+header.hero .toc a:hover { background: var(--gold); color: var(--night); }
+
+/* --- headings with a gold double rule and a diamond --- */
+h2 {
+    font-family: var(--display);
+    color: var(--plum);
+    font-size: 32px;
+    border-bottom: 3px double var(--gold);
+    padding-bottom: 8px;
+}
+h2::before { content: "\25C6"; color: var(--gold); font-size: 15px; margin-right: 12px; vertical-align: 5px; }
+h3 { font-family: var(--display); font-weight: 600; color: var(--ink); }
+a { color: var(--plum); text-decoration-color: var(--gold); }
+
+/* --- framed cards (thin gold frame with an inner rule) --- */
+.card, .scene, .chat, .your-turn, .episode-btn {
+    border: 1px solid var(--line);
+    box-shadow: inset 0 0 0 4px var(--card), inset 0 0 0 5px rgba(184,150,62,.35);
+    border-radius: var(--radius);
+}
+.card .role { color: var(--gold); letter-spacing: .14em; }
+.card .device { border-top: 1px solid var(--line); }
+.plain {
+    background: var(--card);
+    border-left: 3px solid var(--gold);
+    box-shadow: 0 0 0 1px var(--line);
+    border-radius: 0;
+}
+.plain strong { color: var(--sage); font-family: var(--display); }
+blockquote { border-left-color: var(--gold); color: var(--plum); }
+
+/* scene list */
+.scene .num { font-family: var(--display); color: var(--gold); }
+.scene.mono { border-left: 3px solid var(--gold); }
+.timeline { border-left-color: var(--gold); }
+.timeline li::before { border-radius: 0; transform: rotate(45deg); background: var(--gold); width: 10px; height: 10px; left: -6px; }
+
+/* --- buttons: emerald with gold lettering --- */
+button, .btn, .status-link {
+    background: var(--plum);
+    color: var(--gold-light);
+    border: 1px solid var(--gold);
+    border-radius: 0;
+    font-family: var(--sans);
+    letter-spacing: .08em;
+}
+button:hover, .status-link:hover { background: var(--night); color: #fff; }
+button.ghost, .ghost-link { background: transparent; color: var(--plum); border: 1px solid var(--gold); }
+button.ghost:hover, .ghost-link:hover { background: var(--paper-2); color: var(--plum); }
+.respond-link, .respond-link:hover { border: 0; background: none; }
+textarea, select, input[type="text"] { border-radius: 0; border-color: var(--line); background: #fffdf6; }
+textarea:focus, input[type="text"]:focus { outline: 1px solid var(--gold); }
+
+/* podcast */
+.episode-btn.active, .episode-btn:hover { border-color: var(--gold); }
+.line { border-radius: 0; }
+.line.a { background: #e7ede6; }
+.line.a .speaker { color: var(--plum); }
+.line.b { background: #f1e4dc; }
+.line.b .speaker { color: var(--sage); }
+.line.speaking { outline: 1px solid var(--gold); }
+
+/* chat */
+.msg { border-radius: 0; }
+.msg.user { background: var(--plum); color: #f1e8d0; }
+.msg.user a { color: var(--gold-light); }
+.msg.bot { background: #efe6cf; border-left: 2px solid var(--gold); }
+.msg.bot h4 { color: var(--plum); letter-spacing: .06em; }
+.bar .fill { background: var(--gold); }
+.photo-btn { border-radius: 0; color: var(--plum); border-color: var(--gold); }
+
+/* breakdown */
+.edition-card { background: #efe6cf; }
+.meaning strong { color: var(--sage); font-family: var(--display); }
+
+/* --- footer: black with a gold rule --- */
+footer {
+    background: var(--night);
+    color: #b9ae93;
+    border-top: 1px solid var(--gold);
+    box-shadow: inset 0 3px 0 var(--night), inset 0 4px 0 var(--gold);
+    letter-spacing: .04em;
+}
