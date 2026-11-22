@@ -250,6 +250,8 @@ textarea, select, input[type="text"] {
 .respond-link:hover { background: none; color: var(--plum); }
 .line:hover .respond-link, .respond-link:focus { opacity: 1; }
 @media (hover: none) { .respond-link { opacity: 1; } }
+.voice-row { margin-top: 12px; }
+.voice-row select { width: auto; max-width: 260px; font-size: 15px; padding: 6px 8px; }
 .your-turn { background: var(--card); border: 2px dashed var(--plum-soft); border-radius: var(--radius); padding: 18px; margin-top: 18px; }
 .your-turn ol { margin: 8px 0 14px; }
 .recordings audio { width: 100%; margin-top: 8px; }

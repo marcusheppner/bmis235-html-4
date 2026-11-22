@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="Marcus Heppner">
 <title>Podcast - Reading Mrs. Dalloway</title>
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
 
@@ -46,8 +46,14 @@
         <button id="play">&#9654; Play episode</button>
         <button id="interject" disabled>&#9995; Interject</button>
         <button id="stop" class="ghost" disabled>&#9632; Stop</button>
-        <span class="note-tip" id="voice-note"></span>
     </div>
+    <div class="row voice-row">
+        <label class="note-tip" for="voice-a">Vera's voice</label>
+        <select id="voice-a"></select>
+        <label class="note-tip" for="voice-b">Theo's voice</label>
+        <select id="voice-b"></select>
+    </div>
+    <p class="note-tip" id="voice-note"></p>
 
     <div class="transcript" id="transcript"></div>
 
@@ -69,6 +75,6 @@
 
 <footer>Voices use your browser's built-in text-to-speech. Recordings stay on your device until you download them.</footer>
 
-<script src="podcast.js"></script>
+<script src="podcast.js?v=3"></script>
 </body>
 </html>

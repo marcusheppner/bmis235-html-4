@@ -193,11 +193,81 @@ let pickupCount = 0;
 
 if (!synth) voiceNote.textContent = "Your browser can't read aloud. Read the transcript and use \"Respond here\" on any line.";
 
+// ---- Choosing the most human-sounding voices this device has ----
+// Neural voices (Edge "Natural", Safari "Premium"/"Enhanced", Google voices in Chrome)
+// sound far more natural than the old system voices, so they're ranked first.
+const FEMALE = /sonia|libby|maisie|hollie|bella|abbie|jenny|aria|michelle|ava|emma|serena|kate|martha|stephanie|samantha|karen|moira|tessa|fiona|victoria|susan|zira|hazel|female|woman/i;
+const MALE = /ryan|thomas|oliver|elliot|alfie|ethan|noah|guy|davis|andrew|brian|christopher|eric|daniel|arthur|alex|tom|george|david|mark|james|male|man\b/i;
+const NOVELTY = /albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|fred|good news|hysterical|jester|junior|organ|superstar|trinoids|whisper|wobble|zarvox|ralph|kathy|grandma|grandpa|eddy|flo|reed|rocko|sandy|shelley/i;
+
+function voiceScore(v) {
+    let score = 0;
+    if (/natural/i.test(v.name)) score += 100;
+    if (/premium/i.test(v.name)) score += 80;
+    if (/enhanced|siri/i.test(v.name)) score += 60;
+    if (/online|neural/i.test(v.name)) score += 50;
+    if (/google/i.test(v.name)) score += 40;
+    if (v.lang === "en-GB") score += 15;          // the novel is set in London
+    else if (/^en-(US|AU|IE)/.test(v.lang)) score += 5;
+    if (v.localService === false) score += 5;     // cloud voices are usually the neural ones
+    if (NOVELTY.test(v.name)) score -= 500;
+    return score;
+}
+
+function englishVoices() {
+    return (synth ? synth.getVoices() : []).filter(function (v) { return v.lang && v.lang.indexOf("en") === 0; })
+        .sort(function (a, b) { return voiceScore(b) - voiceScore(a); });
+}
+
+function autoVoices() {
+    const list = englishVoices();
+    const a = list.find(function (v) { return FEMALE.test(v.name) && !MALE.test(v.name); }) || list[0] || null;
+    const b = list.find(function (v) { return v !== a && MALE.test(v.name) && !FEMALE.test(v.name); }) ||
+              list.find(function (v) { return v !== a; }) || a;
+    return { a: a, b: b };
+}
+
 function pickVoices() {
-    const voices = synth ? synth.getVoices().filter(function (v) { return v.lang && v.lang.indexOf("en") === 0; }) : [];
-    const gb = voices.filter(function (v) { return v.lang === "en-GB"; });
-    const pool = gb.length >= 2 ? gb : voices;
-    return { a: pool[0] || null, b: pool[1] || pool[0] || null };
+    const auto = autoVoices();
+    const chosen = load("podcast-voices", {});
+    const list = englishVoices();
+    function byName(n) { return list.find(function (v) { return v.name === n; }); }
+    return { a: byName(chosen.a) || auto.a, b: byName(chosen.b) || auto.b };
+}
+
+// Fill the two voice menus (voices load a moment after the page does).
+function fillVoiceMenus() {
+    const list = englishVoices();
+    const menus = { a: document.getElementById("voice-a"), b: document.getElementById("voice-b") };
+    if (!list.length || !menus.a) return;
+    const current = pickVoices();
+    ["a", "b"].forEach(function (k) {
+        menus[k].innerHTML = list.map(function (v) {
+            const tag = voiceScore(v) >= 40 ? " \u2605" : "";
+            return '<option value="' + escapeHtml(v.name) + '"' + (current[k] === v ? " selected" : "") + ">" +
+                   escapeHtml(v.name.replace(/^Microsoft |^Google /, "")) + " (" + v.lang + ")" + tag + "</option>";
+        }).join("");
+        menus[k].onchange = function () {
+            const chosen = load("podcast-voices", {});
+            chosen[k] = menus[k].value;
+            save("podcast-voices", chosen);
+            if (!playing) previewVoice(k);
+        };
+    });
+    const best = Math.max.apply(null, list.map(voiceScore));
+    voiceNote.innerHTML = best >= 40 ? "" :
+        "Your browser only has basic voices. For much more natural ones, open this page in <strong>Microsoft Edge</strong> (its \"Natural\" voices) or Safari.";
+}
+
+function previewVoice(k) {
+    if (!synth) return;
+    synth.cancel();
+    sayLine(k, k === "a" ? "Hello, I'm Vera." : "And I'm Theo.", function () {});
+}
+
+if (synth) {
+    fillVoiceMenus();
+    synth.addEventListener ? synth.addEventListener("voiceschanged", fillVoiceMenus) : (synth.onvoiceschanged = fillVoiceMenus);
 }
 
 function highlight(i) {
@@ -209,9 +279,9 @@ function highlight(i) {
 function sayLine(speaker, text, onDone) {
     const v = pickVoices();
     const u = new SpeechSynthesisUtterance(text);
-    if (v[speaker]) u.voice = v[speaker];
-    u.pitch = speaker === "a" ? 1.1 : 0.85;
-    u.rate = 0.98;
+    if (v[speaker]) { u.voice = v[speaker]; u.lang = v[speaker].lang; }
+    u.pitch = 1;       // changing pitch makes voices sound robotic
+    u.rate = 1;
     u.onend = onDone;
     synth.speak(u);
 }
