@@ -172,6 +172,8 @@ blockquote {
     padding: 16px 18px;
     margin-bottom: 12px;
 }
+.scene.mono { border-left: 4px solid var(--plum-soft); }
+.scene.mono blockquote { margin: 8px 0; font-size: 19px; }
 .scene .num { font-size: 28px; color: var(--plum-soft); line-height: 1; }
 .scene .who { font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: var(--muted); }
 .scene .status {
