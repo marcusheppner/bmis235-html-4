@@ -182,7 +182,7 @@ function addBubble(cls, html, ts) {
 
 function userBubbleHtml(n) {
     const img = n.photo ? '<img class="note-photo" src="' + n.photo + '" alt="Photo of handwritten notes">' : "";
-    const label = n.photo ? '<span class="photo-label">&#128247; From your handwritten notes</span>' : "";
+    const label = n.photo ? '<span class="photo-label">' + CAMERA_ICON + " From your handwritten notes</span>" : "";
     return img + label + escapeHtml(n.text).replace(/\n/g, "<br>");
 }
 
@@ -269,6 +269,7 @@ function addNote(text, photo) {
 //  1. shrink + clean up the image   2. read it with Tesseract.js (OCR)
 //  3. let you fix the text          4. add it as a note
 // ======================================================================
+const CAMERA_ICON = '<svg class="icon-camera" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.6-2.4A1.5 1.5 0 0 1 9.9 5h4.2a1.5 1.5 0 0 1 1.3.6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>';
 const TESSERACT_URL = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
 let tesseractLoading = null;
 
@@ -324,7 +325,7 @@ function cleanOcr(text) {
 async function handlePhoto(file) {
     const card = document.createElement("div");
     card.className = "msg user photo-review";
-    card.innerHTML = '<span class="photo-label">&#128247; Reading your notes...</span>' +
+    card.innerHTML = '<span class="photo-label">' + CAMERA_ICON + " Reading your notes...</span>" +
         '<div class="ocr-progress"><div class="ocr-fill"></div></div>' +
         '<p class="ocr-status">Loading the page...</p>';
     box.appendChild(card);
@@ -361,7 +362,7 @@ async function handlePhoto(file) {
     }
 
     card.querySelector(".ocr-progress").remove();
-    card.querySelector(".photo-label").innerHTML = "&#128247; Check the text before adding";
+    card.querySelector(".photo-label").innerHTML = CAMERA_ICON + " Check the text before adding";
     status.innerHTML = failed
         ? "I couldn't load the handwriting reader (are you offline?). Type the key points from this page below."
         : (text

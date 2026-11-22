@@ -278,10 +278,11 @@ textarea, select, input[type="text"] {
 .note-tip { font-size: 15px; color: var(--muted); }
 .photo-btn {
     display: flex; align-items: center; justify-content: center;
-    width: 48px; flex-shrink: 0; font-size: 22px; cursor: pointer;
+    width: 48px; flex-shrink: 0; cursor: pointer; color: var(--plum);
     border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2);
 }
-.photo-btn:hover { border-color: var(--plum-soft); }
+.photo-btn:hover { border-color: var(--plum-soft); background: #fff; }
+.photo-label .icon-camera { vertical-align: -2px; }
 .note-photo { display: block; max-width: 100%; max-height: 260px; border-radius: 8px; margin-bottom: 8px; }
 .photo-label { display: block; font-family: Arial, sans-serif; font-size: 13px; opacity: 0.85; margin-bottom: 4px; }
 .msg.photo-review { background: var(--card); color: var(--ink); border: 2px solid var(--plum-soft); max-width: 92%; }
