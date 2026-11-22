@@ -26,7 +26,7 @@
 <header class="hero">
     <div class="kicker">Your notebook, connected to the novel</div>
     <h1>Class Notes Chat</h1>
-    <p>Type a note from class, like a professor's point, a question, or something a classmate said. The chat links it to
+    <p>Type a note from class, or snap a photo of your handwritten notes. The chat links it to
        the themes, characters, and scenes it fits and gives you a follow-up question. Over time, the tracker
        shows which themes your class keeps coming back to.</p>
 </header>
@@ -36,7 +36,11 @@
     <div class="chat">
         <div class="messages" id="messages"></div>
         <form class="composer" id="composer">
-            <textarea id="input" placeholder="e.g. Prof said Bradshaw's 'proportion' is about forcing people to be normal"></textarea>
+            <label class="photo-btn" title="Add a photo of handwritten notes">
+                &#128247;
+                <input type="file" id="photo" accept="image/*" multiple hidden>
+            </label>
+            <textarea id="input" placeholder="Type a note, or tap the camera to add a photo of your handwritten notes"></textarea>
             <button type="submit">Send</button>
         </form>
     </div>
@@ -57,14 +61,15 @@
         </div>
         <div class="card">
             <h3>Try sending</h3>
-            <p class="note-tip">"Septimus as Clarissa's double"<br>"why does Big Ben keep striking?"<br>
+            <p class="note-tip">&#128247; a photo of a page of notes<br>"Septimus as Clarissa's double"<br>"why does Big Ben keep striking?"<br>
                "class talked about Sally and queerness"<br>"Woolf's rest cure"</p>
         </div>
     </aside>
 </div>
 </main>
 
-<footer>This chat runs in your browser and matches your notes to a built-in guide to the novel. It is not an AI model.</footer>
+<footer>This chat runs in your browser and matches your notes to a built-in guide to the novel. It is not an AI model.
+    Handwriting is read with the free Tesseract.js library, so check the text before adding it.</footer>
 
 <script src="notes.js"></script>
 </body>

@@ -276,6 +276,18 @@ textarea, select, input[type="text"] {
 .bar span:first-child { width: 120px; flex-shrink: 0; }
 .bar .fill { height: 10px; background: var(--plum-soft); border-radius: 5px; min-width: 2px; }
 .note-tip { font-size: 15px; color: var(--muted); }
+.photo-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; flex-shrink: 0; font-size: 22px; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2);
+}
+.photo-btn:hover { border-color: var(--plum-soft); }
+.note-photo { display: block; max-width: 100%; max-height: 260px; border-radius: 8px; margin-bottom: 8px; }
+.photo-label { display: block; font-family: Arial, sans-serif; font-size: 13px; opacity: 0.85; margin-bottom: 4px; }
+.msg.photo-review { background: var(--card); color: var(--ink); border: 2px solid var(--plum-soft); max-width: 92%; }
+.msg.photo-review textarea { margin: 8px 0; }
+.ocr-progress { height: 8px; background: var(--paper-2); border-radius: 4px; overflow: hidden; margin: 8px 0; }
+.ocr-fill { height: 100%; width: 3%; background: var(--plum-soft); transition: width .2s; }
 
 footer { text-align: center; color: var(--muted); font-size: 14px; padding: 30px; border-top: 1px solid var(--line); }
 
