@@ -23,12 +23,15 @@ const READING_KEY = "dalloway-close-readings";
 let pages = load(PAGES_KEY, {});
 let readings = load(READING_KEY, {});
 
-const ids = Object.keys(BREAKDOWNS);
+// Scenes first, then monologues, in the order they're written in breakdowns.js.
+const ids = Object.keys(BREAKDOWNS).filter(function (k) { return BREAKDOWNS[k].kind === "scene"; })
+    .concat(Object.keys(BREAKDOWNS).filter(function (k) { return BREAKDOWNS[k].kind === "mono"; }));
+const monoIds = ids.filter(function (k) { return BREAKDOWNS[k].kind === "mono"; });
 const id = new URLSearchParams(location.search).get("id");
 const entry = BREAKDOWNS[id];
 
 function label(key) {
-    return key.indexOf("scene-") === 0 ? "Scene " + key.slice(6) : "Monologue M" + (+key.slice(5));
+    return BREAKDOWNS[key].kind === "scene" ? "Scene " + key.slice(6) : "Monologue M" + (monoIds.indexOf(key) + 1);
 }
 
 if (!entry) {
@@ -40,7 +43,7 @@ if (!entry) {
 }
 
 function render() {
-    document.title = entry.title.replace(/"/g, "") + " - Reading Mrs. Dalloway";
+    document.title = entry.title.replace(/"/g, "") + " - Medicine & Mrs. Dalloway";
     document.getElementById("kicker").textContent = label(id) + " breakdown";
     document.getElementById("title").textContent = entry.title;
     document.getElementById("who").textContent = entry.who + " · " + entry.where;
@@ -48,7 +51,8 @@ function render() {
     document.getElementById("back").innerHTML = "&larr; Back to the scene list";
 
     document.getElementById("happens-text").innerHTML = entry.happens.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("");
-    document.getElementById("matters").textContent = entry.matters;
+    document.getElementById("lens").textContent = entry.lens;
+    document.getElementById("angle").textContent = entry.angle;
     document.getElementById("themes").innerHTML = entry.themes.map(function (t) { return '<span class="chip">' + esc(t) + "</span>"; }).join("");
 
     const list = document.getElementById("quote-list");

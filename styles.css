@@ -501,3 +501,10 @@ footer {
     box-shadow: inset 0 3px 0 var(--night), inset 0 4px 0 var(--gold);
     letter-spacing: .04em;
 }
+
+/* medical-focus additions */
+.part-label { font-family: var(--sans); text-transform: uppercase; letter-spacing: .18em; font-size: 14px; color: var(--gold); margin: 28px 0 12px; }
+.chip.small { font-size: 11px; padding: 3px 8px; margin: 4px 6px 0 0; }
+.plain.angle { border-left-color: var(--plum); }
+.plain.angle strong { color: var(--plum); }
+.scene .status-link { margin-top: 14px; }

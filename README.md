@@ -1,17 +1,17 @@
-# Reading Mrs. Dalloway: a study tool
+# Prescribing the Normal: medicine in Mrs. Dalloway
 
 **Name:** Marcus Heppner
 **GU username:** marcusheppner
 **Course:** BMIS 235 · HTML-4
 
-An interactive study tool for Virginia Woolf's *Mrs. Dalloway* (1925), built for an English class on disability in literature.
+A research starting point on how medicine in Virginia Woolf's *Mrs. Dalloway* (1925) works as a mechanism for enforcing social norms. Built for an English class on disability in literature.
 
 Live site (once GitHub Pages is on): https://marcusheppner.github.io/bmis235-html-4/
 
 ## Pages
 
-- `index.html`: Home. Synopsis, how to read stream of consciousness, historical context, themes, characters as literary devices, and Virginia Woolf's life.
-- `scenes.html`: Key scenes and monologues. 19 scenes and 17 monologues in order, each linking to its breakdown.
+- `index.html`: Home. The core idea, the story through the medical lens, historical context, key ideas, the medical cast, Woolf and her doctors, critical lenses, and thesis starting points.
+- `scenes.html` + `scenes.js`: Key scenes (12) and monologues (7) about medicine and norms, built from `breakdowns.js`.
 - `breakdown.html` + `breakdown.js` + `breakdowns.js`: One page that shows any breakdown (`breakdown.html?id=scene-05`, `?id=mono-03`). It covers what happens, why it matters, key quotes with their underlying meaning, a page-number finder (photograph your book page), and a box for your own close reading. All content lives in `breakdowns.js`.
 - `ocr.js`: Shared photo-reading helpers (Tesseract.js) used by the page finder.
 - `podcast.html` + `podcast.js`: Two hosts debate a question about the novel (read aloud by the browser), then you record or write your own take.

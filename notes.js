@@ -8,104 +8,102 @@
 
 const TOPICS = [
     {
-        name: "Disability & medicine", theme: true,
-        keys: ["disab", "ill", "illness", "mad", "madness", "insan", "sane", "sanity", "doctor", "medic", "bradshaw", "holmes", "proportion",
-               "conversion", "shell shock", "ptsd", "trauma", "mental", "cure", "treatment", "asylum", "home in the country", "normal", "patholog"],
-        say: "This connects to the novel's critique of medical power. Holmes dismisses Septimus ('nothing the matter'), while Bradshaw imposes 'Proportion' and isolation. For a disability-studies reading, the problem isn't just the illness. It's who gets to define 'normal' and what happens to people who don't fit.",
-        scenes: ["08 Septimus's backstory & Dr. Holmes", "09 Bradshaw: Proportion and Conversion", "15 Septimus's death"],
-        ask: "Does the novel locate the 'problem' in Septimus's mind, or in the society and doctors around him?",
+        name: "Proportion & normality", theme: true,
+        keys: ["proportion", "normal", "normality", "norm", "norms", "balance", "conform", "deviant", "deviance", "standard", "ideal", "ideals", "expectation", "expectations"],
+        say: "Bradshaw \"never spoke of 'madness'; he called it not having a sense of proportion.\" Renaming illness as a lack of proportion turns it into a moral and social failing (imbalance, lack of restraint), so treatment becomes correction toward the norm.",
+        scenes: ["scene-06", "mono-03"],
+        ask: "Is \"proportion\" a medical idea or a social ideal dressed up as medicine?",
     },
     {
-        name: "Septimus as double", theme: true,
-        keys: ["double", "mirror", "parallel", "never meet", "foil", "counterpart", "doppel"],
-        say: "Septimus is Clarissa's double. Woolf said she originally planned for Clarissa to die and gave that fate to Septimus instead. They never meet, but they share images ('Fear no more'), sensitivity, and isolation. One conforms and lives, and the other refuses and dies.",
-        scenes: ["02 The motor car on Bond Street", "15 Septimus's death", "18 The little room"],
-        ask: "Is Clarissa feeling 'very like him' real empathy, or is she turning his death into her own story?",
+        name: "Conversion & control", theme: true,
+        keys: ["conversion", "convert", "control", "power", "dominat", "force", "forcing", "soul", "kilman", "religio", "discipline"],
+        say: "Conversion, Proportion's \"sister,\" \"feasts on the wills of the weakly.\" Woolf extends it beyond medicine: Miss Kilman's religious urge to possess Elizabeth mirrors Bradshaw, and Clarissa finally names his offense as \"forcing your soul.\"",
+        scenes: ["mono-03", "scene-07", "scene-12"],
+        ask: "Is the urge to convert others presented as specifically medical, or as a general social disease?",
     },
     {
-        name: "Time & memory", theme: true,
-        keys: ["time", "clock", "big ben", "hour", "memory", "remember", "past", "bourton", "nostalg", "flashback", "leaden circles"],
-        say: "Woolf contrasts clock time (Big Ben's 'leaden circles,' Harley Street clocks 'shredding and slicing' the day) with inner time, where one moment can hold 30 years of memory. Bourton keeps flooding into 1923.",
-        scenes: ["01 Buying the flowers", "06 Peter in Regent's Park", "17 The party"],
-        ask: "Who in the novel is controlled by clock time, and who escapes it?",
+        name: "Denial (Holmes)", theme: true,
+        keys: ["holmes", "denial", "deny", "nothing the matter", "nothing whatever", "porridge", "hobby", "hobbies", "willpower", "own control", "gp"],
+        say: "Holmes insists \"There was nothing whatever the matter\" and that \"health is largely a matter in our own control.\" Denial shifts responsibility from illness to the patient's character, which is another way of enforcing the norm.",
+        scenes: ["scene-05", "scene-02", "scene-09"],
+        ask: "Is Holmes's cheerful denial more or less harmful than Bradshaw's control?",
     },
     {
-        name: "Isolation & connection", theme: true,
-        keys: ["alone", "isolat", "lonel", "connect", "communicat", "party", "parties", "offering", "together", "solitude", "privacy", "soul"],
-        say: "Every character is sealed in their own consciousness, yet shared moments (the car, the plane, the bells) link strangers. Clarissa calls her parties an 'offering.' At the party, she even reads Septimus's death as an attempt to communicate.",
-        scenes: ["03 The skywriting airplane", "17 The party", "18 The little room"],
-        ask: "Does anyone in the novel truly connect with another person, or are there only near misses?",
+        name: "Rest cure & isolation", theme: true,
+        keys: ["rest", "rest cure", "isolat", "separat", "home in the country", "asylum", "institution", "confine", "seclu", "nursing home", "sent away", "removed"],
+        say: "Bradshaw's treatment is removal: \"We have been arranging that you should go into a home,\" away from Rezia. This mirrors the rest cure Woolf herself underwent, with isolation, rest, and no stimulation, and the Proportion passage's \"secluded her lunatics.\"",
+        scenes: ["scene-06", "mono-03", "scene-03"],
+        ask: "What does isolating the patient accomplish for society, as opposed to the patient?",
     },
     {
-        name: "Death", theme: true,
-        keys: ["death", "die", "dying", "dies", "suicide", "killed", "fear no more", "cymbeline", "mortal", "window", "defiance"],
-        say: "'Fear no more the heat o' the sun' (from Shakespeare's Cymbeline) links Clarissa and Septimus. At the party, Clarissa thinks of death as 'defiance,' a way of keeping something whole. The novel puts the will to live and the choice to die next to each other.",
-        scenes: ["15 Septimus's death", "16 The ambulance", "18 The little room"],
-        ask: "Why does Woolf have Clarissa hear of the death at her own party rather than anywhere else?",
+        name: "Shell shock & masculinity", theme: true,
+        keys: ["shell shock", "shell-shock", "ptsd", "trauma", "war", "soldier", "veteran", "evans", "coward", "cowardice", "masculin", "manly", "manhood", "feeling very little", "numb"],
+        say: "Septimus \"congratulated himself upon feeling very little,\" the soldierly ideal of control. Holmes's final word, \"The coward!\", repeats the military's moral verdict on shell-shocked men. At the party, Bradshaw turns it into policy: \"the deferred effects of shell shock.\"",
+        scenes: ["scene-05", "scene-09", "scene-11"],
+        ask: "How does medicine reinforce the same masculine ideal that helped break Septimus?",
     },
     {
-        name: "Love, desire & queerness", theme: true,
-        keys: ["love", "loves", "loved", "sally", "kiss", "queer", "desire", "sexual", "lesbian", "romance", "marriage", "marry", "passion", "repress"],
-        say: "Clarissa's kiss with Sally at Bourton is 'the most exquisite moment of her whole life,' yet she married Richard for safety and turned Peter down. Many critics read a repressed queer desire that her society has no language for.",
-        scenes: ["04 The attic room & Sally", "06 Peter's memories of Bourton", "11 Richard's roses"],
-        ask: "Did Clarissa choose safety, or did her society choose it for her?",
+        name: "Class & medical authority", theme: true,
+        keys: ["social class", "upper class", "ruling class", "harley", "establishment", "party", "prime minister", "england", "nation", "empire", "authority", "expert", "upper", "wealth", "civilisation", "civilization", "ambulance", "bill", "law", "policy"],
+        say: "Bradshaw's Proportion \"made England prosper.\" He arrives at Clarissa's party among the Prime Minister and MPs, discussing a shell-shock Bill. Peter praises the ambulance as \"one of the triumphs of civilisation.\" Medicine and the ruling class share values and rooms.",
+        scenes: ["scene-11", "mono-03", "scene-10"],
+        ask: "Whose interests does Bradshaw's medicine ultimately serve?",
     },
     {
-        name: "Class & empire", theme: true,
-        keys: ["social class", "working class", "middle class", "upper", "classes", "wealth", "rich", "poor", "empire", "india", "colonial", "prime minister", "establishment", "conservative",
-               "politic", "lady bruton", "hugh", "society", "conform", "power"],
-        say: "The Dalloways belong to the ruling class: an MP, the Prime Minister at the party, Peter back from colonial India, and Lady Bruton planning emigration to Canada. Woolf said she wanted to 'criticise the social system & show it at work.' Bradshaw's 'Proportion' is that system applied to minds.",
-        scenes: ["10 Lunch at Lady Bruton's", "17 The party"],
-        ask: "How does social class decide who gets cared for and who gets 'sent away'?",
+        name: "Eugenics & the 'unfit'", theme: true,
+        keys: ["eugenic", "unfit", "childbirth", "propagate", "breed", "degenera", "mental deficiency", "steriliz"],
+        say: "The Proportion passage says it \"forbade childbirth\" and \"made it impossible for the unfit to propagate their views,\" echoing the eugenics ideas common among respectable Britons in the 1910s and 20s.",
+        scenes: ["mono-03"],
+        ask: "How does the eugenics language widen the critique from one doctor to a whole ideology?",
     },
     {
-        name: "War & its aftermath", theme: true,
-        keys: ["war", "wwi", "ww1", "soldier", "veteran", "wars", "evans", "battle", "army", "1918", "1923", "grief", "trench", "postwar", "post-war"],
-        say: "It's 1923, five years after the Armistice. London's parties try to move on, but the war returns through Septimus, through Evans's death, and in quieter ways, like Lady Bexborough opening a bazaar after losing a son. Septimus is the war that society won't look at.",
-        scenes: ["02 The motor car", "07 Septimus in the park", "08 Septimus's backstory"],
-        ask: "Where does the war show up in characters other than Septimus?",
+        name: "Care vs. cure", theme: true,
+        keys: ["care", "caregiv", "caring", "rezia", "lucrezia", "hat", "wife", "support", "accommodat"],
+        say: "The hat scene, with no doctor present, is the healthiest Septimus is all day. Rezia does the real care but is ignored and made the doctors' enforcer. The \"cure\" prescribed is separation from her.",
+        scenes: ["scene-08", "mono-06", "scene-04"],
+        ask: "What alternative to medical control does the novel imagine, and why is it destroyed?",
     },
     {
-        name: "Stream of consciousness & style", theme: true,
-        keys: ["stream", "conscious", "style", "narrat", "free indirect", "modernis", "form", "structure", "point of view", "pov", "voice", "chapter", "tunnel"],
-        say: "Woolf uses free indirect discourse: third-person narration that takes on a character's voice. She shifts minds through shared sights and sounds. She described her method as 'tunnelling,' digging caves behind characters so their pasts connect.",
-        scenes: ["02 The motor car", "03 The skywriting airplane"],
-        ask: "What does the style let Woolf show that a traditional narrator couldn't?",
+        name: "The patient's view", theme: true,
+        keys: ["septimus", "patient", "vision", "visions", "hallucinat", "madness", "mad", "insan", "sane", "sanity", "message", "messages", "human nature", "paranoi", "insight"],
+        say: "Woolf gives Septimus's mind beauty and moral force (\"Men must not cut down trees\"). He also analyzes his own situation: \"Once you fall... Holmes and Bradshaw are on you.\" The patient's voice challenges the doctors' authority to define him.",
+        scenes: ["mono-01", "mono-02", "scene-04"],
+        ask: "Does the novel treat Septimus's \"madness\" as something with knowledge in it?",
     },
     {
-        name: "Virginia Woolf's life", theme: false,
-        keys: ["woolf", "author", "biograph", "rest cure", "leonard", "bloomsbury", "hogarth", "on being ill", "her life", "virginia"],
-        say: "Woolf had repeated breakdowns and was treated with 'rest cures' of isolation, bed rest, and no writing. Bradshaw is widely read as her satire of those doctors. Her essay 'On Being Ill' (1926) argues illness deserves literature's attention.",
-        scenes: ["09 Bradshaw: Proportion and Conversion"],
-        ask: "How far should Woolf's biography shape our reading of Septimus?",
+        name: "Death as resistance", theme: true,
+        keys: ["death", "die", "dies", "suicide", "killed", "jump", "window", "defiance", "resist", "resistance", "refusal", "refuse", "intolerable"],
+        say: "Septimus \"did not want to die. Life was good.\" His last words, \"I'll give it you!\", are thrown at Holmes. Clarissa reads it as \"Death was defiance\" and imagines him thinking \"they make life intolerable, men like that.\"",
+        scenes: ["mono-05", "scene-09", "scene-12"],
+        ask: "Can you argue the death is resistance without romanticizing it?",
     },
     {
-        name: "Clarissa", theme: false,
-        keys: ["clarissa", "hostess", "mrs. dalloway", "mrs dalloway", "flowers", "heart", "51", "fifty"],
-        say: "Clarissa is 51, recovering from an illness that weakened her heart, and loves life while fearing her own feelings. Others see her as cold (Peter), as a model (Hugh), or as an enemy (Miss Kilman).",
-        scenes: ["01 Buying the flowers", "05 Peter's visit", "18 The little room"],
-        ask: "Which character's view of Clarissa does the novel seem to trust most?",
+        name: "Gender", theme: true,
+        keys: ["gender", "women", "woman", "female", "wife", "lady bradshaw", "gone under", "clarissa", "yellow wallpaper", "hyster", "nervous", "feminis"],
+        say: "Conversion works on the healthy too: Lady Bradshaw \"had gone under\" fifteen years ago. Clarissa's convalescence (the attic, the narrow bed) is a quieter, accepted version of medical-social management, much like the rest cures given to women such as Woolf.",
+        scenes: ["mono-03", "scene-03", "scene-11"],
+        ask: "Does medical-social control work differently, or more invisibly, on women?",
     },
     {
-        name: "Rezia & caregiving", theme: false,
-        keys: ["rezia", "lucrezia", "wife", "caregiv", "care", "hat", "italian", "milan"],
-        say: "Rezia carries the daily work of caring for Septimus. She's lonely, foreign, and unheard by the doctors. The hat-making scene is the couple's one moment of shared calm before Holmes arrives.",
-        scenes: ["07 Septimus in the park", "14 Making the hat"],
-        ask: "What does Rezia's experience add to a disability reading of the novel?",
+        name: "Visibility & shame", theme: true,
+        keys: ["shame", "ashamed", "embarrass", "notice", "visible", "invisible", "hide", "hidden", "public", "stigma"],
+        say: "From the first scene, illness must not be seen: Rezia thinks \"People must notice; people must see.\" The party, too, keeps suffering outside until Lady Bradshaw brings it in.",
+        scenes: ["scene-01", "scene-11"],
+        ask: "How does the pressure to hide illness work alongside medical treatment?",
     },
     {
-        name: "Peter Walsh", theme: false,
-        keys: ["peter", "walsh", "knife", "pocketknife", "pocket-knife", "daisy", "proposal"],
-        say: "Peter, the suitor Clarissa refused, is emotional and critical and keeps opening and closing his pocketknife. He calls the ambulance carrying Septimus 'one of the triumphs of civilisation' without knowing who's inside.",
-        scenes: ["05 Peter's visit", "06 Peter in Regent's Park", "16 The ambulance", "19 'For there she was'"],
-        ask: "Is Peter a reliable judge of Clarissa?",
+        name: "Woolf's own treatment", theme: false,
+        keys: ["woolf", "author", "biograph", "savage", "her doctors", "leonard", "on being ill", "virginia", "diary"],
+        say: "Woolf had repeated breakdowns and was treated with rest cures by eminent doctors, including Sir George Savage. In her diary she wrote that she wanted to \"criticise the social system, & to show it at work.\" Use biography as context, not as the whole argument.",
+        scenes: ["mono-03"],
+        ask: "How far should Woolf's medical history shape your reading of Holmes and Bradshaw?",
     },
     {
-        name: "Miss Kilman & Elizabeth", theme: false,
-        keys: ["kilman", "elizabeth", "daughter", "tutor", "religio", "eclair", "éclair", "omnibus", "bus", "strand", "career"],
-        say: "Miss Kilman wants to 'convert' Elizabeth, which echoes Bradshaw's 'Conversion.' She's also an outsider who lost her job in the war over her German ancestry. Elizabeth slips away and rides the bus up the Strand, imagining a profession.",
-        scenes: ["12 Miss Kilman at the Army & Navy Stores", "13 Elizabeth on the omnibus"],
-        ask: "Is Miss Kilman a villain, a victim, or both?",
+        name: "Disability studies lenses", theme: false,
+        keys: ["disability", "social model", "medical model", "foucault", "ableism", "ableist", "impairment", "lens", "theory", "critic"],
+        say: "The medical model locates the problem in the individual; the social model locates it in how society treats difference. Bradshaw embodies the medical model; the novel's sympathies point toward the social model. Foucault's idea of normalization (control by defining and correcting \"normal\") fits Proportion closely.",
+        scenes: ["scene-06", "mono-03"],
+        ask: "Which model of disability does the novel itself seem to endorse?",
     },
 ];
 
@@ -144,8 +142,9 @@ function match(text, max) {
 function replyFor(note) {
     const hits = match(note.text, note.photo ? 3 : 2);
     if (!hits.length) {
-        return "<p>Saved. I couldn't link this one to a theme yet. Try naming a character, a scene, or an idea " +
-               "(like <em>Septimus</em>, <em>Big Ben</em>, <em>the party</em>, or <em>doctors</em>).</p>";
+        return "<p>Saved. I couldn't link this to the medicine theme. Try naming a doctor, an idea, or a passage " +
+               "(like <em>Bradshaw</em>, <em>proportion</em>, <em>shell shock</em>, <em>Rezia</em>, or <em>the party</em>). " +
+               "If it's about another part of the book, it's still kept in your notes.</p>";
     }
     // Look for earlier notes on the same theme so the chat can connect class sessions.
     const earlier = notes.filter(function (n) {
@@ -155,8 +154,10 @@ function replyFor(note) {
     hits.forEach(function (h, i) {
         html += "<h4>" + (i === 0 ? "Connects to: " : "Also touches: ") + h.name + "</h4><p>" + h.say + "</p>";
     });
-    html += "<h4>Scenes to reread</h4><p>" + hits[0].scenes.map(function (s) {
-        return '<a href="scenes.html#scene-' + s.slice(0, 2) + '">' + s + "</a>";
+    html += "<h4>Passages to reread</h4><p>" + hits[0].scenes.filter(function (id) {
+        return typeof BREAKDOWNS !== "undefined" && BREAKDOWNS[id];
+    }).map(function (id) {
+        return '<a href="breakdown.html?id=' + id + '">' + escapeHtml(BREAKDOWNS[id].title.replace(/"/g, "")) + "</a>";
     }).join(" &middot; ") + "</p>";
     if (earlier.length) {
         const last = earlier[earlier.length - 1];
