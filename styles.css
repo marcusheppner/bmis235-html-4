@@ -508,3 +508,5 @@ footer {
 .plain.angle { border-left-color: var(--plum); }
 .plain.angle strong { color: var(--plum); }
 .scene .status-link { margin-top: 14px; }
+.est-page { margin: 8px 0 0; font-family: var(--sans); font-size: 14px; letter-spacing: .03em; color: var(--muted); }
+.est-page strong { color: var(--plum); }

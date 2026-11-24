@@ -140,7 +140,7 @@ const BREAKDOWNS = {
     summary: "In under an hour the great specialist decides Septimus must be sent to a home in the country.",
     happens: [
         "At noon exactly, the Smiths see Sir William Bradshaw. He questions Septimus briefly, decides his case is serious, and announces that arrangements have been made for him to go to a home in the country, apart from his wife, to rest.",
-        "Septimus asks what power Bradshaw has over him. Rezia leaves feeling abandoned.",
+        "Rezia leaves feeling abandoned; later that evening Septimus will ask himself what power Bradshaw has over him.",
     ],
     lens: "This is the central scene for your theme. Bradshaw renames madness as \"not having a sense of proportion,\" turning illness into a failure of balance and self-control, so treatment becomes correction. The decision is made for Septimus, not with him (\"We have been arranging\"), and it removes him from society.",
     angle: "What is gained, for Bradshaw and for society, by calling it \"proportion\" instead of \"madness\"?",
@@ -150,8 +150,6 @@ const BREAKDOWNS = {
          "A change of words that changes the meaning: illness becomes a moral or social failing."],
         ["We have been arranging that you should go into a home",
          "The passive, collective \"we\" hides who decided. The patient is managed, not consulted."],
-        ["\"Must,\" \"must,\" why \"must\"? What power had Bradshaw over him?",
-         "Septimus names the real issue, which is power and not health."],
     ],
     links: ["mono-03", "scene-05", "scene-11"],
 },
@@ -206,13 +204,15 @@ const BREAKDOWNS = {
     who: "Septimus, Rezia, Dr. Holmes", where: "Their lodgings, evening",
     summary: "Holmes pushes past Rezia to take Septimus away; Septimus throws himself from the window.",
     happens: [
-        "Dr. Holmes comes to take Septimus to the home. Rezia tries to block him on the stairs. Alone, Septimus doesn't want to die, but as Holmes comes up he jumps from the window onto the railings below.",
+        "Waiting for the doctors, Septimus asks himself why he \"must\" go and what power Bradshaw has over him. Dr. Holmes comes to take Septimus to the home. Rezia tries to block him on the stairs. Alone, Septimus doesn't want to die, but as Holmes comes up he jumps from the window onto the railings below.",
         "Holmes calls him a coward. Rezia is sedated.",
     ],
     lens: "The medical system's final intervention ends in death, and its last word is a moral judgment (\"coward\"), not a diagnosis. Holmes's force on the stairs shows the physical power behind polite medical authority.",
     angle: "Is Septimus's death presented as a symptom of illness, or as a refusal of medical control?",
     themes: ["Death as resistance", "Shell shock & masculinity", "Denial (Holmes)"],
     quotes: [
+        ["\"Must,\" \"must,\" why \"must\"? What power had Bradshaw over him?",
+         "Just before Holmes arrives, Septimus names the real issue: power, not health."],
         ["I'll give it you!",
          "His last words are flung at Holmes. Defiance, not surrender."],
         ["The coward!",
@@ -443,3 +443,71 @@ const PARTS = [
     ["afternoon", "Afternoon"],
     ["evening", "Evening & the party"],
 ];
+
+// ---------------------------------------------------------------------
+// PAGE ESTIMATES for the edition you're reading.
+// SOURCE_PAGES = the page each quote is on in the 1925 Harcourt text (296 pages).
+// Your page is estimated as that page's position scaled to your edition's length.
+// Tested against the NYRB Classics edition: estimates landed on the exact page.
+// ---------------------------------------------------------------------
+const EDITION = {
+    name: "NYRB Classics, ed. Edward Mendelson (2025)",
+    pages: 175,          // last page of the novel in your edition
+    sourcePages: 296,    // last page of the 1925 Harcourt text
+    spread: 4,           // +/- pages to search
+};
+
+const SOURCE_PAGES = {
+    "Septimus Warren Smith, aged about thirty, pale-faced, beak-nosed": 20,
+    "It is I who am blocking the way, he thought.": 21,
+    "People must notice; people must see.": 22,
+    "So, thought Septimus, looking up, they are signalling to me.": 31,
+    "Dr. Holmes had told her to make her husband (who had nothing whatever seriously the matter with him but was a little out of sorts) take an interest in things outside himself.": 31,
+    "Men must not cut down trees. There is a God.": 35,
+    "I am alone; I am alone!": 35,
+    "No one kills from hatred.": 35,
+    "Like a nun withdrawing, or a child exploring a tower, she went upstairs": 45,
+    "Narrower and narrower would her bed be.": 45,
+    "there was an emptiness about the heart of life; an attic room.": 45,
+    "congratulated himself upon feeling very little and very reasonably.": 130,
+    "There was nothing whatever the matter, said Dr. Holmes.": 137,
+    "health is largely a matter in our own control.": 138,
+    "The verdict of human nature on such a wretch was death.": 138,
+    "Sir William said he never spoke of \"madness\"; he called it not having a sense of proportion.": 146,
+    "We have been arranging that you should go into a home": 147,
+    "Once you fall, Septimus repeated to himself, human nature is on you. Holmes and Bradshaw are on you.": 148,
+    "Proportion, divine proportion, Sir William's goddess": 150,
+    "Worshipping proportion, Sir William not only prospered himself but made England prosper": 150,
+    "secluded her lunatics, forbade childbirth, penalised despair, made it impossible for the unfit to propagate their views": 150,
+    "Conversion is her name and she feasts on the wills of the weakly": 151,
+    "Fifteen years ago she had gone under.": 152,
+    "If she could have felled her it would have eased her.": 189,
+    "Love and religion! thought Clarissa": 191,
+    "Don't quite forget me": 201,
+    "Never had he done anything which made him feel so proud.": 218,
+    "\"Must,\" \"must,\" why \"must\"? What power had Bradshaw over him?": 223,
+    "I'll give it you!": 226,
+    "The coward!": 226,
+    "He did not want to die. Life was good. The sun hot.": 226,
+    "Only human beings": 226,
+    "One of the triumphs of civilisation, Peter Walsh thought.": 229,
+    "We are shockingly late, dear Mrs. Dalloway, we hardly dared to come in": 277,
+    "the deferred effects of shell shock": 278,
+    "Death was defiance. Death was an attempt to communicate": 280,
+    "a great doctor yet to her obscurely evil": 281,
+    "capable of some indescribable outrage—forcing your soul, that was it": 281,
+    "they make life intolerable, men like that": 281,
+    "She felt somehow very like him": 283,
+    "She felt glad that he had done it; thrown it away.": 283,
+};
+
+function estimatePage(quote) {
+    const src = SOURCE_PAGES[quote];
+    if (!src) return null;
+    const est = Math.max(1, Math.min(EDITION.pages, Math.round(src / EDITION.sourcePages * EDITION.pages)));
+    return {
+        page: est,
+        from: Math.max(1, est - EDITION.spread),
+        to: Math.min(EDITION.pages, est + EDITION.spread),
+    };
+}

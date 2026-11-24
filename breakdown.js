@@ -70,6 +70,7 @@ function render() {
                     '<button type="button" class="ghost cam-btn" title="Photograph the page to find it">' + CAMERA + "</button>" +
                 "</div>" +
             "</div>" +
+            '<p class="est-page"></p>' +
             '<p class="page-msg note-tip"></p>' +
             '<p class="meaning"><strong>Underlying meaning:</strong> ' + esc(meaning) + "</p>" +
             '<details class="close-reading"' + (readings[quote] ? " open" : "") + ">" +
@@ -79,12 +80,23 @@ function render() {
         list.appendChild(div);
 
         const input = div.querySelector(".page-input");
+        const est = estimatePage(quote);
+        const estEl = div.querySelector(".est-page");
         input.value = pages[quote] || "";
+        if (est) input.placeholder = "~" + est.page;
+        function showEstimate() {
+            if (!est) { estEl.textContent = ""; return; }
+            estEl.innerHTML = input.value.trim()
+                ? "&#10003; In your copy: <strong>p. " + esc(input.value.trim()) + "</strong>"
+                : "In your edition: about <strong>p. " + est.page + "</strong> (check pp. " + est.from + "&ndash;" + est.to + ")";
+        }
+        showEstimate();
         input.addEventListener("input", function () {
             const v = input.value.trim();
             if (v) pages[quote] = v; else delete pages[quote];
             save(PAGES_KEY, pages);
             div.querySelector(".page-msg").textContent = "";
+            showEstimate();
         });
         div.querySelector(".cam-btn").addEventListener("click", function () { startScan(i); });
 
@@ -107,7 +119,7 @@ function render() {
     if (pos < ids.length - 1) next.href = "breakdown.html?id=" + ids[pos + 1]; else next.hidden = true;
 
     const ed = document.getElementById("edition");
-    ed.value = load("dalloway-edition", "");
+    ed.value = load("dalloway-edition", EDITION.name);
     ed.addEventListener("input", function () { save("dalloway-edition", ed.value); });
 }
 
@@ -175,5 +187,7 @@ function setPage(i, num) {
     const quote = entry.quotes[i][0];
     pages[quote] = String(num);
     save(PAGES_KEY, pages);
-    document.querySelectorAll(".quote-card")[i].querySelector(".page-input").value = num;
+    const input = document.querySelectorAll(".quote-card")[i].querySelector(".page-input");
+    input.value = num;
+    input.dispatchEvent(new Event("input"));
 }

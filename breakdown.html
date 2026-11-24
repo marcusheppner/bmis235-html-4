@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="Marcus Heppner">
 <title>Breakdown - Medicine &amp; Mrs. Dalloway</title>
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
 
@@ -50,14 +50,15 @@
     <div class="card edition-card">
         <div class="row" style="align-items:flex-start">
             <div style="flex:1; min-width:240px">
-                <h3>Find the page numbers in your copy</h3>
-                <p class="note-tip">Tap a camera button and photograph the page of your book. The site reads the
-                   page, checks for <em>every</em> quote below at once, and fills in the page numbers it finds. You can
-                   also type a page number yourself. Page numbers are saved in this browser.</p>
+                <h3>Page numbers in your copy</h3>
+                <p class="note-tip">Each quote shows an <strong>estimated page</strong> for the NYRB Classics edition
+                   (175 pages), worked out from where it falls in the novel. Estimates are usually right on, so check
+                   that page first, then a few pages either side. Type the exact page once you find it, or tap the camera
+                   to photograph the page and fill it in automatically. Saved in this browser.</p>
             </div>
             <div style="width:240px">
                 <label for="edition" class="note-tip">Your edition (optional)</label>
-                <input type="text" id="edition" placeholder="e.g. Harcourt, 1981">
+                <input type="text" id="edition" placeholder="e.g. NYRB Classics, 2025">
             </div>
         </div>
         <p class="note-tip" id="scan-status"></p>
@@ -78,10 +79,10 @@
 
 <input type="file" id="page-photo" accept="image/*" hidden>
 
-<footer>Quotes checked against the 1925 Harcourt text. Page numbers vary by edition, so scan your own copy.</footer>
+<footer>Quotes checked against the 1925 Harcourt text; page estimates are for the NYRB Classics edition (ed. Edward Mendelson). Wording may differ slightly in your edition.</footer>
 
-<script src="breakdowns.js?v=4"></script>
+<script src="breakdowns.js?v=5"></script>
 <script src="ocr.js"></script>
-<script src="breakdown.js?v=4"></script>
+<script src="breakdown.js?v=5"></script>
 </body>
 </html>
