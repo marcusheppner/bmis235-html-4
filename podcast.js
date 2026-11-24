@@ -151,7 +151,8 @@ let current = null;
 EPISODES.forEach(function (ep, i) {
     const b = document.createElement("button");
     b.className = "episode-btn";
-    b.innerHTML = "Ep. " + (i + 1) + ": " + ep.title + "<small>" + ep.tag + "</small>";
+    b.innerHTML = "Ep. " + (i + 1) + ": " + ep.title + "<small>" + ep.tag +
+        ' &middot; <span class="ep-length"></span></small>';
     b.addEventListener("click", function () { openEpisode(ep, b); });
     epList.appendChild(b);
 });
@@ -172,8 +173,10 @@ function openEpisode(ep, btn) {
         const div = document.createElement("div");
         div.className = "line " + l[0];
         div.id = "line-" + i;
-        div.innerHTML = '<div class="speaker">' + HOSTS[l[0]] + "</div>" + l[1] +
+        div.innerHTML = '<div class="speaker">' + HOSTS[l[0]] +
+            ' <button type="button" class="stamp-btn" title="Play from here"></button></div>' + l[1] +
             '<div><button type="button" class="respond-link">&#8627; Respond here</button></div>';
+        div.querySelector(".stamp-btn").addEventListener("click", function () { jumpTo(i, false); });
         div.querySelector(".respond-link").addEventListener("click", function () {
             interject(i, false);
         });
@@ -190,6 +193,7 @@ function openEpisode(ep, btn) {
     p.innerHTML = "";
     ep.prompts.forEach(function (q) { const li = document.createElement("li"); li.textContent = q; p.appendChild(li); });
 
+    refreshStamps();
     document.getElementById("written").value = load("podcast-written-" + ep.id, "");
     document.getElementById("saved-msg").textContent = "";
     document.getElementById("recordings").innerHTML = "";
@@ -282,7 +286,7 @@ function fillVoiceMenus() {
 
 function previewVoice(k) {
     if (!synth) return;
-    synth.cancel();
+    cancelSpeech();
     sayLine(k, k === "a" ? "Hello, I'm Vera." : "And I'm Theo.", function () {});
 }
 
@@ -297,14 +301,89 @@ function highlight(i) {
     if (el) el.classList.add("speaking");
 }
 
+// ---- Speech, with a "generation" counter so cancelled lines never trigger the next one ----
+let gen = 0;
+function cancelSpeech() {
+    gen++;
+    if (synth) synth.cancel();
+}
+
 function sayLine(speaker, text, onDone) {
     const v = pickVoices();
     const u = new SpeechSynthesisUtterance(text);
     if (v[speaker]) { u.voice = v[speaker]; u.lang = v[speaker].lang; }
     u.pitch = 1;       // changing pitch makes voices sound robotic
-    u.rate = 1;
-    u.onend = onDone;
+    u.rate = speed;
+    const myGen = gen;
+    u.onend = function () { if (myGen === gen) onDone(); };
     synth.speak(u);
+}
+
+// ======================================================================
+//  TIMESTAMPS: browsers don't report speech length, so each line's length
+//  is estimated from its word count at a natural speaking pace.
+// ======================================================================
+const WPM = 160;            // words per minute at 1x
+const GAP = 0.5;            // pause between lines, seconds
+let speed = +load("podcast-speed", 1) || 1;
+let lineStartAt = 0;        // when the current line started (ms)
+let clockTimer = null;
+
+function lineSecs(text) {
+    return (text.trim().split(/\s+/).length / WPM * 60 + GAP) / speed;
+}
+function episodeSecs(ep) {
+    return ep.lines.reduce(function (t, l) { return t + lineSecs(l[1]); }, 0);
+}
+function starts() {
+    const out = [];
+    let t = 0;
+    current.lines.forEach(function (l) { out.push(t); t += lineSecs(l[1]); });
+    out.push(t);            // last entry = total length
+    return out;
+}
+function fmt(sec) {
+    sec = Math.max(0, Math.round(sec));
+    return Math.floor(sec / 60) + ":" + String(sec % 60).padStart(2, "0");
+}
+function elapsed() {
+    if (!current) return 0;
+    const st = starts();
+    const i = Math.min(pos, current.lines.length);
+    if (playing && !lineDone && i < current.lines.length) {
+        const inLine = (performance.now() - lineStartAt) / 1000;
+        return st[i] + Math.min(inLine, st[i + 1] - st[i]);
+    }
+    return st[i];
+}
+function updateClock() {
+    if (!current) return;
+    const total = starts()[current.lines.length];
+    const now = elapsed();
+    document.getElementById("clock").textContent = fmt(now) + " / " + fmt(total);
+    document.getElementById("progress-fill").style.width = (total ? now / total * 100 : 0) + "%";
+}
+function refreshStamps() {
+    if (current) {
+        const st = starts();
+        current.lines.forEach(function (l, i) {
+            const el = document.querySelector("#line-" + i + " .stamp-btn");
+            if (el) el.textContent = fmt(st[i]);
+        });
+    }
+    document.querySelectorAll(".episode-btn").forEach(function (b, i) {
+        const m = b.querySelector(".ep-length");
+        if (m) m.textContent = "⏱ " + fmt(episodeSecs(EPISODES[i]));
+    });
+    updateClock();
+}
+function startClock() {
+    if (!clockTimer) clockTimer = setInterval(updateClock, 250);
+}
+function stopClock() {
+    clearInterval(clockTimer);
+    clockTimer = null;
+    updateClock();
 }
 
 function speakNext() {
@@ -314,8 +393,10 @@ function speakNext() {
     const l = current.lines[i];
     highlight(i);
     lineDone = false;
+    lineStartAt = performance.now();
+    startClock();
     sayLine(l[0], l[1], function () {
-        if (!playing || pos !== i) return;   // stopped or paused mid-line
+        if (!playing || pos !== i) return;
         lineDone = true;
         pos = i + 1;
         speakNext();
@@ -326,7 +407,9 @@ function finish() {
     playing = false;
     paused = false;
     pos = 0;
+    lineDone = true;
     highlight(-1);
+    stopClock();
     setControls();
     document.querySelector(".your-turn").scrollIntoView({ behavior: "smooth", block: "center" });
 }
@@ -334,31 +417,101 @@ function finish() {
 function stopAll() {
     playing = false;
     paused = false;
-    if (synth) synth.cancel();
+    cancelSpeech();
     highlight(-1);
+    stopClock();
     setControls();
 }
 
+function pauseNow() {
+    if (!playing) return;
+    playing = false;
+    paused = true;
+    cancelSpeech();         // the interrupted line replays from its start
+    stopClock();
+    setControls();
+}
+
+// Jump to a line. Keeps playing if it was playing, otherwise starts.
+function jumpTo(i, keepPaused) {
+    if (!current || !synth) return;
+    closeOpenComposer();
+    cancelSpeech();
+    pos = Math.max(0, Math.min(i, current.lines.length - 1));
+    lineDone = true;
+    if (keepPaused) {
+        highlight(pos);
+        updateClock();
+        setControls();
+        return;
+    }
+    paused = false;
+    playing = true;
+    setControls();
+    speakNext();
+}
+
+function skip(seconds) {
+    if (!current) return;
+    const st = starts();
+    const target = elapsed() + seconds;
+    let i = 0;
+    while (i < current.lines.length - 1 && st[i + 1] <= target) i++;
+    const here = Math.min(pos, current.lines.length - 1);
+    if (seconds > 0 && i <= here) i = here + 1;              // always move forward at least one line
+    if (i >= current.lines.length) { cancelSpeech(); finish(); return; }
+    jumpTo(i, !playing);
+}
+
 function setControls() {
-    playBtn.disabled = !synth || playing;
-    playBtn.innerHTML = paused ? "&#9654; Resume" : (pos > 0 ? "&#9654; Continue" : "&#9654; Play episode");
+    const has = !!current && !!synth;
+    playBtn.disabled = !has;
+    playBtn.innerHTML = playing ? "&#10074;&#10074; Pause" :
+        (paused ? "&#9654; Resume" : (pos > 0 ? "&#9654; Continue" : "&#9654; Play episode"));
     stopBtn.disabled = !playing && !paused;
     interjectBtn.disabled = !playing;
+    document.getElementById("back15").disabled = !has;
+    document.getElementById("fwd15").disabled = !has;
 }
 
 playBtn.addEventListener("click", function () {
     if (!current || !synth) return;
+    if (playing) { pauseNow(); return; }
     closeOpenComposer();
     paused = false;
     playing = true;
     setControls();
     speakNext();
 });
-stopBtn.addEventListener("click", function () { closeOpenComposer(); pos = 0; stopAll(); });
+stopBtn.addEventListener("click", function () { closeOpenComposer(); pos = 0; lineDone = true; stopAll(); });
 interjectBtn.addEventListener("click", function () {
     // Attach to the line being spoken (or the one that just finished).
     const at = lineDone ? Math.max(0, pos - 1) : pos;
     interject(at, true);
+});
+document.getElementById("back15").addEventListener("click", function () { skip(-15); });
+document.getElementById("fwd15").addEventListener("click", function () { skip(15); });
+
+document.getElementById("progress").addEventListener("click", function (e) {
+    if (!current) return;
+    const r = this.getBoundingClientRect();
+    const target = (e.clientX - r.left) / r.width * starts()[current.lines.length];
+    const st = starts();
+    let i = 0;
+    while (i < current.lines.length - 1 && st[i + 1] <= target) i++;
+    jumpTo(i, !playing);
+});
+
+refreshStamps();   // fill in each episode's length
+
+const speedSel = document.getElementById("speed");
+speedSel.value = String(speed);
+if (speedSel.value !== String(speed)) { speed = 1; speedSel.value = "1"; }
+speedSel.addEventListener("change", function () {
+    speed = +speedSel.value;
+    save("podcast-speed", speed);
+    refreshStamps();
+    if (playing && !lineDone) { cancelSpeech(); speakNext(); }   // restart the current line at the new speed
 });
 
 // ======================================================================
@@ -395,7 +548,8 @@ function interject(afterIndex, fromPlayback) {
     if (playing) {
         playing = false;
         paused = true;
-        if (synth) synth.cancel();
+        cancelSpeech();
+        stopClock();
         // pos already points at the next line (or the interrupted one, which replays on resume)
         setControls();
     }

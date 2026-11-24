@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="Marcus Heppner">
 <title>Podcast - Medicine &amp; Mrs. Dalloway</title>
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
 
@@ -42,10 +42,28 @@
 <section id="player" hidden>
     <h2 id="ep-title"></h2>
     <p id="ep-question" class="plain"></p>
-    <div class="row">
-        <button id="play">&#9654; Play episode</button>
-        <button id="interject" disabled>&#9995; Interject</button>
-        <button id="stop" class="ghost" disabled>&#9632; Stop</button>
+    <div class="player-bar">
+        <div class="row">
+            <button id="back15" class="ghost" title="Back 15 seconds">&#8634; 15s</button>
+            <button id="play">&#9654; Play episode</button>
+            <button id="fwd15" class="ghost" title="Forward 15 seconds">15s &#8635;</button>
+            <button id="interject" disabled>&#9995; Interject</button>
+            <button id="stop" class="ghost" disabled>&#9632; Stop</button>
+            <label class="note-tip" for="speed" style="margin-left:auto">Speed</label>
+            <select id="speed">
+                <option value="0.75">0.75&times;</option>
+                <option value="1">1&times;</option>
+                <option value="1.25">1.25&times;</option>
+                <option value="1.5">1.5&times;</option>
+                <option value="2">2&times;</option>
+            </select>
+        </div>
+        <div class="row timeline-row">
+            <div id="progress" title="Jump to a point"><div id="progress-fill"></div></div>
+            <span id="clock">0:00 / 0:00</span>
+        </div>
+        <p class="note-tip" style="margin:4px 0 0">Times are estimates from speaking pace; your voice may run a little faster or slower.
+           Click any timestamp in the transcript to play from there.</p>
     </div>
     <div class="row voice-row">
         <label class="note-tip" for="voice-a">Vera's voice</label>
@@ -75,6 +93,6 @@
 
 <footer>Voices use your browser's built-in text-to-speech. Recordings stay on your device until you download them.</footer>
 
-<script src="podcast.js?v=4"></script>
+<script src="podcast.js?v=6"></script>
 </body>
 </html>
