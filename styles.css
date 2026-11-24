@@ -524,3 +524,9 @@ footer {
 }
 .stamp-btn:hover { background: none; color: var(--gold); text-decoration: underline; }
 .ep-length { white-space: nowrap; }
+
+/* seminar format: question lines read as chapter headings */
+.line.q { background: var(--plum); color: #f1e8d0; font-family: var(--display); font-size: 21px; margin-top: 22px; }
+.line.q .speaker { color: var(--gold-light); }
+.line.q .stamp-btn { color: var(--gold-light); }
+.line.q .respond-link { color: #d8cfb8; }
