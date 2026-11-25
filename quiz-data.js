@@ -52,15 +52,19 @@ const READING_CHECK = [
   Each check looks for evidence that your answer engages with a feature of the passage.
     any:      at least one of these words/phrases appears (lower case; word starts)
     anyOf2:   at least two different items from this list appear
+  "passage" is the longer excerpt shown to the reader (from Standard Ebooks' text, based on
+  the 1925 Hogarth Press edition); "focus" is the key line highlighted inside it.
   Every drill also gets the general checks in quiz.js (quoting the text, length,
   more than one reading, going beyond restating, linking to the theme).
 */
 const DRILLS = [
     {
         id: "dr-proportion", review: "scene-06",
+        passage: ["Oh, he did, she cried. But he did not mean it, she said. Of course not. It was merely a question of rest, said Sir William; of rest, rest, rest; a long rest in bed. There was a delightful home down in the country where her husband would be perfectly looked after. Away from her? she asked. Unfortunately, yes; the people we care for most are not good for us when we are ill. But he was not mad, was he? Sir William said he never spoke of “madness”; he called it not having a sense of proportion. But her husband did not like doctors. He would refuse to go there. Shortly and kindly Sir William explained to her the state of the case. He had threatened to kill himself. There was no alternative. It was a question of law. He would lie in bed in a beautiful house in the country. The nurses were admirable. Sir William would visit him once a week. If Mrs. Warren Smith was quite sure she had no more questions to ask⁠—he never hurried his patients⁠—they would return to her husband. She had nothing more to ask⁠—not of Sir William."],
+        focus: "Sir William said he never spoke of “madness”; he called it not having a sense of proportion.",
         title: "Proportion instead of madness",
         quote: "Sir William said he never spoke of \"madness\"; he called it not having a sense of proportion.",
-        prompt: "Close-read Bradshaw's choice of words. What happens when \"proportion\" replaces \"madness\"?",
+        prompt: "Read the whole passage, then close-read Bradshaw's choice of words in the highlighted line. What happens when \"proportion\" replaces \"madness\"?",
         checks: [
             { label: "You discuss the word \"madness\" itself.", any: ["madness", "mad"],
               hint: "Look at the word he refuses to use. What does it carry?" },
@@ -70,13 +74,17 @@ const DRILLS = [
               hint: "Whose vocabulary is this, and what is his position?" },
             { label: "You notice the word \"never.\"", any: ["never"],
               hint: "He *never* says it. Does that word matter?" },
+            { label: "You use the dialogue around it (rest, the home, the \"question of law\").", any: ["rest", "home", "law", "alternative", "threatened", "nurses", "country"],
+              hint: "Read the whole paragraph. What else does Sir William say, and what does Rezia ask?" },
         ],
     },
     {
         id: "dr-we", review: "scene-06",
+        passage: ["“We have had our little talk,” said Sir William.", "“He says you are very, very ill,” Rezia cried.", "“We have been arranging that you should go into a home,” said Sir William.", "“One of Holmes’s homes?” sneered Septimus.", "The fellow made a distasteful impression. For there was in Sir William, whose father had been a tradesman, a natural respect for breeding and clothing, which shabbiness nettled; again, more profoundly, there was in Sir William, who had never had time for reading, a grudge, deeply buried, against cultivated people who came into his room and intimated that doctors, whose profession is a constant strain upon all the highest faculties, are not educated men.", "“One of my homes, Mr. Warren Smith,” he said, “where we will teach you to rest.”"],
+        focus: "“We have been arranging that you should go into a home,” said Sir William.",
         title: "\"We have been arranging\"",
         quote: "We have been arranging that you should go into a home",
-        prompt: "Close-read the grammar of this sentence. Who acts, who is acted upon, and when was it decided?",
+        prompt: "Close-read the highlighted sentence in the context of the exchange. Who acts, who is acted upon, and when was it decided?",
         checks: [
             { label: "You discuss the pronoun \"we.\"", any: ["\"we\"", "'we'", "the word we", "pronoun", "plural", "who is we", "who \"we\"", "collective"],
               hint: "Who could \"we\" include? Who is left out of it?" },
@@ -86,13 +94,17 @@ const DRILLS = [
               hint: "Was Septimus part of the decision?" },
             { label: "You notice the word \"home.\"", any: ["home"],
               hint: "\"Home\" usually means something else. What does it mean here?" },
+            { label: "You consider Septimus's reply, \"One of Holmes's homes?\"", any: ["sneer", "holmes's homes", "holmes’s homes", "reply", "respond", "one of my homes", "teach you to rest"],
+              hint: "How does Septimus answer, and how does Sir William answer him?" },
         ],
     },
     {
         id: "dr-control", review: "scene-05",
+        passage: ["Dr. Holmes came again. Large, fresh coloured, handsome, flicking his boots, looking in the glass, he brushed it all aside⁠—headaches, sleeplessness, fears, dreams⁠—nerve symptoms and nothing more, he said. If Dr. Holmes found himself even half a pound below eleven stone six, he asked his wife for another plate of porridge at breakfast. (Rezia would learn to cook porridge.) But, he continued, health is largely a matter in our own control. Throw yourself into outside interests; take up some hobby. He opened Shakespeare⁠—Antony and Cleopatra; pushed Shakespeare aside. Some hobby, said Dr. Holmes, for did he not owe his own excellent health (and he worked as hard as any man in London) to the fact that he could always switch off from his patients on to old furniture? And what a very pretty comb, if he might say so, Mrs. Warren Smith was wearing!"],
+        focus: "health is largely a matter in our own control.",
         title: "Holmes on control",
         quote: "health is largely a matter in our own control.",
-        prompt: "Close-read Dr. Holmes's sentence. What does it assume about illness, and about the person who is ill?",
+        prompt: "Close-read Dr. Holmes's visit, focusing on the highlighted sentence. What does it assume about illness, and about the person who is ill?",
         checks: [
             { label: "You discuss the word \"control.\"", any: ["control"],
               hint: "What does it mean for health to be \"in our control\"?" },
@@ -102,13 +114,17 @@ const DRILLS = [
               hint: "Whose control? Does \"our\" include the doctor?" },
             { label: "You consider what this implies for someone who stays ill.", any: ["responsib", "blame", "fault", "choice", "choose", "will", "willpower", "effort"],
               hint: "If health is in your control, what does staying ill suggest?" },
+            { label: "You use the details around the line (porridge, old furniture, the comb).", any: ["porridge", "furniture", "comb", "shakespeare", "boots", "glass", "stone", "hobby", "nerve symptoms"],
+              hint: "What else does Holmes do and say in this paragraph?" },
         ],
     },
     {
         id: "dr-list", review: "mono-03",
+        passage: ["Proportion, divine proportion, Sir William’s goddess, was acquired by Sir William walking hospitals, catching salmon, begetting one son in Harley Street by Lady Bradshaw, who caught salmon herself and took photographs scarcely to be distinguished from the work of professionals. Worshipping proportion, Sir William not only prospered himself but made England prosper, secluded her lunatics, forbade childbirth, penalised despair, made it impossible for the unfit to propagate their views until they, too, shared his sense of proportion⁠—his, if they were men, Lady Bradshaw’s if they were women (she embroidered, knitted, spent four nights out of seven at home with her son), so that not only did his colleagues respect him, his subordinates fear him, but the friends and relations of his patients felt for him the keenest gratitude for insisting that these prophetic Christs and Christesses, who prophesied the end of the world, or the advent of God, should drink milk in bed, as Sir William ordered; Sir William with his thirty years’ experience of these kinds of cases, and his infallible instinct, this is madness, this sense; in fact, his sense of proportion."],
+        focus: "secluded her lunatics, forbade childbirth, penalised despair, made it impossible for the unfit to propagate their views",
         title: "The narrator's list",
         quote: "secluded her lunatics, forbade childbirth, penalised despair, made it impossible for the unfit to propagate their views",
-        prompt: "Close-read the list of what \"Proportion\" did for England. Look at the verbs, the objects, and the tone.",
+        prompt: "Close-read the narrator's paragraph, focusing on the highlighted list of what \"Proportion\" did for England. Look at the verbs, the objects, and the tone.",
         checks: [
             { label: "You look closely at at least two of the verbs.", anyOf2: ["secluded", "forbade", "penalised", "penalized", "made it impossible", "impossible"],
               hint: "Secluded, forbade, penalised, made impossible: what kind of actions are these?" },
@@ -118,13 +134,17 @@ const DRILLS = [
               hint: "How does the narrator sound here? Admiring, mocking, matter-of-fact?" },
             { label: "You place it in historical context.", any: ["eugenic", "unfit", "1920", "1913", "history", "historical", "period", "at the time"],
               hint: "See the Eugenics card on the Home page." },
+            { label: "You look at what follows the list (\"until they, too, shared his sense of proportion\").", any: ["until", "shared", "men", "women", "lady bradshaw", "milk", "christs", "prophe", "gratitude", "infallible", "experience"],
+              hint: "Read past the list. Who has to share his sense of proportion, and how?" },
         ],
     },
     {
         id: "dr-fall", review: "mono-02",
+        passage: ["He was quite certain that when Mr. Warren Smith was well he was the last man in the world to frighten his wife. But he had talked of killing himself.", "“We all have our moments of depression,” said Sir William.", "Once you fall, Septimus repeated to himself, human nature is on you. Holmes and Bradshaw are on you. They scour the desert. They fly screaming into the wilderness. The rack and the thumbscrew are applied. Human nature is remorseless."],
+        focus: "Once you fall, Septimus repeated to himself, human nature is on you. Holmes and Bradshaw are on you.",
         title: "\"Holmes and Bradshaw are on you\"",
         quote: "Once you fall, Septimus repeated to himself, human nature is on you. Holmes and Bradshaw are on you.",
-        prompt: "Close-read Septimus's thought. What does he mean by \"human nature,\" and how much weight should a reader give it?",
+        prompt: "Close-read the exchange and Septimus's thought. What does he mean by \"human nature,\" and how much weight should a reader give it?",
         checks: [
             { label: "You discuss \"human nature.\"", any: ["human nature"],
               hint: "What is \"human nature\" to Septimus here?" },
@@ -134,13 +154,17 @@ const DRILLS = [
               hint: "The sentence repeats a structure. What does repeating it do?" },
             { label: "You consider whose perspective this is and how reliable it is.", any: ["symptom", "paranoi", "illness", "insight", "accurate", "true", "reliab", "perspective", "point of view"],
               hint: "Is this only a symptom, or could it also be accurate? Or both?" },
+            { label: "You look at the images that follow (desert, wilderness, rack, thumbscrew).", any: ["desert", "wilderness", "rack", "thumbscrew", "remorseless", "tortur", "scream", "hunt"],
+              hint: "What images does Septimus use after the key line?" },
         ],
     },
     {
         id: "dr-window", review: "mono-05",
+        passage: ["Holmes was coming upstairs. Holmes would burst open the door. Holmes would say, “In a funk, eh?” Holmes would get him. But no; not Holmes; not Bradshaw. Getting up rather unsteadily, hopping indeed from foot to foot, he considered Mrs. Filmer’s nice clean bread knife with “Bread” carved on the handle. Ah, but one mustn’t spoil that. The gas fire? But it was too late now. Holmes was coming. Razors he might have got, but Rezia, who always did that sort of thing, had packed them. There remained only the window, the large Bloomsbury-lodging house window, the tiresome, the troublesome, and rather melodramatic business of opening the window and throwing himself out. It was their idea of tragedy, not his or Rezia’s (for she was with him). Holmes and Bradshaw like that sort of thing. (He sat on the sill.) But he would wait till the very last moment. He did not want to die. Life was good. The sun hot. Only human beings? Coming down the staircase opposite an old man stopped and stared at him. Holmes was at the door. “I’ll give it you!” he cried, and flung himself vigorously, violently down on to Mrs. Filmer’s area railings."],
+        focus: "He did not want to die. Life was good. The sun hot.",
         title: "At the window",
         quote: "He did not want to die. Life was good. The sun hot.",
-        prompt: "Close-read the style of these three sentences. What do their form and content suggest at this moment?",
+        prompt: "Close-read the paragraph, focusing on the highlighted sentences. What do their form and content suggest at this moment?",
         checks: [
             { label: "You comment on the sentence length or structure.", any: ["short", "sentence", "rhythm", "simple", "fragment", "verb", "syntax", "brief"],
               hint: "Count the words. \"The sun hot\" has no verb. Why might that matter?" },
@@ -150,13 +174,17 @@ const DRILLS = [
               hint: "Why the sun, here?" },
             { label: "You connect it to what comes next (\"Only human beings\").", any: ["human", "people", "holmes", "doctor"],
               hint: "Read on a line. What is he contrasting life with?" },
+            { label: "You use the rest of the paragraph (the bread knife, the gas fire, \"their idea of tragedy\").", any: ["knife", "gas", "razor", "tragedy", "melodramatic", "their idea", "old man", "funk", "railings"],
+              hint: "Look at what he considers, and rejects, before the window." },
         ],
     },
     {
         id: "dr-defiance", review: "scene-12",
+        passage: ["She had once thrown a shilling into the Serpentine, never anything more. But he had flung it away. They went on living (she would have to go back; the rooms were still crowded; people kept on coming). They (all day she had been thinking of Bourton, of Peter, of Sally), they would grow old. A thing there was that mattered; a thing, wreathed about with chatter, defaced, obscured in her own life, let drop every day in corruption, lies, chatter. This he had preserved. Death was defiance. Death was an attempt to communicate; people feeling the impossibility of reaching the centre which, mystically, evaded them; closeness drew apart; rapture faded; one was alone. There was an embrace in death."],
+        focus: "Death was defiance. Death was an attempt to communicate",
         title: "\"Death was defiance\"",
         quote: "Death was defiance. Death was an attempt to communicate",
-        prompt: "Close-read Clarissa's two sentences. What do the key words and the repetition do?",
+        prompt: "Close-read Clarissa's thoughts, focusing on the highlighted sentences. What do the key words and the repetition do?",
         checks: [
             { label: "You discuss \"defiance.\"", any: ["defian", "defy"],
               hint: "Defiance of what, or of whom?" },
@@ -166,13 +194,17 @@ const DRILLS = [
               hint: "Both sentences start the same way. What does that do?" },
             { label: "You think about whose interpretation this is.", any: ["clarissa", "her view", "her reading", "party", "hostess", "she"],
               hint: "This is Clarissa's reading of a stranger's death. Does that matter?" },
+            { label: "You use what Clarissa thinks about her own life (\"A thing there was that mattered\").", any: ["thing there was", "mattered", "chatter", "preserved", "shilling", "corruption", "lies", "embrace", "alone", "centre", "center"],
+              hint: "What does Clarissa say she has let drop, and he has kept?" },
         ],
     },
     {
         id: "dr-under", review: "mono-03",
+        passage: ["But conversion, fastidious Goddess, loves blood better than brick, and feasts most subtly on the human will. For example, Lady Bradshaw. Fifteen years ago she had gone under. It was nothing you could put your finger on; there had been no scene, no snap; only the slow sinking, waterlogged, of her will into his. Sweet was her smile, swift her submission; dinner in Harley Street, numbering eight or nine courses, feeding ten or fifteen guests of the professional classes, was smooth and urbane. Only as the evening wore on a very slight dullness, or uneasiness perhaps, a nervous twitch, fumble, stumble and confusion indicated, what it was really painful to believe⁠—that the poor lady lied."],
+        focus: "Fifteen years ago she had gone under.",
         title: "\"Gone under\"",
         quote: "Fifteen years ago she had gone under.",
-        prompt: "Close-read this short sentence about Lady Bradshaw and where it sits in the passage.",
+        prompt: "Close-read the narrator's description of Lady Bradshaw, focusing on the highlighted sentence.",
         checks: [
             { label: "You discuss the phrase \"gone under.\"", any: ["gone under", "go under", "under", "sink", "drown", "submerg"],
               hint: "What images does \"gone under\" suggest?" },
@@ -182,6 +214,8 @@ const DRILLS = [
               hint: "Who is \"she\"? Check the surrounding sentences." },
             { label: "You connect it to the passage around it.", any: ["conversion", "will", "proportion", "passage", "context", "sister"],
               hint: "This line sits inside the Proportion and Conversion passage. Why there?" },
+            { label: "You look at how her \"going under\" is described (sinking, waterlogged, her will into his).", any: ["sink", "waterlog", "will into his", "submission", "lied", "dinner", "slow", "smile", "no scene"],
+              hint: "How does the narrator describe what happened to her?" },
         ],
     },
 ];

@@ -571,3 +571,10 @@ h3.sub { margin: 22px 0 8px; font-family: var(--sans); font-size: 14px; letter-s
 .topic-btn { text-align: left; font-size: 13px; padding: 7px 10px; }
 .msg.bot ul { margin: 4px 0; padding-left: 20px; }
 .stamp-inline { font-family: var(--sans); font-size: 13px; color: var(--muted); }
+
+/* quiz passages */
+.passage { background: #fffdf6; border: 1px solid var(--line); border-left: 3px solid var(--gold); padding: 14px 18px; margin: 12px 0 4px; font-size: 18px; line-height: 1.7; }
+.passage p { margin: 0 0 10px; }
+.passage p:last-child { margin-bottom: 0; }
+.passage mark { background: #f1e2b3; color: var(--ink); padding: 1px 2px; box-shadow: 0 1px 0 var(--gold); }
+.passage-src { margin: 4px 0 10px; font-size: 14px; }

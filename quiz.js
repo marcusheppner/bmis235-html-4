@@ -142,7 +142,7 @@ function checklist(drill, answer) {
         return { label: c.label, ok: ok, hint: c.hint, specific: true };
     });
     results.push(
-        { label: "You quote the passage directly.", ok: quotesPassage(answer, drill.quote),
+        { label: "You quote the passage directly.", ok: quotesPassage(answer, (drill.passage || [drill.quote]).join(" ")),
           hint: "Put the exact words you're discussing in quotation marks." },
         { label: "You go beyond restating the quote.", ok: wordCount >= 25 && overlap < 0.5,
           hint: "Most of your answer repeats the passage. Add what you notice about it." },
@@ -159,6 +159,20 @@ function checklist(drill, answer) {
 function assess(drill, answer) {
     // Future: if (FEEDBACK.mode === "ai") return fetch(FEEDBACK.endpoint, {...}) ...
     return Promise.resolve(checklist(drill, answer));
+}
+
+// The longer excerpt, with the key line highlighted.
+function passageHtml(d) {
+    if (!d.passage) return "<blockquote>" + esc(d.quote) + "</blockquote>";
+    const est = (typeof estimatePage === "function") ? estimatePage(d.quote) : null;
+    const paras = d.passage.map(function (p) {
+        const safe = esc(p);
+        const f = esc(d.focus || "");
+        return "<p>" + (f && safe.indexOf(f) !== -1 ? safe.replace(f, "<mark>" + f + "</mark>") : safe) + "</p>";
+    }).join("");
+    return '<div class="passage">' + paras + "</div>" +
+        '<p class="note-tip passage-src">' + (est ? "About <strong>p. " + est.page + "</strong> in the NYRB edition (check pp. " + est.from + "&ndash;" + est.to + "). " : "") +
+        "Text from Standard Ebooks (1925 Hogarth Press text); wording may differ slightly from your copy.</p>";
 }
 
 let currentDrill = null;
@@ -182,7 +196,7 @@ function openDrill(d) {
     area.innerHTML =
         '<div class="card drill-card">' +
             "<h3>" + esc(d.title) + "</h3>" +
-            "<blockquote>" + esc(d.quote) + "</blockquote>" +
+            passageHtml(d) +
             '<p class="note-tip">' + reviewLink(d.review).replace("Review:", "Context:") + "</p>" +
             '<p class="plain"><strong>Prompt:</strong> ' + esc(d.prompt) + "</p>" +
             '<textarea id="drill-text" rows="9" placeholder="Write your close reading here..."></textarea>' +
