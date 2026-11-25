@@ -10,100 +10,100 @@ const TOPICS = [
     {
         name: "Proportion & normality", theme: true,
         keys: ["proportion", "normal", "normality", "norm", "norms", "balance", "conform", "deviant", "deviance", "standard", "ideal", "ideals", "expectation", "expectations"],
-        say: "Bradshaw \"never spoke of 'madness'; he called it not having a sense of proportion.\" Renaming illness as a lack of proportion turns it into a moral and social failing (imbalance, lack of restraint), so treatment becomes correction toward the norm.",
+        say: "Look at Bradshaw's wording in Scene 06: \"he never spoke of 'madness'; he called it not having a sense of proportion.\" Then the narrator's passage (Monologue M4): \"Proportion, divine proportion, Sir William's goddess.\"",
         scenes: ["scene-06", "mono-03"],
-        ask: "Is \"proportion\" a medical idea or a social ideal dressed up as medicine?",
+        ask: "What does \"proportion\" mean in everyday speech, and what does it mean in Bradshaw's mouth?",
     },
     {
         name: "Conversion & control", theme: true,
         keys: ["conversion", "convert", "control", "power", "dominat", "force", "forcing", "soul", "kilman", "religio", "discipline"],
-        say: "Conversion, Proportion's \"sister,\" \"feasts on the wills of the weakly.\" Woolf extends it beyond medicine: Miss Kilman's religious urge to possess Elizabeth mirrors Bradshaw, and Clarissa finally names his offense as \"forcing your soul.\"",
+        say: "Look at the narrator's line \"Conversion is her name and she feasts on the wills of the weakly\" (M4), Miss Kilman and Elizabeth (Scene 07), and Clarissa's phrase \"forcing your soul\" (Scene 12).",
         scenes: ["mono-03", "scene-07", "scene-12"],
-        ask: "Is the urge to convert others presented as specifically medical, or as a general social disease?",
+        ask: "Who tries to change whom in the novel, and how?",
     },
     {
         name: "Denial (Holmes)", theme: true,
         keys: ["holmes", "denial", "deny", "nothing the matter", "nothing whatever", "porridge", "hobby", "hobbies", "willpower", "own control", "gp"],
-        say: "Holmes insists \"There was nothing whatever the matter\" and that \"health is largely a matter in our own control.\" Denial shifts responsibility from illness to the patient's character, which is another way of enforcing the norm.",
+        say: "Look at Holmes's lines in Scene 05: \"There was nothing whatever the matter, said Dr. Holmes\" and \"health is largely a matter in our own control.\" Also his advice as Rezia remembers it in Scene 02.",
         scenes: ["scene-05", "scene-02", "scene-09"],
-        ask: "Is Holmes's cheerful denial more or less harmful than Bradshaw's control?",
+        ask: "How do you read Holmes's view that health is in our control?",
     },
     {
         name: "Rest cure & isolation", theme: true,
         keys: ["rest", "rest cure", "isolat", "separat", "home in the country", "asylum", "institution", "confine", "seclu", "nursing home", "sent away", "removed"],
-        say: "Bradshaw's treatment is removal: \"We have been arranging that you should go into a home,\" away from Rezia. This mirrors the rest cure Woolf herself underwent, with isolation, rest, and no stimulation, and the Proportion passage's \"secluded her lunatics.\"",
+        say: "Look at Bradshaw's plan in Scene 06: \"We have been arranging that you should go into a home.\" Compare Clarissa's attic room (Scene 03) and the rest-cure card on the Home page.",
         scenes: ["scene-06", "mono-03", "scene-03"],
-        ask: "What does isolating the patient accomplish for society, as opposed to the patient?",
+        ask: "Who is separated from whom in the medical scenes, and who decides?",
     },
     {
         name: "Shell shock & masculinity", theme: true,
         keys: ["shell shock", "shell-shock", "ptsd", "trauma", "war", "soldier", "veteran", "evans", "coward", "cowardice", "masculin", "manly", "manhood", "feeling very little", "numb"],
-        say: "Septimus \"congratulated himself upon feeling very little,\" the soldierly ideal of control. Holmes's final word, \"The coward!\", repeats the military's moral verdict on shell-shocked men. At the party, Bradshaw turns it into policy: \"the deferred effects of shell shock.\"",
+        say: "Look at Septimus after Evans's death: he \"congratulated himself upon feeling very little\" (Scene 05); Holmes's \"The coward!\" (Scene 09); and \"the deferred effects of shell shock\" at the party (Scene 11).",
         scenes: ["scene-05", "scene-09", "scene-11"],
-        ask: "How does medicine reinforce the same masculine ideal that helped break Septimus?",
+        ask: "Do you see any connection between military ideals and the doctors' attitudes?",
     },
     {
         name: "Class & medical authority", theme: true,
         keys: ["social class", "upper class", "ruling class", "harley", "establishment", "party", "prime minister", "england", "nation", "empire", "authority", "expert", "upper", "wealth", "civilisation", "civilization", "ambulance", "bill", "law", "policy"],
-        say: "Bradshaw's Proportion \"made England prosper.\" He arrives at Clarissa's party among the Prime Minister and MPs, discussing a shell-shock Bill. Peter praises the ambulance as \"one of the triumphs of civilisation.\" Medicine and the ruling class share values and rooms.",
+        say: "Look at the Bradshaws at the party with the Prime Minister and Richard (Scene 11), Peter's \"One of the triumphs of civilisation\" (Scene 10), and \"made England prosper\" in the Proportion passage (M4).",
         scenes: ["scene-11", "mono-03", "scene-10"],
-        ask: "Whose interests does Bradshaw's medicine ultimately serve?",
+        ask: "Where does Bradshaw appear besides his office, and what do you make of it?",
     },
     {
         name: "Eugenics & the 'unfit'", theme: true,
         keys: ["eugenic", "unfit", "childbirth", "propagate", "breed", "degenera", "mental deficiency", "steriliz"],
-        say: "The Proportion passage says it \"forbade childbirth\" and \"made it impossible for the unfit to propagate their views,\" echoing the eugenics ideas common among respectable Britons in the 1910s and 20s.",
+        say: "Look at the list in the Proportion passage (M4): \"secluded her lunatics, forbade childbirth, penalised despair, made it impossible for the unfit to propagate their views.\" See the eugenics card on the Home page for context.",
         scenes: ["mono-03"],
-        ask: "How does the eugenics language widen the critique from one doctor to a whole ideology?",
+        ask: "How do you hear the tone of that list in the Proportion passage?",
     },
     {
         name: "Care vs. cure", theme: true,
         keys: ["care", "caregiv", "caring", "rezia", "lucrezia", "hat", "wife", "support", "accommodat"],
-        say: "The hat scene, with no doctor present, is the healthiest Septimus is all day. Rezia does the real care but is ignored and made the doctors' enforcer. The \"cure\" prescribed is separation from her.",
+        say: "Look at the hat scene (Scene 08): \"Never had he done anything which made him feel so proud.\" Also Rezia's \"I am alone; I am alone!\" (M2) and her role in Scene 02.",
         scenes: ["scene-08", "mono-06", "scene-04"],
-        ask: "What alternative to medical control does the novel imagine, and why is it destroyed?",
+        ask: "What seems to help Septimus, and what doesn't?",
     },
     {
         name: "The patient's view", theme: true,
         keys: ["septimus", "patient", "vision", "visions", "hallucinat", "madness", "mad", "insan", "sane", "sanity", "message", "messages", "human nature", "paranoi", "insight"],
-        say: "Woolf gives Septimus's mind beauty and moral force (\"Men must not cut down trees\"). He also analyzes his own situation: \"Once you fall... Holmes and Bradshaw are on you.\" The patient's voice challenges the doctors' authority to define him.",
+        say: "Look at Septimus's messages (M1): \"Men must not cut down trees. There is a God.\" And his view of the doctors (M3): \"Holmes and Bradshaw are on you.\"",
         scenes: ["mono-01", "mono-02", "scene-04"],
-        ask: "Does the novel treat Septimus's \"madness\" as something with knowledge in it?",
+        ask: "How much weight does the novel give to Septimus's own view?",
     },
     {
         name: "Death as resistance", theme: true,
         keys: ["death", "die", "dies", "suicide", "killed", "jump", "window", "defiance", "resist", "resistance", "refusal", "refuse", "intolerable"],
-        say: "Septimus \"did not want to die. Life was good.\" His last words, \"I'll give it you!\", are thrown at Holmes. Clarissa reads it as \"Death was defiance\" and imagines him thinking \"they make life intolerable, men like that.\"",
+        say: "Look at Septimus's last thoughts (M6): \"He did not want to die. Life was good. The sun hot.\" His last words \"I'll give it you!\" (Scene 09), and Clarissa's \"Death was defiance\" (M7).",
         scenes: ["mono-05", "scene-09", "scene-12"],
-        ask: "Can you argue the death is resistance without romanticizing it?",
+        ask: "What details support different readings of Septimus's death?",
     },
     {
         name: "Gender", theme: true,
         keys: ["gender", "women", "woman", "female", "wife", "lady bradshaw", "gone under", "clarissa", "yellow wallpaper", "hyster", "nervous", "feminis"],
-        say: "Conversion works on the healthy too: Lady Bradshaw \"had gone under\" fifteen years ago. Clarissa's convalescence (the attic, the narrow bed) is a quieter, accepted version of medical-social management, much like the rest cures given to women such as Woolf.",
+        say: "Look at Lady Bradshaw: \"Fifteen years ago she had gone under\" (M4). Clarissa's attic: \"Narrower and narrower would her bed be\" (Scene 03). The rest-cure and Yellow Wallpaper notes on the Home page.",
         scenes: ["mono-03", "scene-03", "scene-11"],
-        ask: "Does medical-social control work differently, or more invisibly, on women?",
+        ask: "Do the women in the novel experience any version of the pressures Septimus faces?",
     },
     {
         name: "Visibility & shame", theme: true,
         keys: ["shame", "ashamed", "embarrass", "notice", "visible", "invisible", "hide", "hidden", "public", "stigma"],
-        say: "From the first scene, illness must not be seen: Rezia thinks \"People must notice; people must see.\" The party, too, keeps suffering outside until Lady Bradshaw brings it in.",
+        say: "Look at Rezia on Bond Street: \"People must notice; people must see\" (Scene 01), and the moment Lady Bradshaw mentions the death at the party (Scene 11).",
         scenes: ["scene-01", "scene-11"],
-        ask: "How does the pressure to hide illness work alongside medical treatment?",
+        ask: "Who worries about being seen, and why?",
     },
     {
         name: "Woolf's own treatment", theme: false,
         keys: ["woolf", "author", "biograph", "savage", "her doctors", "leonard", "on being ill", "virginia", "diary"],
-        say: "Woolf had repeated breakdowns and was treated with rest cures by eminent doctors, including Sir George Savage. In her diary she wrote that she wanted to \"criticise the social system, & to show it at work.\" Use biography as context, not as the whole argument.",
+        say: "See \"Woolf & her doctors\" on the Home page: her rest cures, her doctors, and her diary line about wanting to \"criticise the social system, & to show it at work.\"",
         scenes: ["mono-03"],
-        ask: "How far should Woolf's medical history shape your reading of Holmes and Bradshaw?",
+        ask: "How much should Woolf's biography shape your reading?",
     },
     {
         name: "Disability studies lenses", theme: false,
         keys: ["disability", "social model", "medical model", "foucault", "ableism", "ableist", "impairment", "lens", "theory", "critic"],
-        say: "The medical model locates the problem in the individual; the social model locates it in how society treats difference. Bradshaw embodies the medical model; the novel's sympathies point toward the social model. Foucault's idea of normalization (control by defining and correcting \"normal\") fits Proportion closely.",
+        say: "See \"Critical lenses\" on the Home page for the medical and social models of disability and Foucault's idea of normalization. Then compare the doctors' scenes (Scene 05, Scene 06).",
         scenes: ["scene-06", "mono-03"],
-        ask: "Which model of disability does the novel itself seem to endorse?",
+        ask: "Which model of disability fits the doctors? Which fits the novel?",
     },
 ];
 
@@ -152,7 +152,7 @@ function replyFor(note) {
     });
     let html = "";
     hits.forEach(function (h, i) {
-        html += "<h4>" + (i === 0 ? "Connects to: " : "Also touches: ") + h.name + "</h4><p>" + h.say + "</p>";
+        html += "<h4>" + (i === 0 ? "Theme: " : "Also: ") + h.name + "</h4><p>" + h.say + "</p>";
     });
     html += "<h4>Passages to reread</h4><p>" + hits[0].scenes.filter(function (id) {
         return typeof BREAKDOWNS !== "undefined" && BREAKDOWNS[id];
@@ -165,7 +165,7 @@ function replyFor(note) {
                 earlier.length + " time" + (earlier.length > 1 ? "s" : "") + " before, most recently: <em>\"" +
                 escapeHtml(last.text.slice(0, 120)) + (last.text.length > 120 ? "..." : "") + "\"</em></p>";
     }
-    html += "<h4>Take back to class</h4><p>" + hits[0].ask + "</p>";
+    html += "<h4>A question to think about</h4><p>" + hits[0].ask + "</p>";
     return html;
 }
 

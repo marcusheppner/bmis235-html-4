@@ -51,7 +51,7 @@ function render() {
     document.getElementById("back").innerHTML = "&larr; Back to the scene list";
 
     document.getElementById("happens-text").innerHTML = entry.happens.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("");
-    document.getElementById("lens").textContent = entry.lens;
+    document.getElementById("notice").innerHTML = (entry.notice || []).map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("");
     document.getElementById("angle").textContent = entry.angle;
     document.getElementById("themes").innerHTML = entry.themes.map(function (t) { return '<span class="chip">' + esc(t) + "</span>"; }).join("");
 
@@ -72,7 +72,7 @@ function render() {
             "</div>" +
             '<p class="est-page"></p>' +
             '<p class="page-msg note-tip"></p>' +
-            '<p class="meaning"><strong>Underlying meaning:</strong> ' + esc(meaning) + "</p>" +
+            '<p class="meaning"><strong>In plain English:</strong> ' + esc(meaning) + "</p>" +
             '<details class="close-reading"' + (readings[quote] ? " open" : "") + ">" +
                 "<summary>My close reading</summary>" +
                 '<textarea rows="4" placeholder="Word choice, punctuation, rhythm, images, who is speaking... what do you notice?"></textarea>' +

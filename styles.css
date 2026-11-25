@@ -529,3 +529,7 @@ footer {
 .np-speaker { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--plum); }
 .np-text { flex-basis: 100%; font-size: 18px; }
 .now-playing[hidden] { display: none; }
+
+.notice-list { margin: 8px 0 0; padding-left: 22px; }
+.notice-list li { margin: 4px 0; }
+.open-list li { margin: 10px 0; }

@@ -4,7 +4,9 @@
 **GU username:** marcusheppner
 **Course:** BMIS 235 · HTML-4
 
-A research starting point on how medicine in Virginia Woolf's *Mrs. Dalloway* (1925) works as a mechanism for enforcing social norms. Built for an English class on disability in literature.
+Reference points for exploring how medicine in Virginia Woolf's *Mrs. Dalloway* (1925) relates to social expectations and norms. Built for an English class on disability in literature.
+
+**Approach:** the site helps with *reading* (plot summaries, plain-English versions of quotes, historical facts) and points toward things to notice, but leaves the interpretation and argument to the student. New content should follow the same rule: summaries, quotes and open questions, not finished analysis.
 
 Live site (once GitHub Pages is on): https://marcusheppner.github.io/bmis235-html-4/
 
