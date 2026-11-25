@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="Marcus Heppner">
 <title>Podcast - Medicine &amp; Mrs. Dalloway</title>
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
 
@@ -74,7 +74,16 @@
     </div>
     <p class="note-tip" id="voice-note"></p>
 
-    <div class="transcript" id="transcript"></div>
+    <div class="now-playing" id="now-playing" hidden>
+        <span class="np-label">Now playing</span>
+        <span class="np-speaker" id="np-speaker"></span>
+        <span class="np-text" id="np-text"></span>
+    </div>
+
+    <button type="button" class="ghost transcript-toggle" id="toggle-transcript" aria-expanded="false" aria-controls="transcript">
+        &#9662; Show transcript
+    </button>
+    <div class="transcript" id="transcript" hidden></div>
 
     <div class="your-turn">
         <h3>Your turn: be the third host</h3>
@@ -94,6 +103,6 @@
 
 <footer>Voices use your browser's built-in text-to-speech. Recordings stay on your device until you download them.</footer>
 
-<script src="podcast.js?v=7"></script>
+<script src="podcast.js?v=8"></script>
 </body>
 </html>

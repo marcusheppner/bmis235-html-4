@@ -267,6 +267,7 @@ function openEpisode(ep, btn) {
 
     const t = document.getElementById("transcript");
     t.innerHTML = "";
+    setTranscript(false);
     ep.lines.forEach(function (l, i) {
         const div = document.createElement("div");
         div.className = "line " + l[0];
@@ -397,6 +398,32 @@ function highlight(i) {
     document.querySelectorAll(".line.speaking").forEach(function (x) { x.classList.remove("speaking"); });
     const el = document.getElementById("line-" + i);
     if (el) el.classList.add("speaking");
+    updateNowPlaying(i);
+}
+
+// ======================================================================
+//  TRANSCRIPT: hidden by default to keep the page clean.
+//  While hidden, a "Now playing" bar shows the current line.
+// ======================================================================
+const transcriptEl = document.getElementById("transcript");
+const toggleBtn = document.getElementById("toggle-transcript");
+
+function setTranscript(open) {
+    transcriptEl.hidden = !open;
+    toggleBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    toggleBtn.innerHTML = open ? "&#9652; Hide transcript" : "&#9662; Show transcript";
+    updateNowPlaying(current && document.querySelector(".line.speaking") ? +document.querySelector(".line.speaking").id.slice(5) : -1);
+}
+toggleBtn.addEventListener("click", function () { setTranscript(transcriptEl.hidden); });
+
+function updateNowPlaying(i) {
+    const bar = document.getElementById("now-playing");
+    if (!current || i < 0 || i >= current.lines.length || !transcriptEl.hidden) { bar.hidden = true; return; }
+    const l = current.lines[i];
+    bar.hidden = false;
+    bar.classList.toggle("is-question", l[0] === "q");
+    document.getElementById("np-speaker").textContent = HOSTS[l[0]];
+    document.getElementById("np-text").textContent = l[1];
 }
 
 // ---- Speech, with a "generation" counter so cancelled lines never trigger the next one ----
@@ -640,6 +667,7 @@ function closeOpenComposer() {
 function interject(afterIndex, fromPlayback) {
     if (!current) return;
     closeOpenComposer();
+    setTranscript(true);
 
     // Pause the hosts.
     const wasPlaying = playing || fromPlayback;

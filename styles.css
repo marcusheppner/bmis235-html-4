@@ -530,3 +530,17 @@ footer {
 .line.q .speaker { color: var(--gold-light); }
 .line.q .stamp-btn { color: var(--gold-light); }
 .line.q .respond-link { color: #d8cfb8; }
+
+/* transcript toggle + now playing */
+.transcript-toggle { margin-top: 16px; }
+.transcript-toggle + .transcript { margin-top: 12px; }
+.now-playing {
+    display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap;
+    background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--gold);
+    padding: 12px 16px; margin-top: 14px;
+}
+.now-playing.is-question { border-left-color: var(--plum); }
+.np-label { font-family: var(--sans); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+.np-speaker { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--plum); }
+.np-text { flex-basis: 100%; font-size: 18px; }
+.now-playing[hidden] { display: none; }
