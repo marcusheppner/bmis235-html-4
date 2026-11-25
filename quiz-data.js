@@ -1,9 +1,8 @@
 /*
   Author: Marcus Heppner
   Course: BMIS 235 - HTML-4
-  Quiz content. Three kinds:
+  Quiz content. Two kinds:
     READING_CHECK  multiple choice about what literally happens (answer key)
-    WHO_SPEAKS     whose voice/mind a quote comes from (answer key)
     DRILLS         close-reading prompts with NO answer key; a checklist checks whether
                    your answer engages with specific features of the passage, never what
                    you conclude. Every quote is checked against the 1925 Harcourt text.
@@ -46,26 +45,6 @@ const READING_CHECK = [
       options: ["Septimus's case", "A Bill about the deferred effects of shell shock", "Lady Bruton's emigration scheme", "The Prime Minister's health"], answer: 1 },
     { id: "rc-15", review: "scene-11", q: "Who tells Clarissa about the young man's death?",
       options: ["Sir William", "Peter Walsh", "Lady Bradshaw", "Richard"], answer: 2 },
-];
-
-const SPEAKERS = ["Septimus", "Clarissa", "Rezia", "Dr. Holmes", "Sir William Bradshaw",
-                  "Lady Bradshaw", "Miss Kilman", "Peter Walsh", "The narrator"];
-
-const WHO_SPEAKS = [
-    { id: "ws-01", review: "scene-01", quote: "People must notice; people must see.", speaker: "Rezia" },
-    { id: "ws-02", review: "scene-03", quote: "Narrower and narrower would her bed be.", speaker: "Clarissa" },
-    { id: "ws-03", review: "mono-01", quote: "Men must not cut down trees. There is a God.", speaker: "Septimus" },
-    { id: "ws-04", review: "mono-06", quote: "I am alone; I am alone!", speaker: "Rezia" },
-    { id: "ws-05", review: "scene-05", quote: "health is largely a matter in our own control.", speaker: "Dr. Holmes" },
-    { id: "ws-06", review: "mono-03", quote: "Conversion is her name and she feasts on the wills of the weakly", speaker: "The narrator" },
-    { id: "ws-07", review: "mono-04", quote: "If she could have felled her it would have eased her.", speaker: "Miss Kilman" },
-    { id: "ws-08", review: "mono-05", quote: "He did not want to die. Life was good. The sun hot.", speaker: "Septimus" },
-    { id: "ws-09", review: "scene-11", quote: "We are shockingly late, dear Mrs. Dalloway, we hardly dared to come in", speaker: "Lady Bradshaw" },
-    { id: "ws-10", review: "mono-07", quote: "Death was defiance. Death was an attempt to communicate", speaker: "Clarissa" },
-    { id: "ws-11", review: "scene-06", quote: "We have been arranging that you should go into a home", speaker: "Sir William Bradshaw" },
-    { id: "ws-12", review: "scene-10", quote: "One of the triumphs of civilisation", speaker: "Peter Walsh" },
-    { id: "ws-13", review: "mono-04", quote: "Don't quite forget me", speaker: "Miss Kilman" },
-    { id: "ws-14", review: "scene-09", quote: "The coward!", speaker: "Dr. Holmes" },
 ];
 
 /*

@@ -1,7 +1,7 @@
 /*
   Author: Marcus Heppner
   Course: BMIS 235 - HTML-4
-  Quiz page logic: tabs, reading check, who's speaking, close-reading drills, progress.
+  Quiz page logic: tabs, reading check, close-reading drills, progress.
 */
 
 function load(key, fallback) {
@@ -18,8 +18,9 @@ function reviewLink(id) { return '<a href="breakdown.html?id=' + id + '">Review:
 
 const QUIZ_KEY = "dalloway-quiz";
 const READING_KEY = "dalloway-close-readings";   // shared with the breakdown pages
-let progress = load(QUIZ_KEY, { rc: {}, ws: {}, dr: {} });
-["rc", "ws", "dr"].forEach(function (k) { if (!progress[k]) progress[k] = {}; });
+let progress = load(QUIZ_KEY, { rc: {}, dr: {} });
+delete progress.ws;   // the old "Who's speaking?" quiz was removed
+["rc", "dr"].forEach(function (k) { if (!progress[k]) progress[k] = {}; });
 function saveProgress() { save(QUIZ_KEY, progress); }
 
 // ======================================================================
@@ -36,7 +37,7 @@ tabs.forEach(function (t) {
 });
 
 // ======================================================================
-//  MULTIPLE CHOICE (reading check + who's speaking)
+//  MULTIPLE CHOICE (reading check)
 // ======================================================================
 function mcCard(item, options, correctIndex, store, promptHtml) {
     const div = document.createElement("div");
@@ -80,46 +81,17 @@ function renderReadingCheck() {
     });
 }
 
-// Options for "who's speaking": the right speaker plus three others, in a stable order.
-function speakerOptions(item) {
-    const others = SPEAKERS.filter(function (s) { return s !== item.speaker; });
-    let seed = 0;
-    for (const ch of item.id) seed = (seed * 31 + ch.charCodeAt(0)) % 9973;
-    const picked = [];
-    while (picked.length < 3) {
-        seed = (seed * 7919 + 13) % 9973;
-        const s = others[seed % others.length];
-        if (picked.indexOf(s) === -1) picked.push(s);
-    }
-    const opts = picked.concat([item.speaker]);
-    // rotate so the answer isn't always last
-    const r = seed % 4;
-    return opts.slice(r).concat(opts.slice(0, r));
-}
-
-function renderWhoSpeaks() {
-    const list = document.getElementById("ws-list");
-    list.innerHTML = "";
-    WHO_SPEAKS.forEach(function (q, n) {
-        const opts = speakerOptions(q);
-        list.appendChild(mcCard(q, opts, opts.indexOf(q.speaker), "ws",
-            '<div class="role">Line ' + (n + 1) + "</div><blockquote>" + esc(q.quote) + "</blockquote>"));
-    });
-}
-
 function tally(store, items) {
     const done = items.filter(function (q) { return progress[store][q.id]; });
     const right = done.filter(function (q) { return progress[store][q.id].ok; });
     return { done: done.length, right: right.length, total: items.length };
 }
 function updateScores() {
-    const a = tally("rc", READING_CHECK), b = tally("ws", WHO_SPEAKS);
+    const a = tally("rc", READING_CHECK);
     document.getElementById("rc-score").textContent = a.right + " correct out of " + a.done + " answered (" + a.total + " questions)";
-    document.getElementById("ws-score").textContent = b.right + " correct out of " + b.done + " answered (" + b.total + " lines)";
 }
 
 document.getElementById("rc-reset").addEventListener("click", function () { progress.rc = {}; saveProgress(); renderReadingCheck(); updateScores(); });
-document.getElementById("ws-reset").addEventListener("click", function () { progress.ws = {}; saveProgress(); renderWhoSpeaks(); updateScores(); });
 
 // ======================================================================
 //  CLOSE-READING DRILLS + CHECKLIST
@@ -259,12 +231,11 @@ function openDrill(d) {
 //  PROGRESS
 // ======================================================================
 function renderProgress() {
-    const a = tally("rc", READING_CHECK), b = tally("ws", WHO_SPEAKS);
+    const a = tally("rc", READING_CHECK);
     const drillsDone = DRILLS.filter(function (d) { return progress.dr[d.id]; });
     const avg = drillsDone.length ? Math.round(drillsDone.reduce(function (t, d) { return t + progress.dr[d.id].met / progress.dr[d.id].total; }, 0) / drillsDone.length * 100) : 0;
     document.getElementById("progress-summary").innerHTML =
         '<div class="card"><div class="role">Reading check</div><h3>' + a.right + " / " + a.total + "</h3><p>" + a.done + " answered</p></div>" +
-        '<div class="card"><div class="role">Who\'s speaking?</div><h3>' + b.right + " / " + b.total + "</h3><p>" + b.done + " answered</p></div>" +
         '<div class="card"><div class="role">Close-reading drills</div><h3>' + drillsDone.length + " / " + DRILLS.length + "</h3><p>" +
             (drillsDone.length ? "Average " + avg + "% of checks met" : "None checked yet") + "</p></div>";
 
@@ -282,7 +253,6 @@ function renderProgress() {
         });
     }
     add(READING_CHECK, "rc");
-    add(WHO_SPEAKS, "ws");
     const names = Object.keys(topics).sort(function (x, y) { return topics[x].right / topics[x].done - topics[y].right / topics[y].done; });
     document.getElementById("progress-topics").innerHTML = names.length ? names.map(function (t) {
         const pct = Math.round(topics[t].right / topics[t].done * 100);
@@ -292,8 +262,8 @@ function renderProgress() {
 
     // Breakdowns to review: missed questions and drills under 60%.
     const review = [];
-    READING_CHECK.concat(WHO_SPEAKS).forEach(function (q) {
-        const r = progress.rc[q.id] || progress.ws[q.id];
+    READING_CHECK.forEach(function (q) {
+        const r = progress.rc[q.id];
         if (r && !r.ok && review.indexOf(q.review) === -1) review.push(q.review);
     });
     DRILLS.forEach(function (d) {
@@ -307,15 +277,14 @@ function renderProgress() {
 
 document.getElementById("reset-all").addEventListener("click", function () {
     if (!window.confirm("Reset all quiz progress? Your written close readings are kept.")) return;
-    progress = { rc: {}, ws: {}, dr: {} };
+    progress = { rc: {}, dr: {} };
     saveProgress();
-    renderReadingCheck(); renderWhoSpeaks(); renderDrillPicker(); updateScores(); renderProgress();
+    renderReadingCheck(); renderDrillPicker(); updateScores(); renderProgress();
 });
 
 // ---- start ----
 renderReadingCheck();
-renderWhoSpeaks();
 renderDrillPicker();
 updateScores();
 const startTab = (location.hash || "").slice(1);
-showTab(["reading", "who", "drills", "progress"].indexOf(startTab) !== -1 ? startTab : "reading");
+showTab(["reading", "drills", "progress"].indexOf(startTab) !== -1 ? startTab : "reading");
