@@ -223,13 +223,6 @@ const EPISODES = [
 const HOSTS = { a: "Vera (host)", b: "Theo (guest)", q: "Question" };
 function voiceFor(role) { return role === "b" ? "b" : "a"; }   // the host asks the questions
 
-// Short host pickups after you interject (no AI, just keeps the conversation flowing).
-const PICKUPS = [
-    ["a", "Good point. Let's keep that in mind as we go."],
-    ["b", "Hold onto that. It might change how you hear the next part."],
-    ["a", "That's worth bringing to class. Okay, picking back up."],
-    ["b", "Fair question. Let's see if the rest of this answers it."],
-];
 
 // --- small helpers for browser storage (can fail in some browsers, so wrap it) ---
 function load(key, fallback) {
@@ -273,20 +266,11 @@ function openEpisode(ep, btn) {
         div.className = "line " + l[0];
         div.id = "line-" + i;
         div.innerHTML = '<div class="speaker">' + HOSTS[l[0]] +
-            ' <button type="button" class="stamp-btn" title="Play from here"></button></div>' + l[1] +
-            '<div><button type="button" class="respond-link">&#8627; Respond here</button></div>';
+            ' <button type="button" class="stamp-btn" title="Play from here"></button></div>' + l[1];
         div.querySelector(".stamp-btn").addEventListener("click", function () { jumpTo(i, false); });
-        div.querySelector(".respond-link").addEventListener("click", function () {
-            interject(i, false);
-        });
         t.appendChild(div);
     });
 
-    // Bring back interjections you typed or that were transcribed on an earlier visit.
-    load("podcast-interjections-" + ep.id, []).forEach(function (saved) {
-        const anchor = document.getElementById("line-" + saved.after);
-        if (anchor) placeAfter(anchor, savedBubble(saved));
-    });
 
     const p = document.getElementById("prompts");
     p.innerHTML = "";
@@ -306,16 +290,14 @@ function openEpisode(ep, btn) {
 const synth = window.speechSynthesis;
 const playBtn = document.getElementById("play");
 const stopBtn = document.getElementById("stop");
-const interjectBtn = document.getElementById("interject");
 const voiceNote = document.getElementById("voice-note");
 
 let pos = 0;           // index of the next line to speak
 let playing = false;   // hosts are talking right now
-let paused = false;    // paused for an interjection
+let paused = false;    // paused by the listener
 let lineDone = true;   // did the current line finish before we paused?
-let pickupCount = 0;
 
-if (!synth) voiceNote.textContent = "Your browser can't read aloud. Read the transcript and use \"Respond here\" on any line.";
+if (!synth) voiceNote.textContent = "Your browser can't read aloud. Open the transcript to read the episode instead.";
 
 // ---- Choosing the most human-sounding voices this device has ----
 // Neural voices (Edge "Natural", Safari "Premium"/"Enhanced", Google voices in Chrome)
@@ -560,7 +542,6 @@ function pauseNow() {
 // Jump to a line. Keeps playing if it was playing, otherwise starts.
 function jumpTo(i, keepPaused) {
     if (!current || !synth) return;
-    closeOpenComposer();
     cancelSpeech();
     pos = Math.max(0, Math.min(i, current.lines.length - 1));
     lineDone = true;
@@ -594,7 +575,6 @@ function setControls() {
     playBtn.innerHTML = playing ? "&#10074;&#10074; Pause" :
         (paused ? "&#9654; Resume" : (pos > 0 ? "&#9654; Continue" : "&#9654; Play episode"));
     stopBtn.disabled = !playing && !paused;
-    interjectBtn.disabled = !playing;
     document.getElementById("back15").disabled = !has;
     document.getElementById("fwd15").disabled = !has;
 }
@@ -602,18 +582,12 @@ function setControls() {
 playBtn.addEventListener("click", function () {
     if (!current || !synth) return;
     if (playing) { pauseNow(); return; }
-    closeOpenComposer();
     paused = false;
     playing = true;
     setControls();
     speakNext();
 });
-stopBtn.addEventListener("click", function () { closeOpenComposer(); pos = 0; lineDone = true; stopAll(); });
-interjectBtn.addEventListener("click", function () {
-    // Attach to the line being spoken (or the one that just finished).
-    const at = lineDone ? Math.max(0, pos - 1) : pos;
-    interject(at, true);
-});
+stopBtn.addEventListener("click", function () { pos = 0; lineDone = true; stopAll(); });
 document.getElementById("back15").addEventListener("click", function () { skip(-15); });
 document.getElementById("fwd15").addEventListener("click", function () { skip(15); });
 
@@ -641,193 +615,13 @@ speedSel.addEventListener("change", function () {
 
 // ======================================================================
 //  INTERJECTIONS: record (with live transcript where supported) or type
-// ======================================================================
-const canRecord = !!(navigator.mediaDevices && window.MediaRecorder);
-const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-let openComposer = null;   // only one interjection box open at a time
-
-function placeAfter(anchor, el) {
-    // Put it after the anchor line and after any interjections already attached to that line.
-    let ref = anchor;
-    while (ref.nextElementSibling && ref.nextElementSibling.classList.contains("you")) ref = ref.nextElementSibling;
-    ref.after(el);
-}
-
-function savedBubble(saved) {
-    const div = document.createElement("div");
-    div.className = "line you";
-    div.innerHTML = '<div class="speaker">You &middot; ' + escapeHtml(saved.when) + "</div>" + escapeHtml(saved.text);
-    return div;
-}
-
-function closeOpenComposer() {
-    if (openComposer) openComposer.cancel();
-}
-
-function interject(afterIndex, fromPlayback) {
-    if (!current) return;
-    closeOpenComposer();
-    setTranscript(true);
-
-    // Pause the hosts.
-    const wasPlaying = playing || fromPlayback;
-    if (playing) {
-        playing = false;
-        paused = true;
-        cancelSpeech();
-        stopClock();
-        // pos already points at the next line (or the interrupted one, which replays on resume)
-        setControls();
-    }
-
-    const anchor = document.getElementById("line-" + afterIndex);
-    const box = document.createElement("div");
-    box.className = "line you composing";
-    box.innerHTML =
-        '<div class="speaker">You &middot; interjecting</div>' +
-        '<p class="note-tip ij-status"></p>' +
-        '<p class="ij-live"></p>' +
-        '<div class="row">' +
-            (canRecord ? '<button type="button" class="ij-rec">&#9679; Record</button>' : "") +
-            '<button type="button" class="ghost ij-type">Type instead</button>' +
-        "</div>" +
-        '<textarea class="ij-text" rows="3" hidden placeholder="Your question or point..."></textarea>' +
-        '<div class="ij-audio"></div>' +
-        '<div class="row" style="margin-top:10px">' +
-            '<button type="button" class="ij-done">' + (wasPlaying ? "Done, resume podcast" : "Save interjection") + "</button>" +
-            '<button type="button" class="ghost ij-cancel">Cancel</button>' +
-        "</div>";
-    placeAfter(anchor, box);
-    box.scrollIntoView({ behavior: "smooth", block: "center" });
-
-    const status = box.querySelector(".ij-status");
-    const live = box.querySelector(".ij-live");
-    const recBtn = box.querySelector(".ij-rec");
-    const text = box.querySelector(".ij-text");
-    let recorder = null, stream = null, chunks = [], recog = null, transcript = "", audioUrl = null;
-
-    status.textContent = canRecord ? "Record a question or reaction, or type it." : "Recording isn't supported here. Type your interjection.";
-    if (!canRecord) text.hidden = false;
-
-    function stopRecording() {
-        if (recorder && recorder.state === "recording") recorder.stop();
-        if (recog) { try { recog.stop(); } catch (e) {} }
-    }
-
-    async function startRecording() {
-        try {
-            stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        } catch (err) {
-            status.textContent = "Microphone access was blocked. Type your interjection instead.";
-            text.hidden = false;
-            return;
-        }
-        recorder = new MediaRecorder(stream);
-        chunks = [];
-        recorder.ondataavailable = function (e) { chunks.push(e.data); };
-        recorder.onstop = function () {
-            stream.getTracks().forEach(function (t) { t.stop(); });
-            const blob = new Blob(chunks, { type: recorder.mimeType || "audio/webm" });
-            audioUrl = URL.createObjectURL(blob);
-            box.querySelector(".ij-audio").innerHTML = '<audio controls src="' + audioUrl + '"></audio>';
-            recBtn.innerHTML = "&#9679; Re-record";
-            status.textContent = transcript ? "Recorded. Edit the transcript below if it misheard you." : "Recorded.";
-            if (transcript) { text.hidden = false; text.value = transcript.trim(); }
-        };
-        recorder.start();
-        recBtn.innerHTML = "&#9632; Stop recording";
-        status.textContent = "Recording... speak your question or point.";
-
-        // Live transcript where the browser supports it (Chrome, Edge, Safari).
-        if (Recognition) {
-            transcript = "";
-            recog = new Recognition();
-            recog.continuous = true;
-            recog.interimResults = true;
-            recog.lang = "en-US";
-            recog.onresult = function (e) {
-                let finalText = "", interim = "";
-                for (let k = 0; k < e.results.length; k++) {
-                    if (e.results[k].isFinal) finalText += e.results[k][0].transcript + " ";
-                    else interim += e.results[k][0].transcript;
-                }
-                transcript = finalText + interim;
-                live.textContent = transcript;
-            };
-            recog.onerror = function () { /* transcript is optional */ };
-            try { recog.start(); } catch (e) {}
-        }
-    }
-
-    if (recBtn) recBtn.addEventListener("click", function () {
-        if (recorder && recorder.state === "recording") stopRecording();
-        else { live.textContent = ""; startRecording(); }
-    });
-    box.querySelector(".ij-type").addEventListener("click", function () { text.hidden = false; text.focus(); });
-
-    function teardown() {
-        stopRecording();
-        openComposer = null;
-    }
-
-    box.querySelector(".ij-cancel").addEventListener("click", function () {
-        controller.cancel();
-        if (wasPlaying) resumeAfter(false);
-    });
-
-    box.querySelector(".ij-done").addEventListener("click", function () {
-        stopRecording();
-        // Give the recorder a moment to finish writing the clip.
-        setTimeout(function () {
-            const typed = text.value.trim() || transcript.trim();
-            if (!typed && !audioUrl) { status.textContent = "Record or type something first, or press Cancel."; return; }
-            teardown();
-            const when = new Date().toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
-            box.classList.remove("composing");
-            box.innerHTML = '<div class="speaker">You &middot; ' + escapeHtml(when) + "</div>" +
-                (typed ? "<p>" + escapeHtml(typed) + "</p>" : "<p class=\"note-tip\">(voice only)</p>") +
-                (audioUrl ? '<audio controls src="' + audioUrl + '"></audio>' +
-                    '<a href="' + audioUrl + '" download="dalloway-' + current.id + '-interjection.webm">Download clip</a>' : "");
-            if (typed) {
-                const list = load("podcast-interjections-" + current.id, []);
-                list.push({ after: afterIndex, text: typed, when: when });
-                save("podcast-interjections-" + current.id, list);
-            }
-            if (wasPlaying) resumeAfter(true);
-        }, 300);
-    });
-
-    const controller = {
-        cancel: function () { teardown(); box.remove(); },
-    };
-    openComposer = controller;
-
-    // From the Interject button, start recording right away (or open the text box).
-    if (fromPlayback) {
-        if (canRecord) startRecording(); else text.focus();
-    }
-}
-
-function resumeAfter(withPickup) {
-    if (!current || !synth) { setControls(); return; }
-    paused = false;
-    playing = true;
-    setControls();
-    if (withPickup) {
-        const p = PICKUPS[pickupCount++ % PICKUPS.length];
-        sayLine(p[0], p[1], speakNext);
-    } else {
-        speakNext();
-    }
-}
-
 // --- record your own take at the end ---
 const recBtn = document.getElementById("rec");
 const recStatus = document.getElementById("rec-status");
 let endRecorder = null;
 let endChunks = [];
 
-if (!canRecord) {
+if (!(navigator.mediaDevices && window.MediaRecorder)) {
     recBtn.disabled = true;
     recStatus.textContent = "Recording isn't supported in this browser. Write your take instead.";
 }
