@@ -1,9 +1,10 @@
 /*
   Author: Marcus Heppner
   Course: BMIS 235 - HTML-4
-  Class notes chat. Each topic below has keywords; a note is matched to the topics
-  whose keywords it mentions most. To teach the chat something new, add a topic
-  or add keywords to an existing one.
+  Discussion Chat. Ask a question or jot a thought; the chat looks for matching points in
+  my class discussion notes (discussion-data.js) first, then in the site's theme guide
+  (TOPICS below). It answers with my notes, quotes with page estimates, and questions,
+  not with finished interpretations. It matches keywords; it is not an AI model.
 */
 
 const TOPICS = [
@@ -109,70 +110,64 @@ const TOPICS = [
 
 const STORE = "dalloway-notes";
 function load() { try { return JSON.parse(localStorage.getItem(STORE)) || []; } catch (e) { return []; } }
-function persist(list) {
-    try { localStorage.setItem(STORE, JSON.stringify(list)); return true; } catch (e) { return false; }
-}
+function persist(list) { try { localStorage.setItem(STORE, JSON.stringify(list)); return true; } catch (e) { return false; } }
 
 let notes = load();
 const box = document.getElementById("messages");
 
 function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; });
+    return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; });
 }
 
-// Short keys (4 letters or fewer) must be whole words, so "war" doesn't match "toward".
-// Longer keys match the start of a word, so "isolat" matches "isolation".
+// Short keys (4 letters or fewer) must be whole words; longer keys match the start of a word.
 function hasKey(text, key) {
     const safe = key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const pattern = key.length <= 4 ? "\\b" + safe + "\\b" : "\\b" + safe;
-    return new RegExp(pattern).test(text);
+    return new RegExp(key.length <= 4 ? "\\b" + safe + "\\b" : "\\b" + safe).test(text);
 }
-
-function match(text, max) {
+function score(text, keys) {
     const t = text.toLowerCase();
-    return TOPICS.map(function (topic) {
-        const score = topic.keys.reduce(function (n, k) { return n + (hasKey(t, k) ? 1 : 0); }, 0);
-        return { topic: topic, score: score };
-    }).filter(function (m) { return m.score > 0; })
-      .sort(function (a, b) { return b.score - a.score; })
-      .slice(0, max || 2)
-      .map(function (m) { return m.topic; });
+    return keys.reduce(function (n, k) { return n + (hasKey(t, k) ? 1 : 0); }, 0);
+}
+function best(list, text, getKeys, max) {
+    return list.map(function (x) { return { x: x, s: score(text, getKeys(x)) }; })
+        .filter(function (m) { return m.s > 0; })
+        .sort(function (a, b) { return b.s - a.s; })
+        .slice(0, max).map(function (m) { return m.x; });
 }
 
-function replyFor(note) {
-    const hits = match(note.text, note.photo ? 3 : 2);
-    if (!hits.length) {
-        return "<p>Saved. I couldn't link this to the medicine theme. Try naming a doctor, an idea, or a passage " +
-               "(like <em>Bradshaw</em>, <em>proportion</em>, <em>shell shock</em>, <em>Rezia</em>, or <em>the party</em>). " +
-               "If it's about another part of the book, it's still kept in your notes.</p>";
-    }
-    // Look for earlier notes on the same theme so the chat can connect class sessions.
-    const earlier = notes.filter(function (n) {
-        return n.id !== note.id && n.topics && n.topics.indexOf(hits[0].name) !== -1;
-    });
+function quoteLine(q) {
+    const est = (typeof estimatePage === "function") ? estimatePage(q[0]) : null;
+    return "<p>&ldquo;" + escapeHtml(q[0]) + "&rdquo;" + (est ? ' <span class="stamp-inline">(about p. ' + est.page + ")</span>" : "") + "</p>";
+}
+
+function replyFor(text) {
+    const disc = best(DISCUSSION, text, function (d) { return d.keys; }, 2);
     let html = "";
-    hits.forEach(function (h, i) {
-        html += "<h4>" + (i === 0 ? "Theme: " : "Also: ") + h.name + "</h4><p>" + h.say + "</p>";
-    });
-    html += "<h4>Passages to reread</h4><p>" + hits[0].scenes.filter(function (id) {
-        return typeof BREAKDOWNS !== "undefined" && BREAKDOWNS[id];
-    }).map(function (id) {
-        return '<a href="breakdown.html?id=' + id + '">' + escapeHtml(BREAKDOWNS[id].title.replace(/"/g, "")) + "</a>";
-    }).join(" &middot; ") + "</p>";
-    if (earlier.length) {
-        const last = earlier[earlier.length - 1];
-        html += "<h4>From your earlier notes</h4><p>You've noted <strong>" + hits[0].name + "</strong> " +
-                earlier.length + " time" + (earlier.length > 1 ? "s" : "") + " before, most recently: <em>\"" +
-                escapeHtml(last.text.slice(0, 120)) + (last.text.length > 120 ? "..." : "") + "\"</em></p>";
+    if (disc.length) {
+        const d = disc[0];
+        html += "<h4>From class (" + escapeHtml(d.date) + "): " + escapeHtml(d.title.replace(/"/g, "")) + "</h4>" +
+                "<ul>" + d.notes.map(function (n) { return "<li>" + escapeHtml(n) + "</li>"; }).join("") + "</ul>";
+        html += "<h4>In the text</h4>" + d.quotes.slice(0, 2).map(quoteLine).join("");
+        html += "<h4>A question to think about</h4><p>" + escapeHtml(d.further[0]) + "</p>";
+        html += '<p><a href="discussion.html#' + d.id + '">See all of &ldquo;' + escapeHtml(d.title.replace(/"/g, "")) + "&rdquo; &rarr;</a>";
+        if (disc[1]) html += ' &middot; Also related: <a href="discussion.html#' + disc[1].id + '">' + escapeHtml(disc[1].title.replace(/"/g, "")) + "</a>";
+        html += "</p>";
+        return html;
     }
-    html += "<h4>A question to think about</h4><p>" + hits[0].ask + "</p>";
-    return html;
+    const topic = best(TOPICS, text, function (t) { return t.keys; }, 1)[0];
+    if (topic) {
+        html += "<h4>Not in your class notes yet. From the site's guide: " + escapeHtml(topic.name) + "</h4><p>" + topic.say + "</p>";
+        html += "<h4>A question to think about</h4><p>" + escapeHtml(topic.ask) + "</p>";
+        return html;
+    }
+    return "<p>I couldn't connect that to your class notes or the site's topics. Try naming a character, a word from " +
+           "class, or a passage (like <em>Holmes</em>, <em>human nature</em>, <em>conversion</em>, <em>communication</em>, " +
+           "or <em>proportion</em>).</p>";
 }
 
 function stamp(ts) {
     return new Date(ts).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 }
-
 function addBubble(cls, html, ts) {
     const d = document.createElement("div");
     d.className = "msg " + cls;
@@ -181,216 +176,64 @@ function addBubble(cls, html, ts) {
     box.scrollTop = box.scrollHeight;
 }
 
-function userBubbleHtml(n) {
-    const img = n.photo ? '<img class="note-photo" src="' + n.photo + '" alt="Photo of handwritten notes">' : "";
-    const label = n.photo ? '<span class="photo-label">' + CAMERA_ICON + " From your handwritten notes</span>" : "";
-    return img + label + escapeHtml(n.text).replace(/\n/g, "<br>");
-}
-
-function renderTracker() {
-    const counts = {};
-    TOPICS.filter(function (t) { return t.theme; }).forEach(function (t) { counts[t.name] = 0; });
-    notes.forEach(function (n) { (n.topics || []).forEach(function (name) { if (name in counts) counts[name]++; }); });
-    const max = Math.max(1, ...Object.values(counts));
-    document.getElementById("tracker").innerHTML = Object.keys(counts)
-        .sort(function (a, b) { return counts[b] - counts[a]; })
-        .map(function (name) {
-            return '<div class="bar"><span>' + name + '</span><span class="fill" style="width:' +
-                   (counts[name] / max * 100) + 'px"></span><span>' + counts[name] + "</span></div>";
-        }).join("");
+function renderAll() {
+    box.innerHTML = "";
+    addBubble("bot", "<p>Ask a question or jot a thought about your class discussion. I'll point you to the matching notes " +
+              "from class, the passages they connect to (with page estimates), and a question to push the idea further.</p>");
+    notes.forEach(function (n) {
+        addBubble("user", escapeHtml(n.text).replace(/\n/g, "<br>"), n.ts);
+        addBubble("bot", replyFor(n.text));
+    });
     document.getElementById("count").textContent = notes.length;
 }
 
-function renderAll() {
-    box.innerHTML = "";
-    addBubble("bot", "<p>Hi! Send me a note from class and I'll connect it to the novel. Your notes are saved in this browser, " +
-              "so the more you add, the more I can link today's discussion to earlier ones.</p>");
-    const all = notes;
-    all.forEach(function (n, i) {
-        addBubble("user", userBubbleHtml(n), n.ts);
-        notes = all.slice(0, i + 1);   // so "earlier notes" only counts notes before this one
-        addBubble("bot", replyFor(n));
-    });
-    notes = all;
-    renderTracker();
+function send(text) {
+    text = text.trim();
+    if (!text) return;
+    const n = { id: Date.now(), ts: Date.now(), text: text };
+    notes.push(n);
+    persist(notes);
+    addBubble("user", escapeHtml(text).replace(/\n/g, "<br>"), n.ts);
+    addBubble("bot", replyFor(text));
+    document.getElementById("count").textContent = notes.length;
 }
 
 document.getElementById("composer").addEventListener("submit", function (e) {
     e.preventDefault();
     const input = document.getElementById("input");
-    const text = input.value.trim();
-    if (!text) return;
-    addNote(text, null);
+    send(input.value);
     input.value = "";
 });
-
 document.getElementById("input").addEventListener("keydown", function (e) {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); document.getElementById("composer").requestSubmit(); }
 });
 
 document.getElementById("export").addEventListener("click", function () {
-    const text = notes.map(function (n) {
-        return "[" + stamp(n.ts) + "]" + (n.photo ? " (from photo)" : "") + " " + n.text + (n.topics.length ? "\n   Themes: " + n.topics.join(", ") : "");
-    }).join("\n\n");
+    const text = notes.map(function (n) { return "[" + stamp(n.ts) + "] " + n.text; }).join("\n\n");
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([text || "No notes yet."], { type: "text/plain" }));
-    a.download = "mrs-dalloway-class-notes.txt";
+    a.href = URL.createObjectURL(new Blob([text || "No messages yet."], { type: "text/plain" }));
+    a.download = "mrs-dalloway-discussion-chat.txt";
     a.click();
 });
-
 document.getElementById("clear").addEventListener("click", function () {
     if (!notes.length) return;
-    if (!window.confirm("Delete all your saved notes? Download them first if you want a copy.")) return;
+    if (!window.confirm("Clear your chat history? Download it first if you want a copy.")) return;
     notes = [];
     persist(notes);
     renderAll();
 });
 
-// ======================================================================
-//  ADDING A NOTE (typed or from a photo)
-// ======================================================================
-function addNote(text, photo) {
-    const note = { id: Date.now(), ts: Date.now(), text: text, photo: photo || null };
-    note.topics = match(text, photo ? 3 : 2).map(function (t) { return t.name; });
-    notes.push(note);
-    if (!persist(notes) && photo) {
-        // Browser storage is full: keep the text, drop the picture.
-        note.photo = null;
-        persist(notes);
-        addBubble("bot", "<p>Your browser's storage is full, so I saved the text from this photo but not the picture itself. " +
-                  "Download your notes to keep a backup.</p>");
-    }
-    addBubble("user", userBubbleHtml(note), note.ts);
-    addBubble("bot", replyFor(note));
-    renderTracker();
-}
-
-// ======================================================================
-//  PHOTOS OF HANDWRITTEN NOTES
-//  1. shrink + clean up the image   2. read it with Tesseract.js (OCR)
-//  3. let you fix the text          4. add it as a note
-// ======================================================================
-const CAMERA_ICON = '<svg class="icon-camera" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.6-2.4A1.5 1.5 0 0 1 9.9 5h4.2a1.5 1.5 0 0 1 1.3.6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>';
-const TESSERACT_URL = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
-let tesseractLoading = null;
-
-function loadTesseract() {
-    if (window.Tesseract) return Promise.resolve(window.Tesseract);
-    if (!tesseractLoading) {
-        tesseractLoading = new Promise(function (resolve, reject) {
-            const sc = document.createElement("script");
-            sc.src = TESSERACT_URL;
-            sc.onload = function () { resolve(window.Tesseract); };
-            sc.onerror = function () { tesseractLoading = null; reject(new Error("load failed")); };
-            document.head.appendChild(sc);
-        });
-    }
-    return tesseractLoading;
-}
-
-function loadImage(file) {
-    return new Promise(function (resolve, reject) {
-        const url = URL.createObjectURL(file);
-        const img = new Image();
-        img.onload = function () { resolve(img); };
-        img.onerror = reject;
-        img.src = url;
-    });
-}
-
-// Draw the image on a canvas at a given max size; optionally boost contrast for OCR.
-function toCanvas(img, maxSide, forOcr) {
-    const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
-    const c = document.createElement("canvas");
-    c.width = Math.round(img.width * scale);
-    c.height = Math.round(img.height * scale);
-    const ctx = c.getContext("2d");
-    ctx.drawImage(img, 0, 0, c.width, c.height);
-    if (forOcr) {
-        const d = ctx.getImageData(0, 0, c.width, c.height);
-        const px = d.data;
-        for (let k = 0; k < px.length; k += 4) {
-            const gray = 0.299 * px[k] + 0.587 * px[k + 1] + 0.114 * px[k + 2];
-            const v = Math.max(0, Math.min(255, (gray - 128) * 1.6 + 140));   // grayscale + contrast
-            px[k] = px[k + 1] = px[k + 2] = v;
-        }
-        ctx.putImageData(d, 0, 0);
-    }
-    return c;
-}
-
-function cleanOcr(text) {
-    return text.replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim();
-}
-
-async function handlePhoto(file) {
-    const card = document.createElement("div");
-    card.className = "msg user photo-review";
-    card.innerHTML = '<span class="photo-label">' + CAMERA_ICON + " Reading your notes...</span>" +
-        '<div class="ocr-progress"><div class="ocr-fill"></div></div>' +
-        '<p class="ocr-status">Loading the page...</p>';
-    box.appendChild(card);
-    box.scrollTop = box.scrollHeight;
-    const status = card.querySelector(".ocr-status");
-    const fill = card.querySelector(".ocr-fill");
-
-    let img;
-    try { img = await loadImage(file); } catch (e) {
-        card.innerHTML = "<p>That file couldn't be opened as an image. Try a JPG or PNG.</p>";
-        return;
-    }
-    const thumb = toCanvas(img, 640, false).toDataURL("image/jpeg", 0.6);
-    card.insertAdjacentHTML("afterbegin", '<img class="note-photo" src="' + thumb + '" alt="Your notes">');
-
-    let text = "";
-    let failed = false;
-    try {
-        status.textContent = "Loading the handwriting reader (first time takes a few seconds)...";
-        const T = await loadTesseract();
-        const worker = await T.createWorker("eng", 1, {
-            logger: function (m) {
-                if (m.status === "recognizing text") {
-                    fill.style.width = Math.round(m.progress * 100) + "%";
-                    status.textContent = "Reading handwriting... " + Math.round(m.progress * 100) + "%";
-                }
-            },
-        });
-        const result = await worker.recognize(toCanvas(img, 2000, true));
-        await worker.terminate();
-        text = cleanOcr(result.data.text || "");
-    } catch (e) {
-        failed = true;
-    }
-
-    card.querySelector(".ocr-progress").remove();
-    card.querySelector(".photo-label").innerHTML = CAMERA_ICON + " Check the text before adding";
-    status.innerHTML = failed
-        ? "I couldn't load the handwriting reader (are you offline?). Type the key points from this page below."
-        : (text
-            ? "Here's what I could read. Handwriting is tricky, so fix any mistakes or add what it missed:"
-            : "I couldn't make out any words. Try a brighter, straight-on photo, or type the key points below.");
-    card.insertAdjacentHTML("beforeend",
-        '<textarea class="ocr-text" rows="7"></textarea>' +
-        '<div class="row"><button type="button" class="ocr-add">Add to my notes</button>' +
-        '<button type="button" class="ghost ocr-skip">Discard</button></div>');
-    const ta = card.querySelector(".ocr-text");
-    ta.value = text;
-    ta.focus();
-    box.scrollTop = box.scrollHeight;
-
-    card.querySelector(".ocr-skip").addEventListener("click", function () { card.remove(); });
-    card.querySelector(".ocr-add").addEventListener("click", function () {
-        const finalText = ta.value.trim();
-        if (!finalText) { status.textContent = "Add at least a few words so I can connect it to the novel."; return; }
-        card.remove();
-        addNote(finalText, thumb);
-    });
-}
-
-document.getElementById("photo").addEventListener("change", async function (e) {
-    const files = Array.from(e.target.files || []);
-    e.target.value = "";
-    for (const f of files) await handlePhoto(f);   // one at a time so each can be checked
+// Topic list in the sidebar, built from the class notes.
+document.getElementById("topic-list").innerHTML = DISCUSSION.map(function (d) {
+    return '<button type="button" class="ghost topic-btn" data-q="' + escapeHtml(d.title.replace(/"/g, "")) + '">' +
+           escapeHtml(d.title.replace(/"/g, "")) + "</button>";
+}).join("");
+document.querySelectorAll(".topic-btn").forEach(function (b) {
+    b.addEventListener("click", function () { send(b.dataset.q); });
 });
 
 renderAll();
+
+// Arriving from the Class Discussion page with ?ask=...
+const ask = new URLSearchParams(location.search).get("ask");
+if (ask) { document.getElementById("input").value = "Tell me about " + ask; document.getElementById("input").focus(); }

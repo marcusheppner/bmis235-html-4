@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+  Author: Marcus Heppner
+  GU username: marcusheppner
+  Course: BMIS 235 - HTML-4
+  Page: Class Discussion - my class notes, organized, with related quotes, page estimates and questions.
+  Content lives in discussion-data.js.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Marcus Heppner">
+<title>Class Discussion - Medicine &amp; Mrs. Dalloway</title>
+<link rel="stylesheet" href="styles.css?v=12">
+</head>
+<body>
+
+<nav>
+    <a class="brand" href="index.html">Medicine &amp; Mrs. Dalloway</a>
+    <a href="index.html">Home</a>
+    <a href="scenes.html">Key Scenes</a>
+    <a href="podcast.html">Podcast</a>
+    <a class="active" href="discussion.html">Class Discussion</a>
+    <a href="notes.html">Discussion Chat</a>
+    <a href="quiz.html">Quiz</a>
+</nav>
+
+<header class="hero">
+    <div class="kicker">From my class notes</div>
+    <h1>Class Discussion</h1>
+    <p>The points from class, organized, with the passages they connect to, estimated page numbers for the NYRB
+       edition, and questions for taking each idea further on your own.</p>
+    <div class="toc" id="toc"></div>
+</header>
+
+<main id="discussion"></main>
+
+<footer>Built by Marcus Heppner for BMIS 235 &middot; Quotes checked against the 1925 Harcourt text; page estimates are for the NYRB Classics edition.</footer>
+
+<script src="breakdowns.js?v=12"></script>
+<script src="discussion-data.js?v=12"></script>
+<script>
+/* Builds the page from DISCUSSION (discussion-data.js). */
+(function () {
+    function esc(s) {
+        return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; });
+    }
+    document.getElementById("toc").innerHTML = DISCUSSION.map(function (d) {
+        return '<a href="#' + d.id + '">' + esc(d.title.replace(/"/g, "")) + "</a>";
+    }).join("");
+
+    document.getElementById("discussion").innerHTML = DISCUSSION.map(function (d) {
+        const flow = d.flow ? '<div class="flow">' + d.flow.map(function (f) { return "<span>" + esc(f) + "</span>"; }).join('<span class="arrow">&darr;</span>') + "</div>" : "";
+        const quotes = d.quotes.map(function (q) {
+            const est = estimatePage(q[0]);
+            return '<div class="disc-quote"><blockquote>' + esc(q[0]) + "</blockquote>" +
+                (est ? '<p class="est-page">About <strong>p. ' + est.page + "</strong> (check pp. " + est.from + "&ndash;" + est.to + ")</p>" : "") +
+                '<p class="meaning"><strong>In plain English:</strong> ' + esc(q[1]) + "</p></div>";
+        }).join("");
+        const links = (d.links || []).filter(function (k) { return BREAKDOWNS[k]; }).map(function (k) {
+            return '<a class="chip" href="breakdown.html?id=' + k + '">' + esc(BREAKDOWNS[k].title.replace(/"/g, "")) + "</a>";
+        }).join("");
+        return '<section id="' + d.id + '">' +
+            "<h2>" + esc(d.title) + "</h2>" +
+            '<div class="kicker" style="text-align:left">Class of ' + esc(d.date) + "</div>" +
+            '<div class="card"><h3>From class</h3><ul class="notice-list">' +
+                d.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>" + flow + "</div>" +
+            '<h3 class="sub">In the text</h3>' + quotes +
+            '<div class="plain angle"><strong>Taking it further:</strong><ul class="notice-list">' +
+                d.further.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul></div>" +
+            (links ? '<div class="row">' + links + "</div>" : "") +
+            '<p class="note-tip"><a href="notes.html?ask=' + encodeURIComponent(d.title.replace(/"/g, "")) + '">Ask about this in the Discussion Chat &rarr;</a></p>' +
+            "</section>";
+    }).join("");
+    if (location.hash) { const el = document.getElementById(location.hash.slice(1)); if (el) el.scrollIntoView(); }
+})();
+</script>
+</body>
+</html>

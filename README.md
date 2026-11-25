@@ -17,7 +17,8 @@ Live site (once GitHub Pages is on): https://marcusheppner.github.io/bmis235-htm
 - `breakdown.html` + `breakdown.js` + `breakdowns.js`: One page that shows any breakdown (`breakdown.html?id=scene-05`, `?id=mono-03`). It covers what happens, why it matters, key quotes with their underlying meaning, a page-number finder (photograph your book page), and a box for your own close reading. All content lives in `breakdowns.js`.
 - `ocr.js`: Shared photo-reading helpers (Tesseract.js) used by the page finder.
 - `podcast.html` + `podcast.js`: Two hosts debate a question about the novel (read aloud by the browser), then you record or write your own take.
-- `notes.html` + `notes.js`: Class notes chat. Send in typed notes or photos of handwritten notes and get them linked to themes, characters, scenes, and your earlier notes.
+- `discussion.html` + `discussion-data.js`: Class Discussion. Class notes organized by topic, with related quotes, page estimates and questions for taking each idea further. Add new class sessions to `discussion-data.js`.
+- `notes.html` + `notes.js`: Discussion Chat. Answers questions from the class discussion notes first, then the site's theme guide (keyword matching, not AI).
 - `quiz.html` + `quiz.js` + `quiz-data.js`: Quiz. Reading check (with answers), close-reading drills with a passage-specific checklist (no answer key; feedback mode is set up so an AI option could be added later), and a progress tracker. Drill answers share storage with each breakdown's "My close reading" box.
 - `styles.css`: Shared styles for every page.
 

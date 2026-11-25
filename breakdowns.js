@@ -532,6 +532,14 @@ const EDITION = {
 };
 
 const SOURCE_PAGES = {
+    // added for the Class Discussion page (11/19 notes)
+    "Why not try two tabloids of bromide dissolved in a glass of water at bedtime?": 137,
+    "Human nature, in short, was on him—the repulsive brute, with the blood-red nostrils.": 139,
+    "Once you stumble, Septimus wrote on the back of a postcard, human nature is on you. Holmes is on you.": 139,
+    "Communication is health; communication is happiness": 141,
+    "seeing human nature, that is Dr. Holmes, enter the room": 141,
+    "the heat and sands of India, the mud and swamp of Africa, the purlieus of London": 151,
+    "She must be brave and drink something": 227,
     "Septimus Warren Smith, aged about thirty, pale-faced, beak-nosed": 20,
     "It is I who am blocking the way, he thought.": 21,
     "People must notice; people must see.": 22,

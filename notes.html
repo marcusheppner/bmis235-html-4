@@ -3,15 +3,15 @@
   Author: Marcus Heppner
   GU username: marcusheppner
   Course: BMIS 235 - HTML-4
-  Page: Class notes chat - send in notes, get them linked to themes, characters and scenes
+  Page: Discussion Chat - ask questions in the context of my class discussion notes.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="Marcus Heppner">
-<title>Class Notes Chat - Medicine &amp; Mrs. Dalloway</title>
-<link rel="stylesheet" href="styles.css?v=11">
+<title>Discussion Chat - Medicine &amp; Mrs. Dalloway</title>
+<link rel="stylesheet" href="styles.css?v=12">
 </head>
 <body>
 
@@ -20,16 +20,16 @@
     <a href="index.html">Home</a>
     <a href="scenes.html">Key Scenes</a>
     <a href="podcast.html">Podcast</a>
-    <a class="active" href="notes.html">Class Notes Chat</a>
+    <a href="discussion.html">Class Discussion</a>
+    <a class="active" href="notes.html">Discussion Chat</a>
     <a href="quiz.html">Quiz</a>
 </nav>
 
 <header class="hero">
-    <div class="kicker">Your notebook, connected to the novel</div>
-    <h1>Class Notes Chat</h1>
-    <p>Type a note from class, or snap a photo of your handwritten notes. The chat links it to
-       the themes, characters, and scenes it fits and gives you a follow-up question. Over time, the tracker
-       shows which themes your class keeps coming back to.</p>
+    <div class="kicker">In the context of class</div>
+    <h1>Discussion Chat</h1>
+    <p>Ask a question or try out a thought. The chat answers from your <a href="discussion.html" style="color:var(--gold-light)">class
+       discussion notes</a>: the matching points from class, the passages they connect to, and a question to take further.</p>
 </header>
 
 <main>
@@ -37,42 +37,33 @@
     <div class="chat">
         <div class="messages" id="messages"></div>
         <form class="composer" id="composer">
-            <label class="photo-btn" title="Add a photo of handwritten notes">
-                <svg class="icon-camera" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.6-2.4A1.5 1.5 0 0 1 9.9 5h4.2a1.5 1.5 0 0 1 1.3.6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
-                <input type="file" id="photo" accept="image/*" multiple hidden>
-            </label>
-            <textarea id="input" placeholder="Type a note about medicine &amp; norms, or tap the camera to add a photo of your notes"></textarea>
+            <textarea id="input" placeholder="e.g. Why did we say Holmes is &quot;human nature&quot;?"></textarea>
             <button type="submit">Send</button>
         </form>
     </div>
 
     <aside class="sidebar">
         <div class="card">
-            <h3>Theme tracker</h3>
-            <p class="note-tip">How often each theme shows up in your notes.</p>
-            <div id="tracker"></div>
+            <h3>Topics from class</h3>
+            <p class="note-tip">Tap one to start.</p>
+            <div id="topic-list" class="topic-list"></div>
         </div>
         <div class="card">
-            <h3>Your notes</h3>
-            <p class="note-tip"><span id="count">0</span> notes saved in this browser.</p>
+            <h3>Your chat</h3>
+            <p class="note-tip"><span id="count">0</span> messages saved in this browser.</p>
             <div class="row">
-                <button class="ghost" id="export" type="button">Download notes</button>
+                <button class="ghost" id="export" type="button">Download</button>
                 <button class="ghost" id="clear" type="button">Clear</button>
             </div>
-        </div>
-        <div class="card">
-            <h3>Try sending</h3>
-            <p class="note-tip">A photo of a page of notes (camera button)<br>"Prof said proportion = a social ideal"<br>
-               "Holmes calls him a coward, link to masculinity?"<br>"Bradshaw at the party writing the shell shock bill"<br>"Woolf's rest cure"</p>
         </div>
     </aside>
 </div>
 </main>
 
-<footer>This chat runs in your browser and matches your notes to a built-in guide to the novel. It is not an AI model.
-    Handwriting is read with the free Tesseract.js library, so check the text before adding it.</footer>
+<footer>This chat matches keywords against your class notes and the site's guide. It is not an AI model.</footer>
 
-<script src="breakdowns.js?v=10"></script>
-<script src="notes.js?v=4"></script>
+<script src="breakdowns.js?v=12"></script>
+<script src="discussion-data.js?v=12"></script>
+<script src="notes.js?v=12"></script>
 </body>
 </html>
