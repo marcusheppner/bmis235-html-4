@@ -533,3 +533,28 @@ footer {
 .notice-list { margin: 8px 0 0; padding-left: 22px; }
 .notice-list li { margin: 4px 0; }
 .open-list li { margin: 10px 0; }
+
+/* quiz */
+.quiz-tabs a.on { background: var(--gold); color: var(--night); }
+.quiz-card { margin-bottom: 14px; }
+.quiz-card blockquote { font-size: 20px; margin: 4px 0 10px; }
+.options { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; margin-top: 10px; }
+.option { text-align: left; background: #fffdf6; color: var(--ink); border: 1px solid var(--line); font-family: var(--serif);
+          font-size: 17px; letter-spacing: 0; text-transform: none; }
+.option:hover:not(:disabled) { background: var(--paper-2); color: var(--ink); border-color: var(--gold); }
+.option:disabled { opacity: 1; cursor: default; }
+.option.right { background: #e3eee4; border-color: var(--sage); border-color: #4f7a5a; }
+.option.wrong { background: #f3dfdb; border-color: var(--sage); }
+.quiz-feedback { margin: 10px 0 0; font-size: 16px; }
+.score-line { font-family: var(--sans); font-size: 14px; letter-spacing: .05em; color: var(--plum); }
+.drill-picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 14px 0 20px; }
+.drill-btn small { display: block; }
+.drill-card textarea { margin-top: 12px; }
+.checklist { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+.checklist h4 { font-family: var(--sans); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin: 14px 0 6px; }
+.checklist ul { list-style: none; padding: 0; margin: 0; }
+.checklist li { padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.checklist .tick { display: inline-block; width: 24px; font-weight: bold; }
+.checklist li.met .tick { color: #4f7a5a; }
+.checklist li.unmet .tick { color: var(--muted); }
+.checklist .hint { display: block; margin-left: 24px; font-size: 15px; color: var(--muted); font-style: italic; }

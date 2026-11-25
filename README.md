@@ -18,6 +18,7 @@ Live site (once GitHub Pages is on): https://marcusheppner.github.io/bmis235-htm
 - `ocr.js`: Shared photo-reading helpers (Tesseract.js) used by the page finder.
 - `podcast.html` + `podcast.js`: Two hosts debate a question about the novel (read aloud by the browser), then you record or write your own take.
 - `notes.html` + `notes.js`: Class notes chat. Send in typed notes or photos of handwritten notes and get them linked to themes, characters, scenes, and your earlier notes.
+- `quiz.html` + `quiz.js` + `quiz-data.js`: Quiz. Reading check and "Who's speaking?" (with answers), close-reading drills with a passage-specific checklist (no answer key; feedback mode is set up so an AI option could be added later), and a progress tracker. Drill answers share storage with each breakdown's "My close reading" box.
 - `styles.css`: Shared styles for every page.
 
 ## Notes

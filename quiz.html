@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--
+  Author: Marcus Heppner
+  GU username: marcusheppner
+  Course: BMIS 235 - HTML-4
+  Page: Quiz - reading checks, who's speaking, close-reading drills with a checklist, and progress.
+  Content lives in quiz-data.js; logic in quiz.js.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Marcus Heppner">
+<title>Quiz - Medicine &amp; Mrs. Dalloway</title>
+<link rel="stylesheet" href="styles.css?v=11">
+</head>
+<body>
+
+<nav>
+    <a class="brand" href="index.html">Medicine &amp; Mrs. Dalloway</a>
+    <a href="index.html">Home</a>
+    <a href="scenes.html">Key Scenes</a>
+    <a href="podcast.html">Podcast</a>
+    <a href="notes.html">Class Notes Chat</a>
+    <a class="active" href="quiz.html">Quiz</a>
+</nav>
+
+<header class="hero">
+    <div class="kicker">Check your reading</div>
+    <h1>Quiz</h1>
+    <p>Test what you've read and practice close reading. Reading checks and "Who's speaking?" have answers. The
+       close-reading drills don't: a checklist tells you which features of the passage your answer deals with,
+       never what you should conclude.</p>
+    <div class="toc quiz-tabs" role="tablist">
+        <a href="#reading" data-tab="reading" role="tab">Reading check</a>
+        <a href="#who" data-tab="who" role="tab">Who's speaking?</a>
+        <a href="#drills" data-tab="drills" role="tab">Close-reading drills</a>
+        <a href="#progress" data-tab="progress" role="tab">My progress</a>
+    </div>
+</header>
+
+<main>
+
+<section id="reading" class="quiz-panel">
+    <h2>Reading check</h2>
+    <p class="note-tip">What literally happens. Each wrong answer links to the breakdown that covers it.</p>
+    <div class="row"><span class="score-line" id="rc-score"></span>
+        <button type="button" class="ghost" id="rc-reset" style="margin-left:auto">Retake</button></div>
+    <div id="rc-list"></div>
+</section>
+
+<section id="who" class="quiz-panel" hidden>
+    <h2>Who's speaking?</h2>
+    <p class="note-tip">Whose voice or mind does each line come from? With stream of consciousness, this is half the battle.</p>
+    <div class="row"><span class="score-line" id="ws-score"></span>
+        <button type="button" class="ghost" id="ws-reset" style="margin-left:auto">Retake</button></div>
+    <div id="ws-list"></div>
+</section>
+
+<section id="drills" class="quiz-panel" hidden>
+    <h2>Close-reading drills</h2>
+    <p class="note-tip">No answer key. Write your reading, then check it: the checklist looks for whether you engaged with
+       specific words and features of the passage. It can't judge whether your idea is good, only whether you looked
+       closely. Your answer is also saved to that quote's "My close reading" box on its breakdown page.</p>
+    <div class="drill-picker" id="drill-picker"></div>
+    <div id="drill-area"></div>
+</section>
+
+<section id="progress" class="quiz-panel" hidden>
+    <h2>My progress</h2>
+    <div class="grid" id="progress-summary"></div>
+    <h3 style="margin-top:28px">By topic</h3>
+    <p class="note-tip">Reading check and "Who's speaking?" results grouped by theme.</p>
+    <div id="progress-topics"></div>
+    <h3 style="margin-top:28px">Worth reviewing</h3>
+    <div class="row" id="progress-review"></div>
+    <p style="margin-top:28px"><button type="button" class="ghost" id="reset-all">Reset all quiz progress</button></p>
+</section>
+
+</main>
+
+<footer>Built by Marcus Heppner for BMIS 235 &middot; Progress is saved in this browser.</footer>
+
+<script src="breakdowns.js?v=11"></script>
+<script src="quiz-data.js?v=11"></script>
+<script src="quiz.js?v=11"></script>
+</body>
+</html>
