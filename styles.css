@@ -327,19 +327,19 @@ footer { text-align: center; color: var(--muted); font-size: 14px; padding: 30px
    block to go back to the original look.
    ===================================================================== */
 :root {
-    --paper: #f4eddc;          /* ivory stationery */
-    --paper-2: #e9dec3;
-    --ink: #1d1b16;
-    --muted: #5e574a;
-    --plum: #143a30;           /* deep emerald (main accent) */
-    --plum-soft: #a8843a;      /* gold (secondary accent) */
-    --sage: #7b2d2d;           /* oxblood */
-    --line: #cdb98a;
-    --card: #fbf7ec;
+    --paper: #f5f7fa;          /* page background: cool off-white */
+    --paper-2: #e4e8ee;        /* secondary background */
+    --ink: #111827;            /* body text */
+    --muted: #4b5563;          /* small gray text */
+    --plum: #041E42;           /* Gonzaga navy: headings, buttons */
+    --plum-soft: #C8102E;      /* Gonzaga red: borders */
+    --sage: #C8102E;           /* Gonzaga red: callout labels */
+    --line: #C1C6C8;           /* Gonzaga gray: thin lines */
+    --card: #ffffff;           /* card background */
     --radius: 2px;
-    --gold: #b8963e;
-    --gold-light: #e2c983;
-    --night: #0d211b;
+    --gold: #C8102E;           /* accent lines and labels: red */
+    --gold-light: #ffffff;     /* text on navy: white */
+    --night: #021230;          /* menu bar and footer: deep navy */
     --serif: "EB Garamond", Georgia, serif;
     --display: "Playfair Display", Georgia, serif;
     --sans: "Josefin Sans", "Futura", Arial, sans-serif;
