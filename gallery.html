@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!--
+  Author: Marcus Heppner
+  GU username: marcusheppner
+  Course: BMIS 235 - HTML-4
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Marcus Heppner">
+
+<!-- this is the title that shows up on the tab of a web browser -->
+<title>Marcus Heppner's Fantasy Players</title>
+
+<style>
+body { font-family: Arial, sans-serif; margin: 0; padding: 0 20px; }
+h1   { text-align: center; }
+h2   { text-align: center; }
+a    { color: inherit; }
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
+}
+
+/* the bottom section: always the opposite color of the page */
+#embed-block {
+    margin: 50px -20px 0;
+    padding: 30px 20px 40px;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===================== DARK MODE BUTTON ===================== -->
+<!-- Clicking it runs toggleDark(), a tiny program at the bottom   -->
+<!-- of this file.                                                 -->
+<p style="text-align: center;"><button onclick="toggleDark()">Dark mode on / off</button></p>
+
+<a id="top"></a>
+
+<h1>Marcus Heppner's Fantasy Players</h1>
+<p style="text-align: center;">Email me at mheppner@zagmail.gonzaga.edu for episode suggestions</p>
+
+<!-- ===================== MENU OF IMAGES ===================== -->
+<!-- Click an image and it jumps down to its video.            -->
+<!-- MIND works. Use it as your model.                         -->
+<ul>
+
+    <li><h2>For the Body</h2></li>
+    <li><a href="#huberman-lab"><img src="huberman.jpg" width="400" height="400" alt="Andrew Huberman"></a></li>
+
+    <li><h2>For the Craft</h2></li>
+    <li><a href="#fridman"><img src="fridman.jpg" width="400" height="400" alt="Lex Fridman"></a></li>
+
+</ul>
+
+<!-- ===================== VIDEO SECTIONS ===================== -->
+
+<!-- BODY: Huberman Lab -->
+<a id="huberman-lab"></a>
+<a href="https://www.youtube.com/@hubermanlab">
+<h2>Huberman Lab</h2>
+</a>
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pq6WHJzOkno" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</center>
+
+<!-- CRAFT: Lex Fridman Podcast -->
+<a id="fridman"></a>
+<a href="https://www.youtube.com/@lexfridman">
+<h2>Lex Fridman Podcast</h2>
+</a>
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kFQUDCgMjRc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</center>
+
+<p style="font-size: small; text-align: center;"><a href="#top">To top</a></p>
+
+<!-- ===================== YOUR EMBED BLOCK ===================== -->
+<!-- This section is always the opposite color of the page.      -->
+<!-- 1. Pick ONE: a Google Map, or an Our World in Data chart.    -->
+<!-- 2. Copy its embed code (it starts with <iframe).             -->
+<!-- 3. Paste it on the empty line below the heading.             -->
+<!-- 4. Change the heading to say what it is.                     -->
+<section id="embed-block">
+<h2>My embed</h2>
+  
+<center>
+<iframe width="560" height="315" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5373.911256350678!2d-117.40469022421398!3d47.665858383884476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x549e18ebbb7aeffb%3A0xdb160d1679b907e7!2sGonzaga%20University!5e0!3m2!1sen!2sus!4v1794508721841!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+</center>
+  
+</section>
+
+<!-- Footer: fill in your name -->
+<p style="text-align: center;">Built by Marcus Heppner &middot; BMIS 235</p>
+
+
+<!-- ===================== DARK MODE SCRIPT ===================== -->
+<script>
+  // 1. Your two colors. Change these to your own.
+  var lightColor = "#ADD8E6";
+  var darkColor  = "#00008B";
+
+  // 2. Which mode the page is in right now
+  var dark = false;
+
+  // 3. Paint the page one color and the embed block the other
+  function paint() {
+    var pageColor  = dark ? darkColor  : lightColor;
+    var blockColor = dark ? lightColor : darkColor;
+    document.body.style.backgroundColor = pageColor;
+    document.body.style.color = dark ? "white" : "black";
+    var block = document.getElementById("embed-block");
+    block.style.backgroundColor = blockColor;
+    block.style.color = dark ? "black" : "white";
+  }
+
+  // 4. When the button is clicked: flip the mode, then repaint
+  function toggleDark() {
+    dark = !dark;
+    paint();
+  }
+
+  // 5. Paint once when the page first loads
+  paint();
+</script>
+
+</body>
+</html>
