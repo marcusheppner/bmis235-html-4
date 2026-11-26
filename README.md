@@ -27,7 +27,8 @@ syntax; explain who controls each; and find and fix errors in the pencil editor.
   situations with broken code to fix in a live editor, with checks, hints and a fix to compare.
 - `quiz.html` + `quiz.js` + `quiz-data.js` — **Quiz**: correct syntax, spot the error, and
   progress (including scenarios).
-- `gallery.html` — **My Gallery**: my own embed page, built by hand in the pencil editor.
+- `gallery.html` — my own embed page, built by hand in the pencil editor.
+- `my-gallery.html` — **My Gallery**: shows `gallery.html` inside the site (with the site menu) using an iframe; `gallery.html` itself is unchanged.
 - `styles.css` — shared styles. `images/` — the site's own (owned) images.
 
 ## My path

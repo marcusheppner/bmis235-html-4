@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+  Author: Marcus Heppner
+  GU username: marcusheppner
+  Course: BMIS 235 - Final (Path 2: Full build)
+  Page: My Gallery - shows my hand-built gallery.html inside the site, using an iframe.
+  gallery.html itself is unchanged; this page only frames it with the site menu.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Marcus Heppner">
+<title>My Gallery - Embedding 101</title>
+<link rel="stylesheet" href="styles.css?v=21">
+</head>
+<body>
+
+<nav>
+    <a class="brand" href="index.html">Embedding 101</a>
+    <a href="index.html">Guide</a>
+    <a href="podcast.html">Podcast</a>
+    <a href="scenarios.html">Scenarios</a>
+    <a href="quiz.html">Quiz</a>
+    <a class="active" href="my-gallery.html">My Gallery</a>
+</nav>
+
+<header class="hero">
+    <div class="kicker">A real example, built by hand</div>
+    <h1>My Gallery</h1>
+    <p>A page I built myself in the pencil editor, using every skill on this site: owned images, jump links,
+       embedded videos, an interactive map, and a dark mode script.</p>
+</header>
+
+<main>
+<section>
+    <h2>What to look for</h2>
+    <div class="grid">
+        <div class="card"><div class="role">Owned &middot; jump links</div><h3>Player images</h3>
+            <p>Two images stored in the repo. Click one and the page jumps to that player's video.</p></div>
+        <div class="card"><div class="role">Embedded</div><h3>Highlight videos</h3>
+            <p>YouTube videos using <code>/embed/</code> links inside iframes.</p></div>
+        <div class="card"><div class="role">Embedded &middot; interactive</div><h3>Stadium map</h3>
+            <p>A Google Map of U.S. Bank Stadium you can zoom and drag.</p></div>
+        <div class="card"><div class="role">Built</div><h3>Dark mode</h3>
+            <p>The button at the top swaps the page and map section between two colors.</p></div>
+    </div>
+    <p class="note-tip">The gallery below is a separate page, <code>gallery.html</code>, embedded here with an iframe.
+       <a href="gallery.html">Open it on its own &rarr;</a></p>
+</section>
+
+<section>
+    <iframe id="gallery-frame" class="gallery-frame" src="gallery.html" title="My hand-built gallery page"></iframe>
+</section>
+</main>
+
+<footer>Built by Marcus Heppner &middot; BMIS 235</footer>
+
+<script>
+/*
+  Makes the embedded gallery feel like part of this page:
+  1. the iframe grows to fit the gallery, so there's only one scroll bar
+  2. jump links inside the gallery (like #burrow) scroll this page to the right spot
+  3. any other link inside the gallery opens in the whole window, not inside the box
+*/
+(function () {
+    var frame = document.getElementById("gallery-frame");
+
+    function fit() {
+        try {
+            var doc = frame.contentDocument;
+            frame.style.height = doc.documentElement.scrollHeight + "px";
+        } catch (e) { /* if the page can't be read, keep the default height */ }
+    }
+
+    frame.addEventListener("load", function () {
+        var doc;
+        try { doc = frame.contentDocument; } catch (e) { return; }
+        fit();
+        if (window.ResizeObserver) new ResizeObserver(fit).observe(doc.body);
+        doc.querySelectorAll("img").forEach(function (img) { img.addEventListener("load", fit); });
+
+        doc.addEventListener("click", function (e) {
+            var a = e.target.closest ? e.target.closest("a[href]") : null;
+            if (!a) return;
+            var href = a.getAttribute("href");
+            if (href.charAt(0) === "#") {
+                var target = doc.getElementById(href.slice(1));
+                if (!target) return;
+                e.preventDefault();
+                var top = frame.getBoundingClientRect().top + window.scrollY + target.getBoundingClientRect().top - 70;
+                window.scrollTo({ top: href === "#top" ? frame.getBoundingClientRect().top + window.scrollY - 90 : top, behavior: "smooth" });
+            } else {
+                a.target = "_top";
+            }
+        });
+    });
+})();
+</script>
+</body>
+</html>
