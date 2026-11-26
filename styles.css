@@ -376,7 +376,7 @@ header.hero {
     color: #efe6cf;
     background:
         repeating-conic-gradient(from 0deg at 50% 115%, rgba(226,201,131,.07) 0deg 4deg, transparent 4deg 8deg),
-        radial-gradient(ellipse at 50% 115%, #1f5546 0%, var(--plum) 45%, var(--night) 100%);
+        radial-gradient(ellipse at 50% 115%, #0d3a7a 0%, var(--plum) 45%, var(--night) 100%);
     border-bottom: 1px solid var(--gold);
     box-shadow: inset 0 -6px 0 var(--night), inset 0 -7px 0 var(--gold);
 }
