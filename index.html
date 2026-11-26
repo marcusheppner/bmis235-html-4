@@ -2,272 +2,244 @@
 <!--
   Author: Marcus Heppner
   GU username: marcusheppner
-  Course: BMIS 235 - HTML-4
-  Page: Home - reference points for exploring medicine and social norms in Mrs. Dalloway.
-  Approach: summaries, facts, quotes and questions; the analysis is left to the reader.
+  Course: BMIS 235 - Final (Path 2: Full build)
+  Page: Home - why embedding matters, live examples, and step-by-step guides for HTML-2.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="Marcus Heppner">
-<title>Medicine &amp; the Normal in Mrs. Dalloway</title>
-<link rel="stylesheet" href="styles.css?v=15">
+<title>Embedding 101 - Marcus Heppner</title>
+<link rel="stylesheet" href="styles.css?v=20">
 </head>
 <body>
 
+<a id="top"></a>
 <nav>
-    <a class="brand" href="index.html">Medicine &amp; Mrs. Dalloway</a>
-    <a class="active" href="index.html">Home</a>
-    <a href="scenes.html">Key Scenes</a>
+    <a class="brand" href="index.html">Embedding 101</a>
+    <a class="active" href="index.html">Guide</a>
     <a href="podcast.html">Podcast</a>
-    <a href="discussion.html">Class Discussion</a>
-    <a href="notes.html">Discussion Chat</a>
+    <a href="scenarios.html">Scenarios</a>
     <a href="quiz.html">Quiz</a>
+    <a href="gallery.html">My Gallery</a>
 </nav>
 
 <header class="hero">
-    <div class="kicker">Virginia Woolf &middot; 1925 &middot; Disability in literature</div>
-    <h1>Prescribing the Normal</h1>
-    <p>Reference points for exploring how medicine in <em>Mrs. Dalloway</em> relates to social expectations and norms:
-       summaries, context, quotes and questions to get your own thinking started.</p>
+    <div class="kicker">BMIS 235 &middot; HTML-2 &middot; Mind, Body, Craft</div>
+    <h1>Embedding 101</h1>
+    <p>Bring images, videos and live tools into a web page, understand who controls each piece, and fix them
+       when they break.</p>
     <div class="toc">
-        <a href="#about">How to use this site</a>
-        <a href="#question">The question</a>
-        <a href="#story">What happens</a>
-        <a href="#context">Context</a>
-        <a href="#terms">Key terms &amp; passages</a>
-        <a href="#cast">The medical cast</a>
-        <a href="#woolf">Woolf &amp; her doctors</a>
-        <a href="#lenses">Critical lenses</a>
-        <a href="#open">Open questions</a>
+        <a href="#start">Start here</a>
+        <a href="#why">Why embed?</a>
+        <a href="#four-ways">Owned, linked, embedded, built</a>
+        <a href="#live">Live examples</a>
+        <a href="#guides">Step-by-step guides</a>
     </div>
 </header>
 
 <main>
 
-<!-- ===== WHAT THIS SITE IS FOR ===== -->
-<section id="about">
-    <h2>What this site is for</h2>
+<!-- ===== START HERE ===== -->
+<section id="start">
+    <h2>Start here</h2>
     <div class="grid">
-        <div class="card"><div class="role">The problem</div><h3>A hard book, a focused essay</h3>
-            <p><em>Mrs. Dalloway</em> is difficult to read: 1920s English, stream of consciousness, and no chapters. On top of
-            that, the assignment asks for close analysis of one theme: how medicine enforces social norms. It's hard to
-            know where the important passages are, what they literally say, and how to build an argument without
-            someone else's analysis doing the thinking.</p></div>
+        <div class="card"><div class="role">The problem</div><h3>A page that breaks without telling you why</h3>
+            <p>In HTML-2 you get a page where some pictures, links and videos work and others don't. The code looks almost
+            the same, and one wrong letter is enough to break something. This site teaches you how each kind of embed works
+            and how to find what's wrong.</p></div>
         <div class="card"><div class="role">The end goal</div><h3>By the end, you should be able to&hellip;</h3>
             <ul class="notice-list">
-                <li>Follow the novel's medical storyline and explain what happens in each key scene.</li>
-                <li>Find the important passages in your own copy, with page numbers to cite.</li>
-                <li>Close-read a passage on your own: notice word choice, context, and more than one possible reading.</li>
-                <li>Connect the text to class discussion and historical context.</li>
-                <li>Develop your own argument about medicine and social norms, ready to write.</li>
+                <li>Add an image, a YouTube video and a map or chart to a page with correct syntax.</li>
+                <li>Make a picture jump to a section of the page.</li>
+                <li>Explain who controls each piece: owned, linked, embedded or built.</li>
+                <li>Find and fix broken file names, links, video addresses and embed code in the pencil editor.</li>
+                <li>Read and change a small script, like a dark mode button.</li>
             </ul></div>
     </div>
-
-    <h3 class="sub">How to use it</h3>
+    <h3 class="sub">How to use this site</h3>
     <ol class="steps">
-        <li><strong>Get the big picture.</strong> Read this page: what happens, the context, and the key terms.</li>
-        <li><strong>Read scene by scene.</strong> Use <a href="scenes.html">Key Scenes</a> alongside the novel. Each breakdown gives
-            a plain-English summary, quotes with page estimates, and things to notice.</li>
-        <li><strong>Connect it to class.</strong> Review your notes on <a href="discussion.html">Class Discussion</a>, and use the
-            <a href="notes.html">Discussion Chat</a> to find passages related to a question or idea.</li>
-        <li><strong>Listen and think.</strong> The <a href="podcast.html">Podcast</a> walks through possible readings out loud,
-            without settling on one. Decide where you land.</li>
-        <li><strong>Check yourself.</strong> On the <a href="quiz.html">Quiz</a>, the reading check tests what happens, and the
-            close-reading drills give checklist feedback on your own writing.</li>
-        <li><strong>Review and repeat.</strong> <a href="quiz.html#progress">My progress</a> shows weak spots and links back to
-            the scenes to revisit.</li>
+        <li><strong>Read the guide.</strong> This page explains why embedding matters, shows live examples, and walks
+            through each skill step by step.</li>
+        <li><strong>Listen.</strong> The <a href="podcast.html">Podcast</a> explains the same ideas out loud, for when you'd
+            rather hear it.</li>
+        <li><strong>Practice on real code.</strong> In <a href="scenarios.html">Scenarios</a>, you fix broken code in a live
+            editor and see the result right away.</li>
+        <li><strong>Check yourself.</strong> The <a href="quiz.html">Quiz</a> tests correct syntax and spotting errors.</li>
+        <li><strong>Track progress.</strong> <a href="quiz.html#progress">My progress</a> shows what to review.</li>
     </ol>
-    <p class="note-tip">The site helps you read and points you toward evidence, but it doesn't write your argument. The
-       analysis is yours.</p>
 </section>
 
-<!-- ===== THE QUESTION ===== -->
-<section id="question">
-    <h2>The question</h2>
-    <div class="plain"><strong>Your topic as a question:</strong> How is medicine in <em>Mrs. Dalloway</em> connected to
-        society's expectations, norms and ideals?</div>
-    <p>This page doesn't answer it. It points you to the places in the novel where you can work it out yourself.</p>
+<!-- ===== WHY ===== -->
+<section id="why">
+    <h2>Why embed?</h2>
     <div class="grid">
-        <div class="card"><h3>Words to watch</h3><p><strong>proportion</strong>, <strong>conversion</strong>,
-            <strong>must</strong>, <strong>coward</strong>, "nothing whatever the matter," "we." Note who says them,
-            about whom, and how often.</p></div>
-        <div class="card"><h3>Scenes to watch</h3><p>Holmes's visits; the appointment with Bradshaw; the narrator's
-            Proportion passage; Septimus's last minutes; the Bradshaws at the party; Clarissa in the little room.</p></div>
-        <div class="card"><h3>People to watch</h3><p>Who gives orders, who follows them, who is never asked, and who
-            notices. Track Septimus, Rezia, Holmes, Bradshaw, Lady Bradshaw and Clarissa.</p></div>
+        <div class="card"><div class="role">Images &amp; video</div><h3>Show, don't just tell</h3>
+            <p>A picture or a short video can explain an idea faster than paragraphs of text. Visual media makes a page
+            easier to understand at a glance.</p></div>
+        <div class="card"><div class="role">Jump links</div><h3>Shortcuts that guide</h3>
+            <p>Clickable images and "jump" links let visitors go straight to what interests them, so a long page still
+            feels organized and easy to move around.</p></div>
+        <div class="card"><div class="role">Maps &amp; dashboards</div><h3>Tools that respond</h3>
+            <p>Interactive embeds, like a map you can zoom or a chart you can hover over, turn a page into a tool that
+            adapts to what each visitor needs.</p></div>
     </div>
 </section>
 
-<!-- ===== WHAT HAPPENS ===== -->
-<section id="story">
-    <h2>What happens (the medical thread)</h2>
-    <p>The novel covers one day in June 1923. These are the events in the story about illness and doctors.</p>
-    <ul class="timeline">
-        <li><span class="time">Morning</span><br>Clarissa Dalloway, 51, walks out to buy flowers. She has recently been
-            ill (the illness affected her heart) and now sleeps alone in an attic room. On Bond Street, Septimus Warren
-            Smith, a young war veteran, is frightened by a car backfiring. His wife Rezia wants to get him home before
-            people notice. She has been told by Dr. Holmes to get Septimus to "take an interest in things outside himself."</li>
-        <li><span class="time">Midday</span><br>In Regent's Park, Septimus sees his dead friend Evans and writes down
-            "messages" for the world. We learn about his war service, Evans's death, and his feeling that he "could not
-            feel." Dr. Holmes has repeatedly said nothing is wrong with him. At noon, Sir William Bradshaw, a Harley Street
-            specialist, examines Septimus and arranges for him to go to a home in the country, apart from Rezia. The narrator
-            then describes Bradshaw's ideas of "Proportion" and "Conversion."</li>
-        <li><span class="time">Afternoon</span><br>Miss Kilman, Elizabeth Dalloway's tutor, tries to draw Elizabeth toward her
-            religion. Septimus and Rezia spend a calm hour together making a hat.</li>
-        <li><span class="time">Evening</span><br>Dr. Holmes arrives to take Septimus away. Septimus jumps from the window and
-            dies. Holmes says "The coward!" Peter Walsh hears the ambulance in the street.</li>
-        <li><span class="time">Night</span><br>The Bradshaws arrive late to Clarissa's party. Sir William has been discussing a
-            Bill about "the deferred effects of shell shock" with Richard Dalloway. Lady Bradshaw mentions the suicide.
-            Clarissa goes into a small room alone and thinks about the young man and about Sir William.</li>
-    </ul>
+<!-- ===== FOUR WAYS ===== -->
+<section id="four-ways">
+    <h2>Owned, linked, embedded, built</h2>
+    <p>Everything on a web page gets there one of four ways. Ask each time: <strong>who controls it?</strong></p>
+    <img class="diagram" src="images/four-ways.svg" alt="Four ways content gets onto a page: owned, linked, embedded, built">
+    <div class="grid">
+        <div class="card"><h3>Owned</h3><p>A file in your repo, like <code>images/sunset.jpg</code>. You control it. It only changes when you change it.</p></div>
+        <div class="card"><h3>Linked</h3><p>A file on someone else's site, pointed to by its full <code>https://</code> address. They control it; if it moves, it breaks on your page.</p></div>
+        <div class="card"><h3>Embedded</h3><p>A live window into another service, like YouTube or Google Maps. It runs on their end, inside a box on your page.</p></div>
+        <div class="card"><h3>Built</h3><p>Code in your page that does something, like the dark mode button. You control it.</p></div>
+    </div>
+    <div class="plain"><strong>Three kinds of embeds:</strong> <em>static</em> (just shows something),
+        <em>interactive</em> (your clicks change your own view, nothing is saved, like a map) and <em>two-way</em> (you send
+        information and they keep it, like a form). Responses to an embedded Google Form are stored by Google, not on your site.</div>
 </section>
 
-<!-- ===== CONTEXT ===== -->
-<section id="context">
-    <h2>Historical context</h2>
-    <div class="grid">
-        <div class="card"><h3>Shell shock</h3><p>Psychological breakdown from the trenches was widespread in World War I.
-            Doctors disagreed about whether it was an injury or a weakness of character. Britain's War Office published
-            a report of its inquiry into "shell-shock" in 1922. Some soldiers whose breakdowns were treated as cowardice
-            were executed during the war.</p>
-            <p class="note-tip"><strong>Question:</strong> Where do these attitudes appear in the novel?</p></div>
-        <div class="card"><h3>The rest cure</h3><p>A common treatment for "nervous" patients, especially women: bed rest,
-            isolation from family, heavy feeding, and no reading, writing or excitement. Woolf received versions of it.</p>
-            <p class="note-tip"><strong>Question:</strong> Compare this with what Bradshaw prescribes for Septimus.</p></div>
-        <div class="card"><h3>Harley Street</h3><p>The London street of elite private specialists. Doctors there were
-            wealthy and socially connected, often knighted, like "Sir" William Bradshaw.</p>
-            <p class="note-tip"><strong>Question:</strong> Where does Bradshaw appear besides his office, and with whom?</p></div>
-        <div class="card"><h3>Eugenics</h3><p>In the 1910s and 20s, many respected British thinkers supported preventing
-            people judged "unfit" from having children. The Mental Deficiency Act of 1913 expanded institutional
-            confinement.</p>
-            <p class="note-tip"><strong>Question:</strong> Look at the words "forbade childbirth" and "the unfit" in the
-            Proportion passage.</p></div>
+<!-- ===== LIVE EXAMPLES ===== -->
+<section id="live">
+    <h2>Live examples</h2>
+    <p>Each of these is working on this page right now. The code that makes it work is underneath.</p>
+
+    <div class="demo" id="demo-image">
+        <div class="role">Owned &middot; image</div>
+        <img src="images/sunset.svg" width="400" height="260" alt="A simple sunset over hills">
+        <pre class="code"><code>&lt;img src=&quot;images/sunset.svg&quot; width=&quot;400&quot; height=&quot;260&quot; alt=&quot;A simple sunset over hills&quot;&gt;</code></pre>
+        <p class="note-tip">Click to jump: <a href="#demo-video"><img src="images/sunset.svg" width="60" height="39" alt="Jump to the video example" style="vertical-align:middle"></a> &larr; this small image is a jump link to the video below.</p>
+    </div>
+
+    <a id="demo-video"></a>
+    <div class="demo">
+        <div class="role">Embedded &middot; video</div>
+        <div class="frame"><iframe width="560" height="315" src="https://www.youtube.com/embed/4L98ssI5Vxw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        <pre class="code"><code>&lt;a id=&quot;demo-video&quot;&gt;&lt;/a&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/4L98ssI5Vxw&quot; title=&quot;YouTube video player&quot; allowfullscreen&gt;&lt;/iframe&gt;</code></pre>
+    </div>
+
+    <div class="demo">
+        <div class="role">Embedded &middot; interactive map</div>
+        <div class="frame"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5373.911256350678!2d-117.40469022421398!3d47.665858383884476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x549e18ebbb7aeffb%3A0xdb160d1679b907e7!2sGonzaga%20University!5e0!3m2!1sen!2sus!4v1794508721841!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Map of Gonzaga University"></iframe></div>
+        <pre class="code"><code>&lt;iframe src=&quot;https://www.google.com/maps/embed?pb=...&quot; width=&quot;600&quot; height=&quot;450&quot; style=&quot;border:0;&quot; allowfullscreen=&quot;&quot; loading=&quot;lazy&quot; referrerpolicy=&quot;strict-origin-when-cross-origin&quot;&gt;&lt;/iframe&gt;</code></pre>
+        <p class="note-tip">Try zooming and dragging. That's the "interactive" part, and it runs on Google's side.</p>
+    </div>
+
+    <div class="demo">
+        <div class="role">Built &middot; a little code</div>
+        <p><button onclick="toggleDemo()">Dark mode on / off</button></p>
+        <div id="demo-box" class="demo-box"><strong>This box is the "embed block."</strong> It's always the opposite color of the area around it.</div>
+        <pre class="code"><code>var lightColor = &quot;#F4EDDC&quot;;
+var darkColor  = &quot;#143A30&quot;;
+var dark = false;
+
+function paint() {
+  var box = document.getElementById(&quot;demo-box&quot;);
+  box.style.backgroundColor = dark ? lightColor : darkColor;
+  box.style.color = dark ? &quot;black&quot; : &quot;white&quot;;
+  box.parentElement.style.backgroundColor = dark ? darkColor : lightColor;
+}
+function toggleDemo() { dark = !dark; paint(); }
+paint();</code></pre>
     </div>
 </section>
 
-<!-- ===== KEY TERMS ===== -->
-<section id="terms">
-    <h2>Key terms &amp; passages</h2>
-    <p>Each term appears in the text. The quotes are here so you can find them; the questions are starting points.</p>
-    <div class="grid">
-        <div class="card"><div class="role">Bradshaw &middot; <a href="breakdown.html?id=scene-06">Scene 06</a></div>
-            <h3>Proportion</h3>
-            <blockquote>Sir William said he never spoke of "madness"; he called it not having a sense of proportion.</blockquote>
-            <p>What does "proportion" usually mean outside medicine? What changes when it replaces the word "madness"?</p></div>
-        <div class="card"><div class="role">The narrator &middot; <a href="breakdown.html?id=mono-03">Monologue M4</a></div>
-            <h3>Conversion</h3>
-            <blockquote>Conversion is her name and she feasts on the wills of the weakly</blockquote>
-            <p>Whose "wills" does the passage go on to mention? Where else in the novel does someone try to convert someone?</p></div>
-        <div class="card"><div class="role">Dr. Holmes &middot; <a href="breakdown.html?id=scene-05">Scene 05</a></div>
-            <h3>"Nothing whatever the matter"</h3>
-            <blockquote>health is largely a matter in our own control.</blockquote>
-            <p>If health is in our control, what does that suggest about someone who stays ill?</p></div>
-        <div class="card"><div class="role">Bradshaw &middot; <a href="breakdown.html?id=scene-06">Scene 06</a></div>
-            <h3>"We"</h3>
-            <blockquote>We have been arranging that you should go into a home</blockquote>
-            <p>Who is "we"? Who was involved in the decision, and who wasn't?</p></div>
-        <div class="card"><div class="role">Septimus &middot; <a href="breakdown.html?id=scene-09">Scene 09</a></div>
-            <h3>"Must"</h3>
-            <blockquote>"Must," "must," why "must"? What power had Bradshaw over him?</blockquote>
-            <p>Where does Bradshaw's power come from? Track other commands in the medical scenes.</p></div>
-        <div class="card"><div class="role">Holmes &middot; <a href="breakdown.html?id=scene-09">Scene 09</a></div>
-            <h3>"Coward"</h3>
-            <blockquote>The coward!</blockquote>
-            <p>Is this a medical word? Where else would a soldier have heard it?</p></div>
+<!-- ===== GUIDES ===== -->
+<section id="guides">
+    <h2>Step-by-step guides</h2>
+    <p>Each guide covers the steps, the correct syntax, and how to spot errors in the pencil editor. Tap a guide to open it.</p>
+    <details class="guide" id="guide-image" open>
+    <summary><span class="guide-num">1</span> Add an image</summary>
+    <div class="guide-body">
+        <p>An image is <em>owned</em> when the file lives in your repo, and <em>linked</em> when <code>src</code> points to a full web address on someone else's site.</p>
+        <h3 class="sub">Step by step</h3>
+        <ol class="steps"><li>Put the image file in your repo: on GitHub, <strong>Add file &rarr; Upload files</strong>, then commit.</li><li>Write an <code>&lt;img&gt;</code> tag whose <code>src</code> is the file name <strong>exactly</strong>, including any folder, capital letters and the extension.</li><li>Add <code>alt</code> text that describes the picture, plus a <code>width</code> and <code>height</code>.</li><li>Commit, wait 1&ndash;2 minutes, and check the live page.</li></ol>
+        <h3 class="sub">Correct syntax</h3>
+        <p class="code-label">Owned (a file in your repo)</p><pre class="code"><code>&lt;img src=&quot;images/sunset.jpg&quot; width=&quot;400&quot; height=&quot;300&quot; alt=&quot;Sunset over the hills&quot;&gt;</code></pre><p class="code-label">Linked (a file on another site)</p><pre class="code"><code>&lt;img src=&quot;https://example.com/photos/sunset.jpg&quot; width=&quot;400&quot; height=&quot;300&quot; alt=&quot;Sunset over the hills&quot;&gt;</code></pre>
+        <div class="plain debug"><strong>Spotting errors in the pencil editor</strong><ul class="notice-list"><li><strong>A broken-image icon means the <code>src</code> doesn't match a real file.</strong> Open your repo's file list next to the code and compare them letter by letter.</li><li>Check capitals: <code>Sunset.jpg</code> and <code>sunset.jpg</code> are different files on GitHub Pages.</li><li>Check the extension: <code>.jpg</code>, <code>.jpeg</code> and <code>.png</code> are not interchangeable.</li><li>Check the folder: if the file is in <code>images/</code>, the <code>src</code> must start with <code>images/</code>.</li><li>Check the quotes: every attribute value needs an opening and closing <code>"</code>.</li><li>A linked image can break later if the other site moves or deletes it. That's out of your control.</li></ul></div>
+        <p class="note-tip">Practice it: <a href="scenarios.html">Scenarios</a> &middot; <a href="quiz.html">Quiz</a> &middot; <a href="podcast.html">Podcast</a></p>
     </div>
-</section>
-
-<!-- ===== CAST ===== -->
-<section id="cast">
-    <h2>The medical cast</h2>
-    <div class="grid">
-        <div class="card"><div class="role">Patient</div><h3>Septimus Warren Smith</h3><p>About thirty. A former clerk
-            who loved Shakespeare, volunteered for the war, and saw his friend Evans killed. He now has hallucinations,
-            feels unable to feel, and believes he has a message for the world.</p>
-            <p class="note-tip"><strong>Question:</strong> How often do we hear Septimus's own view of his treatment?</p></div>
-        <div class="card"><div class="role">General practitioner</div><h3>Dr. Holmes</h3><p>A cheerful family doctor who
-            visits often, insists nothing is wrong, and recommends outside interests and willpower. He comes to take
-            Septimus away at the end.</p>
-            <p class="note-tip"><strong>Question:</strong> How does Holmes treat Rezia when he visits?</p></div>
-        <div class="card"><div class="role">Specialist</div><h3>Sir William Bradshaw</h3><p>An eminent, knighted Harley
-            Street specialist. He sees Septimus at noon and arranges for him to go to a home in the country. He attends
-            Clarissa's party that night.</p>
-            <p class="note-tip"><strong>Question:</strong> How do different characters describe Bradshaw?</p></div>
-        <div class="card"><div class="role">Specialist's wife</div><h3>Lady Bradshaw</h3><p>Sir William's wife. The narrator
-            says that "fifteen years ago she had gone under." At the party she tells Clarissa about the suicide.</p>
-            <p class="note-tip"><strong>Question:</strong> What does "gone under" suggest, and why mention it inside a passage about her husband?</p></div>
-        <div class="card"><div class="role">Wife &amp; caregiver</div><h3>Lucrezia "Rezia" Smith</h3><p>Septimus's young
-            Italian wife, a hat-maker. She cares for him daily, follows the doctors' advice, and is lonely and homesick.</p>
-            <p class="note-tip"><strong>Question:</strong> Do the doctors ever ask Rezia what she thinks?</p></div>
-        <div class="card"><div class="role">Convalescent</div><h3>Clarissa Dalloway</h3><p>Recovering from an illness that
-            affected her heart; sleeps alone in a narrow attic bed. She never meets Septimus but hears of his death at her party.</p>
-            <p class="note-tip"><strong>Question:</strong> Is Clarissa's illness treated differently from Septimus's?</p></div>
-        <div class="card"><div class="role">Tutor</div><h3>Doris Kilman</h3><p>Elizabeth's religious tutor. She lost her
-            teaching job during the war because of her German name and wants to bring Elizabeth to her faith.</p>
-            <p class="note-tip"><strong>Question:</strong> Does Kilman's behavior echo anything in the medical scenes?</p></div>
-        <div class="card"><div class="role">Bystander</div><h3>Peter Walsh</h3><p>Clarissa's old friend, back from India.
-            He hears the ambulance bell in the street and thinks about London's efficiency.</p>
-            <p class="note-tip"><strong>Question:</strong> What does Peter know, and not know, when he hears it?</p></div>
+</details><details class="guide" id="guide-jump">
+    <summary><span class="guide-num">2</span> Make a picture jump to a section</summary>
+    <div class="guide-body">
+        <p>A jump link has two halves: a <strong>link</strong> that says where to go, and a <strong>name tag</strong> at the destination. They must match exactly.</p>
+        <h3 class="sub">Step by step</h3>
+        <ol class="steps"><li>Right above the destination (for example a video), add an empty anchor with an <code>id</code>: <code>&lt;a id="cooking-video"&gt;&lt;/a&gt;</code>.</li><li>Wrap the picture in a link whose <code>href</code> is <code>#</code> plus that same id.</li><li>Make sure the closing <code>&lt;/a&gt;</code> comes <em>after</em> the <code>&lt;img&gt;</code>, so the picture is inside the link.</li><li>Add a "To top" link the same way: <code>&lt;a id="top"&gt;&lt;/a&gt;</code> at the top, <code>&lt;a href="#top"&gt;</code> at the bottom.</li></ol>
+        <h3 class="sub">Correct syntax</h3>
+        <p class="code-label">The link (the picture you click)</p><pre class="code"><code>&lt;a href=&quot;#cooking-video&quot;&gt;&lt;img src=&quot;images/cooking.jpg&quot; width=&quot;400&quot; height=&quot;400&quot; alt=&quot;Cooking show&quot;&gt;&lt;/a&gt;</code></pre><p class="code-label">The destination (right above the video)</p><pre class="code"><code>&lt;a id=&quot;cooking-video&quot;&gt;&lt;/a&gt;</code></pre>
+        <div class="plain debug"><strong>Spotting errors in the pencil editor</strong><ul class="notice-list"><li><strong>If clicking does nothing, compare the text after <code>#</code> in the <code>href</code> with the <code>id</code>.</strong> They must match letter for letter.</li><li>Look for small differences: <code>#cookingvideo</code> vs <code>cooking-video</code>, or <code>#Cooking</code> vs <code>cooking</code>.</li><li>The <code>#</code> goes only in the <code>href</code>, never in the <code>id</code>.</li><li>Each <code>id</code> can be used only once per page.</li><li>If the picture isn't clickable at all, check that the <code>&lt;img&gt;</code> sits between <code>&lt;a href...&gt;</code> and <code>&lt;/a&gt;</code>.</li></ul></div>
+        <p class="note-tip">Practice it: <a href="scenarios.html">Scenarios</a> &middot; <a href="quiz.html">Quiz</a> &middot; <a href="podcast.html">Podcast</a></p>
     </div>
-</section>
-
-<!-- ===== WOOLF ===== -->
-<section id="woolf">
-    <h2>Woolf &amp; her doctors</h2>
-    <div class="grid">
-        <div class="card"><h3>Her illness</h3><p>Woolf had repeated mental breakdowns from her teens onward. She was
-            treated by well-known physicians, including the family friend Sir George Savage, and was given rest cures,
-            including stays in a private nursing home.</p></div>
-        <div class="card"><h3>Her stated aim</h3><p>In her diary while writing the novel (June 1923), Woolf wrote that she
-            wanted to give "life &amp; death, sanity &amp; insanity" and to "criticise the social system, &amp; to show it
-            at work, at its most intense."</p></div>
-        <div class="card"><h3>"On Being Ill" (1926)</h3><p>An essay Woolf published the year after the novel, about
-            illness as a subject for literature. It's a primary source to read alongside the novel if your assignment allows it.</p></div>
-        <div class="card"><h3>Using biography</h3><p>Woolf died by suicide in 1941. Critics often connect Holmes and
-            Bradshaw to her own doctors, while others warn against reading the novel as autobiography. Decide for
-            yourself how much weight to give her life.</p></div>
+</details><details class="guide" id="guide-video">
+    <summary><span class="guide-num">3</span> Embed a YouTube video</summary>
+    <div class="guide-body">
+        <p>A video is <em>embedded</em>: a live window into YouTube, which runs on YouTube's side. YouTube has two kinds of links, and only one of them works inside an <code>&lt;iframe&gt;</code>.</p>
+        <h3 class="sub">Step by step</h3>
+        <ol class="steps"><li>On YouTube, click <strong>Share &rarr; Embed</strong> and copy the code. Or build it yourself from the video's ID, the letters after <code>watch?v=</code>.</li><li>Use the <strong>embed</strong> address in <code>src</code>: <code>https://www.youtube.com/embed/VIDEO_ID</code>.</li><li>Paste the whole <code>&lt;iframe&gt; &hellip; &lt;/iframe&gt;</code> where you want the video.</li><li>Commit, then press play on the live page.</li></ol>
+        <h3 class="sub">Correct syntax</h3>
+        <p class="code-label">Watch link (for YouTube itself; won't play in an iframe)</p><pre class="code"><code>https://www.youtube.com/watch?v=4L98ssI5Vxw</code></pre><p class="code-label">Embed link (goes in the iframe)</p><pre class="code"><code>&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/4L98ssI5Vxw&quot; title=&quot;YouTube video player&quot; allowfullscreen&gt;&lt;/iframe&gt;</code></pre><p class="code-label">Shorts work the same way</p><pre class="code"><code>/shorts/VIDEO_ID  becomes  /embed/VIDEO_ID</code></pre>
+        <div class="plain debug"><strong>Spotting errors in the pencil editor</strong><ul class="notice-list"><li><strong>If the video box is blank or says it refused to connect, the <code>src</code> is probably a watch link.</strong> Swap <code>watch?v=</code> for <code>embed/</code>.</li><li>Compare the broken video's <code>src</code> with a video that works on the same page. The difference is usually right there.</li><li><code>youtu.be/ID</code> and <code>/shorts/ID</code> links also need to become <code>/embed/ID</code>.</li><li>Copy the whole ID. YouTube IDs are 11 characters, and missing one breaks the video.</li><li>"Video unavailable" means the owner blocked embedding. That's not your code: pick another video.</li></ul></div>
+        <p class="note-tip">Practice it: <a href="scenarios.html">Scenarios</a> &middot; <a href="quiz.html">Quiz</a> &middot; <a href="podcast.html">Podcast</a></p>
     </div>
-</section>
-
-<!-- ===== LENSES ===== -->
-<section id="lenses">
-    <h2>Critical lenses</h2>
-    <p class="note-tip">Definitions only. Check your course readings for the critics and frameworks your professor wants you to use.</p>
-    <div class="grid">
-        <div class="card"><h3>Medical model of disability</h3><p>Disability is a problem located in the individual's body or
-            mind, to be diagnosed and fixed by professionals.</p></div>
-        <div class="card"><h3>Social model of disability</h3><p>Disability is produced by a society that doesn't accommodate
-            differences; the barriers, not the person, are the problem.</p>
-            <p class="note-tip"><strong>Question:</strong> Which model do the novel's doctors follow? Which does the novel itself?</p></div>
-        <div class="card"><h3>Normalization (Foucault)</h3><p>The philosopher Michel Foucault argued that modern institutions
-            such as asylums, prisons and clinics control people by defining what is "normal" and correcting deviations
-            from it, rather than by open force.</p></div>
-        <div class="card"><h3>Gender &amp; the "nervous" patient</h3><p>Feminist critics study how women in this period were
-            diagnosed and treated for nervous illness. Charlotte Perkins Gilman's story "The Yellow Wallpaper" (1892)
-            is a well-known account of a rest cure.</p></div>
+</details><details class="guide" id="guide-map">
+    <summary><span class="guide-num">4</span> Embed a map or dashboard</summary>
+    <div class="guide-body">
+        <p>Maps and charts are <em>interactive</em> embeds: viewers can zoom, pan or hover, and it all runs on the other company's site. You almost never write the iframe yourself. The site gives you the code.</p>
+        <h3 class="sub">Step by step</h3>
+        <ol class="steps"><li><strong>Google Maps:</strong> search for a place, click <strong>Share &rarr; Embed a map &rarr; Copy HTML</strong>.</li><li><strong>Our World in Data:</strong> open a chart, click <strong>Share &rarr; Embed</strong>, copy the code.</li><li>Paste the <em>whole</em> thing, from <code>&lt;iframe</code> to <code>&lt;/iframe&gt;</code>, into the section where it belongs.</li><li>Change the section's heading to say what the map or chart shows. Commit and test zooming on the live page.</li></ol>
+        <h3 class="sub">Correct syntax</h3>
+        <p class="code-label">What Google gives you (shortened here)</p><pre class="code"><code>&lt;iframe src=&quot;https://www.google.com/maps/embed?pb=...&quot; width=&quot;600&quot; height=&quot;450&quot; style=&quot;border:0;&quot; allowfullscreen=&quot;&quot; loading=&quot;lazy&quot; referrerpolicy=&quot;strict-origin-when-cross-origin&quot;&gt;&lt;/iframe&gt;</code></pre>
+        <div class="plain debug"><strong>Spotting errors in the pencil editor</strong><ul class="notice-list"><li><strong>If you see a plain link instead of a map, you pasted the page address, not the embed code.</strong> The code must start with <code>&lt;iframe</code>.</li><li>If everything below the map disappears, the paste is incomplete: check for the closing <code>&lt;/iframe&gt;</code> and that no quote mark is missing.</li><li>Look for duplicate attributes, like two <code>width=</code> values in one tag. The browser uses only the first, so the size may not be what you expect.</li><li>Make sure the iframe is inside the right section (between its opening and closing tags).</li><li>For charts, use the archived embed version so it keeps working.</li></ul></div>
+        <p class="note-tip">Practice it: <a href="scenarios.html">Scenarios</a> &middot; <a href="quiz.html">Quiz</a> &middot; <a href="podcast.html">Podcast</a></p>
     </div>
-</section>
-
-<!-- ===== OPEN QUESTIONS ===== -->
-<section id="open">
-    <h2>Open questions</h2>
-    <p>No answers here. Pick one that interests you and test it against the scenes and quotes.</p>
-    <ul class="open-list">
-        <li>What does "proportion" have to do with medicine, and what does it have to do with being English, upper-class or male?</li>
-        <li>How are Holmes and Bradshaw different from each other? Are they doing the same thing in different ways?</li>
-        <li>Why does Woolf bring Bradshaw to Clarissa's party?</li>
-        <li>How should a reader interpret Septimus's death? What in the text supports different readings?</li>
-        <li>Does the novel treat Clarissa's illness and Septimus's illness the same way?</li>
-        <li>What role does Rezia play in Septimus's treatment, and how is she treated?</li>
-        <li>How much should Woolf's own medical history shape a reading of the novel?</li>
-    </ul>
+</details><details class="guide" id="guide-script">
+    <summary><span class="guide-num">5</span> Make the page run a little code</summary>
+    <div class="guide-body">
+        <p>A script is <em>built</em> content: code in your page that does something, like a dark mode button. The HTML-2 script has five parts.</p>
+        <h3 class="sub">Step by step</h3>
+        <ol class="steps"><li><strong>Two colors:</strong> <code>lightColor</code> and <code>darkColor</code>. These are the lines you change.</li><li><strong>A memory:</strong> <code>dark</code> is <code>false</code> (light mode) or <code>true</code> (dark mode).</li><li><strong><code>paint()</code></strong> colors the page one color and the embed block the other.</li><li><strong><code>toggleDark()</code></strong> runs on every click: it flips <code>dark</code>, then calls <code>paint()</code>.</li><li>One last <code>paint()</code> colors the page when it first loads.</li></ol>
+        <h3 class="sub">Correct syntax</h3>
+        <p class="code-label">The button</p><pre class="code"><code>&lt;button onclick=&quot;toggleDark()&quot;&gt;Dark mode on / off&lt;/button&gt;</code></pre><p class="code-label">The colors you change</p><pre class="code"><code>var lightColor = &quot;#F4EDDC&quot;;
+var darkColor  = &quot;#143A30&quot;;</code></pre><p class="code-label">Finding the block it recolors</p><pre class="code"><code>var block = document.getElementById(&quot;embed-block&quot;);
+&lt;!-- must match: --&gt;
+&lt;section id=&quot;embed-block&quot;&gt;</code></pre>
+        <div class="plain debug"><strong>Spotting errors in the pencil editor</strong><ul class="notice-list"><li><strong>If the button does nothing, compare the name in <code>onclick="..."</code> with the function name.</strong> <code>toggleDark()</code> and <code>toggledark()</code> are different.</li><li>The text in <code>getElementById("...")</code> must match an <code>id</code> on the page exactly.</li><li>Colors need quotes and a <code>#</code>: <code>"#143A30"</code>.</li><li>Pick two colors far apart (one light, one dark) so the text stays readable in both modes.</li><li>Test both modes before you submit: click the button twice.</li></ul></div>
+        <p class="note-tip">Practice it: <a href="scenarios.html">Scenarios</a> &middot; <a href="quiz.html">Quiz</a> &middot; <a href="podcast.html">Podcast</a></p>
+    </div>
+</details>
+    <p class="note-tip" style="margin-top:20px"><a href="#top">To top</a></p>
 </section>
 
 </main>
 
-<footer>Built by Marcus Heppner for BMIS 235 &middot; A reference point, not a substitute for your own reading. Check every quote against your own edition.</footer>
+<footer>Built by Marcus Heppner &middot; BMIS 235</footer>
 
+<script>
+  // A small version of the HTML-2 dark mode script, used by the "Built" example.
+  var lightColor = "#F4EDDC";
+  var darkColor  = "#143A30";
+  var dark = false;
+
+  function paint() {
+    var box = document.getElementById("demo-box");
+    box.style.backgroundColor = dark ? lightColor : darkColor;
+    box.style.color = dark ? "black" : "white";
+    box.parentElement.style.backgroundColor = dark ? darkColor : lightColor;
+    box.parentElement.style.color = dark ? "white" : "";
+  }
+  function toggleDemo() { dark = !dark; paint(); }
+  paint();
+
+  // Open a guide when arriving from a link like index.html#guide-video
+  if (location.hash.indexOf("#guide-") === 0) {
+    var g = document.querySelector(location.hash);
+    if (g) { g.open = true; g.scrollIntoView(); }
+  }
+</script>
 </body>
 </html>

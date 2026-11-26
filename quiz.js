@@ -1,31 +1,28 @@
 /*
   Author: Marcus Heppner
-  Course: BMIS 235 - HTML-4
-  Quiz page logic: tabs, reading check, close-reading drills, progress.
+  Course: BMIS 235 - Final
+  Quiz page: tabs, two multiple-choice quizzes, and progress (quizzes + scenarios).
 */
 
-function load(key, fallback) {
-    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; }
-}
-function save(key, value) {
-    try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch (e) { return false; }
-}
+function load(k, f) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : f; } catch (e) { return f; } }
+function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; });
 }
-function title(id) { return BREAKDOWNS[id] ? BREAKDOWNS[id].title.replace(/"/g, "") : id; }
-function reviewLink(id) { return '<a href="breakdown.html?id=' + id + '">Review: ' + esc(title(id)) + " &rarr;</a>"; }
 
-const QUIZ_KEY = "dalloway-quiz";
-const READING_KEY = "dalloway-close-readings";   // shared with the breakdown pages
-let progress = load(QUIZ_KEY, { rc: {}, dr: {} });
-delete progress.ws;   // the old "Who's speaking?" quiz was removed
-["rc", "dr"].forEach(function (k) { if (!progress[k]) progress[k] = {}; });
-function saveProgress() { save(QUIZ_KEY, progress); }
+const PROGRESS_KEY = "embed-progress";   // shared with the scenarios page
+let progress = load(PROGRESS_KEY, {});
+["sy", "sp", "sc"].forEach(function (k) { progress[k] = progress[k] || {}; });
+function saveProgress() { save(PROGRESS_KEY, progress); }
 
-// ======================================================================
-//  TABS
-// ======================================================================
+function guideLink(topic, label) {
+    const t = TOPICS[topic];
+    const href = t.guide ? "index.html#" + t.guide : "index.html#four-ways";
+    return '<a href="' + href + '">' + label + ": " + esc(t.name) + " &rarr;</a>";
+}
+
+// ---- tabs ----
+const TABS = ["syntax", "spot", "progress"];
 const tabs = document.querySelectorAll(".quiz-tabs a");
 function showTab(name) {
     document.querySelectorAll(".quiz-panel").forEach(function (p) { p.hidden = p.id !== name; });
@@ -36,269 +33,98 @@ tabs.forEach(function (t) {
     t.addEventListener("click", function (e) { e.preventDefault(); showTab(t.dataset.tab); history.replaceState(null, "", "#" + t.dataset.tab); });
 });
 
-// ======================================================================
-//  MULTIPLE CHOICE (reading check)
-// ======================================================================
-function mcCard(item, options, correctIndex, store, promptHtml) {
+// ---- one multiple-choice card ----
+function card(item, store, n) {
     const div = document.createElement("div");
     div.className = "card quiz-card";
-    div.innerHTML = promptHtml +
-        '<div class="options">' + options.map(function (o, i) {
+    const looksLikeCode = item.options.some(function (o) { return /[<>="]/.test(o); });
+    div.innerHTML = '<div class="role">Question ' + n + " &middot; " + esc(TOPICS[item.topic].name) + "</div><h3>" + esc(item.q) + "</h3>" +
+        (item.code ? '<pre class="code"><code>' + esc(item.code) + "</code></pre>" : "") +
+        '<div class="options' + (looksLikeCode ? " code-options" : "") + '">' + item.options.map(function (o, i) {
             return '<button type="button" class="option" data-i="' + i + '">' + esc(o) + "</button>";
-        }).join("") + "</div>" +
-        '<p class="quiz-feedback"></p>';
-    const fb = div.querySelector(".quiz-feedback");
-    const btns = div.querySelectorAll(".option");
-
+        }).join("") + '</div><p class="quiz-feedback"></p>';
+    const btns = div.querySelectorAll(".option"), fb = div.querySelector(".quiz-feedback");
     function reveal(chosen) {
         btns.forEach(function (b, i) {
             b.disabled = true;
-            if (i === correctIndex) b.classList.add("right");
-            else if (i === chosen) b.classList.add("wrong");
+            if (i === item.answer) b.classList.add("right"); else if (i === chosen) b.classList.add("wrong");
         });
-        fb.innerHTML = chosen === correctIndex ? "&#10003; Correct. " + reviewLink(item.review).replace("Review:", "Read more:")
-                                               : "Not quite. " + reviewLink(item.review);
+        fb.innerHTML = chosen === item.answer ? "&#10003; Correct. " + guideLink(item.topic, "More")
+                                              : "Not quite. " + guideLink(item.topic, "Review");
     }
     btns.forEach(function (b, i) {
         b.addEventListener("click", function () {
-            progress[store][item.id] = { ok: i === correctIndex, chosen: options[i] };
-            saveProgress();
-            reveal(i);
-            updateScores();
+            progress[store][item.id] = { ok: i === item.answer, chosen: i };
+            saveProgress(); reveal(i); updateScores();
         });
     });
-    const prev = progress[store][item.id];
-    if (prev) reveal(options.indexOf(prev.chosen) === -1 ? -1 : options.indexOf(prev.chosen));
+    if (progress[store][item.id]) reveal(progress[store][item.id].chosen);
     return div;
 }
-
-function renderReadingCheck() {
-    const list = document.getElementById("rc-list");
+function renderList(listId, items, store) {
+    const list = document.getElementById(listId);
     list.innerHTML = "";
-    READING_CHECK.forEach(function (q, n) {
-        list.appendChild(mcCard(q, q.options, q.answer, "rc",
-            '<div class="role">Question ' + (n + 1) + "</div><h3>" + esc(q.q) + "</h3>"));
-    });
+    items.forEach(function (q, i) { list.appendChild(card(q, store, i + 1)); });
 }
 
 function tally(store, items) {
     const done = items.filter(function (q) { return progress[store][q.id]; });
-    const right = done.filter(function (q) { return progress[store][q.id].ok; });
-    return { done: done.length, right: right.length, total: items.length };
+    return { done: done.length, right: done.filter(function (q) { return progress[store][q.id].ok; }).length, total: items.length };
 }
 function updateScores() {
-    const a = tally("rc", READING_CHECK);
-    document.getElementById("rc-score").textContent = a.right + " correct out of " + a.done + " answered (" + a.total + " questions)";
+    const a = tally("sy", SYNTAX), b = tally("sp", SPOT);
+    document.getElementById("sy-score").textContent = a.right + " correct out of " + a.done + " answered (" + a.total + " questions)";
+    document.getElementById("sp-score").textContent = b.right + " correct out of " + b.done + " answered (" + b.total + " questions)";
 }
+document.getElementById("sy-reset").addEventListener("click", function () { progress.sy = {}; saveProgress(); renderList("sy-list", SYNTAX, "sy"); updateScores(); });
+document.getElementById("sp-reset").addEventListener("click", function () { progress.sp = {}; saveProgress(); renderList("sp-list", SPOT, "sp"); updateScores(); });
 
-document.getElementById("rc-reset").addEventListener("click", function () { progress.rc = {}; saveProgress(); renderReadingCheck(); updateScores(); });
-
-// ======================================================================
-//  CLOSE-READING DRILLS + CHECKLIST
-//  FEEDBACK.mode is "checklist" for now. The checklist only looks at whether an
-//  answer engages with features of the passage; it never judges the idea.
-//  A future "ai" mode (e.g. through a Cloudflare Worker) could plug in at assess().
-// ======================================================================
-const FEEDBACK = { mode: "checklist" };
-
-const READINGS_WORDS = ["however", "alternatively", "another reading", "another way", "on the other hand", "could also",
-    "might also", "or it could", "or perhaps", "at the same time", "both", "either", "unless", "though", "although",
-    "one reading", "some readers", "but it"];
-const THEME_WORDS = ["medic", "doctor", "treatment", "cure", "illness", "ill", "health", "patient", "norm", "normal",
-    "proportion", "control", "society", "social", "expectation", "conform", "power", "authority", "convert", "conversion"];
-const STOP = ["the", "a", "an", "and", "of", "to", "in", "is", "it", "was", "he", "she", "that", "his", "her", "on",
-    "for", "with", "as", "be", "this", "i", "you", "we", "they", "or", "but", "at", "by", "not", "had", "have"];
-
-function words(s) { return s.toLowerCase().replace(/[‘’]/g, "'").replace(/[^a-z0-9' ]+/g, " ").split(/\s+/).filter(Boolean); }
-function has(text, key) {
-    const t = text.toLowerCase().replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
-    if (/^[a-z]/.test(key)) return new RegExp("\\b" + key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).test(t);
-    return t.indexOf(key) !== -1;
-}
-
-// Did the answer quote the passage? Three words in a row from it, or a quoted word from it.
-function quotesPassage(answer, quote) {
-    const a = words(answer).join(" ");
-    const q = words(quote);
-    for (let i = 0; i + 2 < q.length; i++) {
-        if ((" " + a + " ").indexOf(" " + q.slice(i, i + 3).join(" ") + " ") !== -1) return true;
-    }
-    const quoted = answer.match(/["“']([^"”']{2,60})["”']/g) || [];
-    return quoted.some(function (m) {
-        return words(m).some(function (w) { return STOP.indexOf(w) === -1 && q.indexOf(w) !== -1; });
-    });
-}
-
-function checklist(drill, answer) {
-    const wordCount = words(answer).length;
-    const qWords = words(drill.quote);
-    const content = words(answer).filter(function (w) { return STOP.indexOf(w) === -1; });
-    const overlap = content.length ? content.filter(function (w) { return qWords.indexOf(w) !== -1; }).length / content.length : 1;
-
-    const results = drill.checks.map(function (c) {
-        let ok;
-        if (c.anyOf2) ok = c.anyOf2.filter(function (k) { return has(answer, k); }).length >= 2;
-        else ok = c.any.some(function (k) { return has(answer, k); });
-        return { label: c.label, ok: ok, hint: c.hint, specific: true };
-    });
-    results.push(
-        { label: "You quote the passage directly.", ok: quotesPassage(answer, (drill.passage || [drill.quote]).join(" ")),
-          hint: "Put the exact words you're discussing in quotation marks." },
-        { label: "You go beyond restating the quote.", ok: wordCount >= 25 && overlap < 0.5,
-          hint: "Most of your answer repeats the passage. Add what you notice about it." },
-        { label: "You consider more than one possible reading.", ok: READINGS_WORDS.some(function (k) { return has(answer, k); }),
-          hint: "Try \"One reading is... another is...\" or \"However...\"" },
-        { label: "You connect it to medicine and social norms.", ok: THEME_WORDS.some(function (k) { return has(answer, k); }),
-          hint: "How does this passage relate to your topic?" },
-        { label: "You develop the point (60+ words).", ok: wordCount >= 60,
-          hint: "You're at " + wordCount + " words. Keep going." }
-    );
-    return results;
-}
-
-function assess(drill, answer) {
-    // Future: if (FEEDBACK.mode === "ai") return fetch(FEEDBACK.endpoint, {...}) ...
-    return Promise.resolve(checklist(drill, answer));
-}
-
-// The longer excerpt, with the key line highlighted.
-function passageHtml(d) {
-    if (!d.passage) return "<blockquote>" + esc(d.quote) + "</blockquote>";
-    const est = (typeof estimatePage === "function") ? estimatePage(d.quote) : null;
-    const paras = d.passage.map(function (p) {
-        const safe = esc(p);
-        const f = esc(d.focus || "");
-        return "<p>" + (f && safe.indexOf(f) !== -1 ? safe.replace(f, "<mark>" + f + "</mark>") : safe) + "</p>";
-    }).join("");
-    return '<div class="passage">' + paras + "</div>" +
-        '<p class="note-tip passage-src">' + (est ? "About <strong>p. " + est.page + "</strong> in the NYRB edition (check pp. " + est.from + "&ndash;" + est.to + "). " : "") +
-        "Text from Standard Ebooks (1925 Hogarth Press text); wording may differ slightly from your copy.</p>";
-}
-
-let currentDrill = null;
-function renderDrillPicker() {
-    document.getElementById("drill-picker").innerHTML = DRILLS.map(function (d) {
-        const p = progress.dr[d.id];
-        const badge = p ? '<small>' + p.met + "/" + p.total + " checks</small>" : "<small>Not started</small>";
-        return '<button type="button" class="episode-btn drill-btn' + (currentDrill && currentDrill.id === d.id ? " active" : "") +
-               '" data-id="' + d.id + '">' + esc(d.title) + badge + "</button>";
-    }).join("");
-    document.querySelectorAll(".drill-btn").forEach(function (b) {
-        b.addEventListener("click", function () { openDrill(DRILLS.find(function (d) { return d.id === b.dataset.id; })); });
-    });
-}
-
-function openDrill(d) {
-    currentDrill = d;
-    renderDrillPicker();
-    const readings = load(READING_KEY, {});
-    const area = document.getElementById("drill-area");
-    area.innerHTML =
-        '<div class="card drill-card">' +
-            "<h3>" + esc(d.title) + "</h3>" +
-            passageHtml(d) +
-            '<p class="note-tip">' + reviewLink(d.review).replace("Review:", "Context:") + "</p>" +
-            '<p class="plain"><strong>Prompt:</strong> ' + esc(d.prompt) + "</p>" +
-            '<textarea id="drill-text" rows="9" placeholder="Write your close reading here..."></textarea>' +
-            '<div class="row" style="margin-top:10px"><button type="button" id="drill-check">Check my answer</button>' +
-            '<span class="note-tip" id="drill-count"></span></div>' +
-            '<div id="drill-results"></div>' +
-        "</div>";
-    const ta = document.getElementById("drill-text");
-    ta.value = readings[d.quote] || "";
-    function count() { document.getElementById("drill-count").textContent = words(ta.value).length + " words"; }
-    count();
-    ta.addEventListener("input", function () {
-        count();
-        const r = load(READING_KEY, {});
-        if (ta.value.trim()) r[d.quote] = ta.value; else delete r[d.quote];
-        save(READING_KEY, r);
-    });
-    document.getElementById("drill-check").addEventListener("click", function () {
-        if (!ta.value.trim()) { document.getElementById("drill-results").innerHTML = '<p class="note-tip">Write something first.</p>'; return; }
-        assess(d, ta.value).then(function (res) {
-            const met = res.filter(function (r) { return r.ok; }).length;
-            progress.dr[d.id] = { met: met, total: res.length, ts: Date.now() };
-            saveProgress();
-            renderDrillPicker();
-            const specific = res.filter(function (r) { return r.specific; });
-            const general = res.filter(function (r) { return !r.specific; });
-            function rows(list) {
-                return list.map(function (r) {
-                    return '<li class="' + (r.ok ? "met" : "unmet") + '"><span class="tick">' + (r.ok ? "&#10003;" : "&#9675;") + "</span>" +
-                           esc(r.label) + (r.ok ? "" : '<span class="hint">' + esc(r.hint) + "</span>") + "</li>";
-                }).join("");
-            }
-            document.getElementById("drill-results").innerHTML =
-                '<div class="checklist">' +
-                    '<p class="score-line">' + met + " of " + res.length + " checks met</p>" +
-                    "<h4>This passage</h4><ul>" + rows(specific) + "</ul>" +
-                    "<h4>Close-reading habits</h4><ul>" + rows(general) + "</ul>" +
-                    '<p class="note-tip">The checklist looks for engagement with the passage, not for a right answer. ' +
-                    "A strong reading can miss a check, and meeting them all doesn't make an argument correct.</p>" +
-                "</div>";
-        });
-    });
-}
-
-// ======================================================================
-//  PROGRESS
-// ======================================================================
+// ---- progress ----
 function renderProgress() {
-    const a = tally("rc", READING_CHECK);
-    const drillsDone = DRILLS.filter(function (d) { return progress.dr[d.id]; });
-    const avg = drillsDone.length ? Math.round(drillsDone.reduce(function (t, d) { return t + progress.dr[d.id].met / progress.dr[d.id].total; }, 0) / drillsDone.length * 100) : 0;
+    const a = tally("sy", SYNTAX), b = tally("sp", SPOT);
+    const fixed = SCENARIOS.filter(function (s) { return progress.sc[s.id]; }).length;
     document.getElementById("progress-summary").innerHTML =
-        '<div class="card"><div class="role">Reading check</div><h3>' + a.right + " / " + a.total + "</h3><p>" + a.done + " answered</p></div>" +
-        '<div class="card"><div class="role">Close-reading drills</div><h3>' + drillsDone.length + " / " + DRILLS.length + "</h3><p>" +
-            (drillsDone.length ? "Average " + avg + "% of checks met" : "None checked yet") + "</p></div>";
+        '<div class="card"><div class="role">Correct syntax</div><h3>' + a.right + " / " + a.total + "</h3></div>" +
+        '<div class="card"><div class="role">Spot the error</div><h3>' + b.right + " / " + b.total + "</h3></div>" +
+        '<div class="card"><div class="role">Scenarios fixed</div><h3>' + fixed + " / " + SCENARIOS.length + "</h3></div>";
 
-    // By topic, using each item's breakdown themes.
-    const topics = {};
+    const by = {};
     function add(items, store) {
         items.forEach(function (q) {
             const r = progress[store][q.id];
-            if (!r || !BREAKDOWNS[q.review]) return;
-            BREAKDOWNS[q.review].themes.forEach(function (t) {
-                topics[t] = topics[t] || { right: 0, done: 0 };
-                topics[t].done++;
-                if (r.ok) topics[t].right++;
-            });
+            if (!r) return;
+            by[q.topic] = by[q.topic] || { right: 0, done: 0 };
+            by[q.topic].done++; if (r.ok) by[q.topic].right++;
         });
     }
-    add(READING_CHECK, "rc");
-    const names = Object.keys(topics).sort(function (x, y) { return topics[x].right / topics[x].done - topics[y].right / topics[y].done; });
+    add(SYNTAX, "sy"); add(SPOT, "sp");
+    const names = Object.keys(by).sort(function (x, y) { return by[x].right / by[x].done - by[y].right / by[y].done; });
     document.getElementById("progress-topics").innerHTML = names.length ? names.map(function (t) {
-        const pct = Math.round(topics[t].right / topics[t].done * 100);
-        return '<div class="bar"><span>' + esc(t) + '</span><span class="fill" style="width:' + (pct * 2) + 'px"></span><span>' +
-               topics[t].right + "/" + topics[t].done + "</span></div>";
+        const pct = Math.round(by[t].right / by[t].done * 100);
+        return '<div class="bar"><span>' + esc(TOPICS[t].name) + '</span><span class="fill" style="width:' + (pct * 2) + 'px"></span><span>' +
+               by[t].right + "/" + by[t].done + "</span></div>";
     }).join("") : '<p class="note-tip">Answer some questions to see your topics.</p>';
 
-    // Breakdowns to review: missed questions and drills under 60%.
-    const review = [];
-    READING_CHECK.forEach(function (q) {
-        const r = progress.rc[q.id];
-        if (r && !r.ok && review.indexOf(q.review) === -1) review.push(q.review);
-    });
-    DRILLS.forEach(function (d) {
-        const r = progress.dr[d.id];
-        if (r && r.met / r.total < 0.6 && review.indexOf(d.review) === -1) review.push(d.review);
-    });
-    document.getElementById("progress-review").innerHTML = review.length
-        ? review.map(function (id) { return '<a class="chip" href="breakdown.html?id=' + id + '">' + esc(title(id)) + "</a>"; }).join("")
-        : '<p class="note-tip">Nothing flagged yet.</p>';
+    const review = names.filter(function (t) { return by[t].right / by[t].done < 0.75; });
+    SCENARIOS.forEach(function (s) { if (!progress.sc[s.id] && review.indexOf("sc:" + s.id) === -1) review.push("sc:" + s.id); });
+    document.getElementById("progress-review").innerHTML = review.length ? review.map(function (r) {
+        if (r.indexOf("sc:") === 0) {
+            const s = SCENARIOS.find(function (x) { return x.id === r.slice(3); });
+            return '<a class="chip" href="scenarios.html">Scenario: ' + esc(s.title) + "</a>";
+        }
+        const t = TOPICS[r];
+        return '<a class="chip" href="' + (t.guide ? "index.html#" + t.guide : "index.html#four-ways") + '">Guide: ' + esc(t.name) + "</a>";
+    }).join("") : '<p class="note-tip">Nothing flagged. Nice work.</p>';
 }
-
 document.getElementById("reset-all").addEventListener("click", function () {
-    if (!window.confirm("Reset all quiz progress? Your written close readings are kept.")) return;
-    progress = { rc: {}, dr: {} };
-    saveProgress();
-    renderReadingCheck(); renderDrillPicker(); updateScores(); renderProgress();
+    if (!window.confirm("Reset all quiz and scenario progress?")) return;
+    progress = { sy: {}, sp: {}, sc: {} }; saveProgress();
+    renderList("sy-list", SYNTAX, "sy"); renderList("sp-list", SPOT, "sp"); updateScores(); renderProgress();
 });
 
 // ---- start ----
-renderReadingCheck();
-renderDrillPicker();
+renderList("sy-list", SYNTAX, "sy");
+renderList("sp-list", SPOT, "sp");
 updateScores();
-const startTab = (location.hash || "").slice(1);
-showTab(["reading", "drills", "progress"].indexOf(startTab) !== -1 ? startTab : "reading");
+const start = (location.hash || "").slice(1);
+showTab(TABS.indexOf(start) !== -1 ? start : "syntax");

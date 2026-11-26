@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" role="img" aria-label="A simple sunset over hills">
+  <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#143a30"/><stop offset="1" stop-color="#e2c983"/></linearGradient></defs>
+  <rect width="400" height="260" fill="url(#sky)"/>
+  <circle cx="200" cy="175" r="55" fill="#f1e2b3"/>
+  <path d="M0 200 Q100 150 200 195 T400 185 V260 H0 Z" fill="#0d211b"/>
+  <path d="M0 230 Q120 200 260 228 T400 222 V260 H0 Z" fill="#1f5546"/>
+</svg>

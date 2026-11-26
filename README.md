@@ -1,32 +1,48 @@
-# Prescribing the Normal: medicine in Mrs. Dalloway
+# Embedding 101: Images, Video & Live Dashboards
 
 **Name:** Marcus Heppner
 **GU username:** marcusheppner
-**Course:** BMIS 235 · HTML-4
+**Course:** BMIS 235 · Final
 
-Reference points for exploring how medicine in Virginia Woolf's *Mrs. Dalloway* (1925) relates to social expectations and norms. Built for an English class on disability in literature.
+Live site: https://marcusheppner.github.io/bmis235-html-4/
 
-**Problem it solves:** *Mrs. Dalloway* is hard to read, and the assignment asks for close analysis of one theme. The site helps a student follow the medical storyline, find and cite key passages, practice close reading with feedback, connect the text to class discussion, and track progress, so they can develop their own argument. See "What this site is for" on the Home page.
+## What it teaches
+How to bring images, videos and interactive tools (like a Google Map) into a web page,
+who controls each piece (owned, linked, embedded, built), and how to find and fix the
+mistakes that break them. Based on the BMIS 235 HTML-2 assignment, "Embedding: Mind, Body, Craft."
 
-**Approach:** the site helps with *reading* (plot summaries, plain-English versions of quotes, historical facts) and points toward things to notice, but leaves the interpretation and argument to the student. New content should follow the same rule: summaries, quotes and open questions, not finished analysis.
+**The problem it solves:** in HTML-2, a page has pictures, links and videos that look almost
+identical in the code, but some are broken by a single wrong letter. This site teaches each kind
+of embed, then gives practice finding those errors, with feedback.
 
-Live site (once GitHub Pages is on): https://marcusheppner.github.io/bmis235-html-4/
+**End goal:** a classmate can add an image, a jump link, a YouTube video and a map with correct
+syntax; explain who controls each; and find and fix errors in the pencil editor.
 
 ## Pages
+- `index.html` — **Guide**: why embed, owned/linked/embedded/built, live examples (image, video,
+  map, script), and five step-by-step guides with tips for spotting errors.
+- `podcast.html` + `podcast.js` — **Podcast**: six audio lessons read by the browser, with a
+  transcript, timestamps, speed control and skip buttons.
+- `scenarios.html` + `scenarios.js` + `scenarios-data.js` — **Scenarios**: seven real-world
+  situations with broken code to fix in a live editor, with checks, hints and a fix to compare.
+- `quiz.html` + `quiz.js` + `quiz-data.js` — **Quiz**: correct syntax, spot the error, and
+  progress (including scenarios).
+- `gallery.html` — **My Gallery**: my own embed page, built by hand in the pencil editor.
+- `styles.css` — shared styles. `images/` — the site's own (owned) images.
 
-- `index.html`: Home. The core idea, the story through the medical lens, historical context, key ideas, the medical cast, Woolf and her doctors, critical lenses, and thesis starting points.
-- `scenes.html` + `scenes.js`: Key scenes (12) and monologues (7) about medicine and norms, built from `breakdowns.js`.
-- `breakdown.html` + `breakdown.js` + `breakdowns.js`: One page that shows any breakdown (`breakdown.html?id=scene-05`, `?id=mono-03`). It covers what happens, why it matters, key quotes with their underlying meaning, a page-number finder (photograph your book page), and a box for your own close reading. All content lives in `breakdowns.js`.
-- `ocr.js`: Shared photo-reading helpers (Tesseract.js) used by the page finder.
-- `podcast.html` + `podcast.js`: Two hosts debate a question about the novel (read aloud by the browser), then you record or write your own take.
-- `discussion.html` + `discussion-data.js`: Class Discussion. Class notes organized by topic, with related quotes, page estimates and questions for taking each idea further. Add new class sessions to `discussion-data.js`.
-- `notes.html` + `notes.js`: Discussion Chat. Answers questions from the class discussion notes first, then the site's theme guide (keyword matching, not AI).
-- `quiz.html` + `quiz.js` + `quiz-data.js`: Quiz. Reading check (with answers), close-reading drills with a passage-specific checklist (no answer key; feedback mode is set up so an AI option could be added later), and a progress tracker. Drill answers share storage with each breakdown's "My close reading" box.
-- `styles.css`: Shared styles for every page.
+## My path
+Path 2: Full build
 
-## Notes
+## By hand vs by AI
+**I made:** the teaching plan (which HTML-2 skills to teach, in what order, and for whom); the
+site structure (guide, podcasts, scenarios, quiz, progress) and what each part should do; the
+decisions about what to cut or change while building; and `gallery.html`, which I wrote by hand
+in the pencil editor with my own images, videos and map. <!-- update once your gallery is done -->
 
-- The notes chat matches keywords against a built-in guide to the novel. It is not an AI model. To teach it something new, add a topic or keywords in `notes.js`.
-- Photos are read with [Tesseract.js](https://tesseract.projectnaptha.com/), loaded from a CDN the first time you add a photo (so it needs an internet connection). You can edit the text it reads before saving.
-- Notes, note photos (as small previews) and written podcast takes are saved in your browser (localStorage), so they don't sync between devices. Use "Download notes" to keep a copy.
-- To add a podcast episode, copy one object in the `EPISODES` list in `podcast.js`.
+**AI made:** the HTML, CSS and JavaScript for the Guide, Podcast, Scenarios and Quiz pages, the
+podcast scripts, the scenarios and the quiz questions (Claude, via Claude Code).
+
+**I checked it by:** <!-- only list what you actually do -->
+comparing every code example against my working HTML-2 page; completing every scenario and
+quiz question myself; playing each podcast; testing every embed and the dark mode demo on the
+live site; and testing on my phone and laptop.

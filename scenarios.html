@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+  Author: Marcus Heppner
+  GU username: marcusheppner
+  Course: BMIS 235 - Final (Path 2: Full build)
+  Page: Scenarios - fix broken embed code in a live editor.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Marcus Heppner">
+<title>Scenarios - Embedding 101</title>
+<link rel="stylesheet" href="styles.css?v=20">
+</head>
+<body>
+
+<nav>
+    <a class="brand" href="index.html">Embedding 101</a>
+    <a href="index.html">Guide</a>
+    <a href="podcast.html">Podcast</a>
+    <a class="active" href="scenarios.html">Scenarios</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="gallery.html">My Gallery</a>
+</nav>
+
+<header class="hero">
+    <div class="kicker">Practice on real code</div>
+    <h1>Scenarios</h1>
+    <p>Pick a situation. Each one has a story, a goal and some broken code. Edit the code like you would in the pencil
+       editor, preview it, then check your fix.</p>
+</header>
+
+<main>
+<section>
+    <h2>Choose a scenario</h2>
+    <div class="drill-picker" id="picker"></div>
+</section>
+
+<section id="workspace" hidden>
+    <h2 id="sc-title"></h2>
+    <div class="role" id="sc-type" style="font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)"></div>
+    <div class="grid sc-brief">
+        <div class="card"><h3>The situation</h3><p id="sc-story" class="story"></p></div>
+        <div class="card"><h3>Your goal</h3><p id="sc-goal"></p></div>
+    </div>
+
+    <div class="editor-wrap">
+        <div>
+            <div class="row editor-bar"><strong>Code</strong>
+                <button type="button" class="ghost" id="reset-code" style="margin-left:auto">Reset code</button></div>
+            <textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+        </div>
+        <div>
+            <div class="row editor-bar"><strong>Preview</strong>
+                <button type="button" class="ghost" id="run" style="margin-left:auto">&#8635; Update preview</button></div>
+            <iframe id="preview" title="Preview of your code" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:12px">
+        <button type="button" id="check">Check my fix</button>
+        <button type="button" class="ghost" id="hint">Get a hint</button>
+        <button type="button" class="ghost" id="show">Show a fix</button>
+        <a class="note-tip" id="sc-guide" href="index.html" style="margin-left:auto">Read the guide for this &rarr;</a>
+    </div>
+    <div id="hints"></div>
+    <div id="results"></div>
+    <div id="solution"></div>
+</section>
+</main>
+
+<footer>Built by Marcus Heppner &middot; BMIS 235 &middot; Progress is saved in this browser.</footer>
+
+<script src="scenarios-data.js?v=20"></script>
+<script src="scenarios.js?v=20"></script>
+</body>
+</html>
