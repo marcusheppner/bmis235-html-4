@@ -340,9 +340,9 @@ footer { text-align: center; color: var(--muted); font-size: 14px; padding: 30px
     --gold: #C8102E;           /* accent lines and labels: red */
     --gold-light: #ffffff;     /* text on navy: white */
     --night: #021230;          /* menu bar and footer: deep navy */
-    --serif: "EB Garamond", Georgia, serif;
-    --display: "Playfair Display", Georgia, serif;
-    --sans: "Josefin Sans", "Futura", Arial, sans-serif;
+    --serif: "Source Sans 3", Arial, sans-serif;      /* body text */
+    --display: "Montserrat", Arial, sans-serif;       /* headings */
+    --sans: "Montserrat", Arial, sans-serif;          /* labels and menu */
 }
 
 body {
