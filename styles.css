@@ -336,7 +336,7 @@ footer { text-align: center; color: var(--muted); font-size: 14px; padding: 30px
     --sage: #C8102E;           /* Gonzaga red: callout labels */
     --line: #C1C6C8;           /* Gonzaga gray: thin lines */
     --card: #ffffff;           /* card background */
-    --radius: 2px;
+    --radius: 10px;
     --gold: #C8102E;           /* accent lines and labels: red */
     --gold-light: #ffffff;     /* text on navy: white */
     --night: #021230;          /* menu bar and footer: deep navy */
