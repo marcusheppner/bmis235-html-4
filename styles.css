@@ -4,7 +4,7 @@
   One stylesheet for every page of the Mrs. Dalloway study tool.
 */
 
-@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Josefin+Sans:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap");
 
 :root {
     --paper: #f7f2e8;
