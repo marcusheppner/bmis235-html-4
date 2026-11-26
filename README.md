@@ -6,6 +6,8 @@
 
 Reference points for exploring how medicine in Virginia Woolf's *Mrs. Dalloway* (1925) relates to social expectations and norms. Built for an English class on disability in literature.
 
+**Problem it solves:** *Mrs. Dalloway* is hard to read, and the assignment asks for close analysis of one theme. The site helps a student follow the medical storyline, find and cite key passages, practice close reading with feedback, connect the text to class discussion, and track progress, so they can develop their own argument. See "What this site is for" on the Home page.
+
 **Approach:** the site helps with *reading* (plot summaries, plain-English versions of quotes, historical facts) and points toward things to notice, but leaves the interpretation and argument to the student. New content should follow the same rule: summaries, quotes and open questions, not finished analysis.
 
 Live site (once GitHub Pages is on): https://marcusheppner.github.io/bmis235-html-4/
