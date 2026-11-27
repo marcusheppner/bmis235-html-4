@@ -399,17 +399,27 @@ function sayLine(speaker, text, onDone) {
 }
 
 // ======================================================================
-//  TIMESTAMPS: browsers don't report speech length, so each line's length
-//  is estimated from its word count at a natural speaking pace.
+//  TIMESTAMPS: browsers don't report how long speech takes, so each line's
+//  length is estimated from its word count. The estimate then learns from
+//  your voice: after each line, it compares the real time with the estimate
+//  and adjusts ("pace"), so timestamps and 15-second skips stay accurate.
+//  Skips and pauses can start partway through a line, at the right word.
 // ======================================================================
-const WPM = 160;            // words per minute at 1x
+const WPM = 160;            // starting guess: words per minute at 1x
 const GAP = 0.5;            // pause between lines, seconds
 let speed = +load("podcast-speed", 1) || 1;
-let lineStartAt = 0;        // when the current line started (ms)
+let pace = +load("podcast-pace", 1) || 1;    // learned: real time / estimated time
+let lineStartAt = 0;        // when the current line started (ms), adjusted for a word offset
+let startWord = 0;          // word to start from in the line at "pos" (for skips and resumes)
 let clockTimer = null;
 
+function wordsOf(text) { return text.trim().split(/\s+/); }
 function lineSecs(text) {
-    return (text.trim().split(/\s+/).length / WPM * 60 + GAP) / speed;
+    return (wordsOf(text).length / WPM * 60 + GAP) * pace / speed;
+}
+function secsPerWord(i) {
+    const t = current.lines[i][1];
+    return lineSecs(t) / wordsOf(t).length;
 }
 function episodeSecs(ep) {
     return ep.lines.reduce(function (t, l) { return t + lineSecs(l[1]); }, 0);
@@ -429,11 +439,12 @@ function elapsed() {
     if (!current) return 0;
     const st = starts();
     const i = Math.min(pos, current.lines.length);
-    if (playing && !lineDone && i < current.lines.length) {
+    if (i >= current.lines.length) return st[i];
+    if (playing && !lineDone) {
         const inLine = (performance.now() - lineStartAt) / 1000;
         return st[i] + Math.min(inLine, st[i + 1] - st[i]);
     }
-    return st[i];
+    return st[i] + startWord * secsPerWord(i);
 }
 function updateClock() {
     if (!current) return;
@@ -465,17 +476,35 @@ function stopClock() {
     updateClock();
 }
 
+// Learn how fast this voice really talks, from a line that finished normally.
+function learnPace(estimatedSecs, actualSecs) {
+    if (estimatedSecs < 2 || actualSecs <= 0) return;           // too short to trust
+    const ratio = actualSecs / estimatedSecs;
+    if (ratio < 0.3 || ratio > 3) return;                        // ignore odd readings
+    pace = Math.max(0.5, Math.min(2, pace * (0.6 + 0.4 * ratio)));
+    save("podcast-pace", pace);
+    refreshStamps();
+}
+
 function speakNext() {
     if (!playing || !current) return;
     if (pos >= current.lines.length) { finish(); return; }
     const i = pos;
     const l = current.lines[i];
+    const words = wordsOf(l[1]);
+    const offset = Math.min(startWord, words.length - 1);
+    startWord = 0;
+    const text = offset > 0 ? words.slice(offset).join(" ") : l[1];
+    const spw = secsPerWord(i);
+    const estimate = (words.length - offset) * spw;
     highlight(i);
     lineDone = false;
-    lineStartAt = performance.now();
+    const spokenFrom = performance.now();
+    lineStartAt = spokenFrom - offset * spw * 1000;              // so the clock counts from the line's start
     startClock();
-    sayLine(voiceFor(l[0]), l[1], function () {
+    sayLine(voiceFor(l[0]), text, function () {
         if (!playing || pos !== i) return;
+        learnPace(estimate, (performance.now() - spokenFrom) / 1000 + GAP * pace / speed);
         lineDone = true;
         pos = i + 1;
         speakNext();
@@ -486,6 +515,7 @@ function finish() {
     playing = false;
     paused = false;
     pos = 0;
+    startWord = 0;
     lineDone = true;
     highlight(-1);
     stopClock();
@@ -502,20 +532,31 @@ function stopAll() {
     setControls();
 }
 
+// Remember the word we were on, so resuming continues from (just before) there.
+function holdPlace() {
+    if (playing && !lineDone && pos < current.lines.length) {
+        const inLine = (performance.now() - lineStartAt) / 1000;
+        startWord = Math.max(0, Math.floor(inLine / secsPerWord(pos)) - 1);
+        lineDone = true;
+    }
+}
+
 function pauseNow() {
     if (!playing) return;
+    holdPlace();
     playing = false;
     paused = true;
-    cancelSpeech();         // the interrupted line replays from its start
+    cancelSpeech();
     stopClock();
     setControls();
 }
 
-// Jump to a line. Keeps playing if it was playing, otherwise starts.
-function jumpTo(i, keepPaused) {
+// Jump to a line (and optionally a word in it). Keeps playing if it was playing.
+function jumpTo(i, keepPaused, word) {
     if (!current || !synth) return;
     cancelSpeech();
     pos = Math.max(0, Math.min(i, current.lines.length - 1));
+    startWord = word || 0;
     lineDone = true;
     if (keepPaused) {
         highlight(pos);
@@ -529,16 +570,18 @@ function jumpTo(i, keepPaused) {
     speakNext();
 }
 
+// Skip by a number of seconds, landing on the nearest word.
 function skip(seconds) {
     if (!current) return;
     const st = starts();
-    const target = elapsed() + seconds;
+    const total = st[current.lines.length];
+    const target = Math.max(0, elapsed() + seconds);
+    if (target >= total - 0.5) { cancelSpeech(); finish(); return; }
     let i = 0;
     while (i < current.lines.length - 1 && st[i + 1] <= target) i++;
-    const here = Math.min(pos, current.lines.length - 1);
-    if (seconds > 0 && i <= here) i = here + 1;              // always move forward at least one line
-    if (i >= current.lines.length) { cancelSpeech(); finish(); return; }
-    jumpTo(i, !playing);
+    let word = Math.floor((target - st[i]) / secsPerWord(i));
+    if (word < 2) word = 0;                                     // close to the start: start the line cleanly
+    jumpTo(i, !playing, word);
 }
 
 function setControls() {
@@ -579,10 +622,12 @@ const speedSel = document.getElementById("speed");
 speedSel.value = String(speed);
 if (speedSel.value !== String(speed)) { speed = 1; speedSel.value = "1"; }
 speedSel.addEventListener("change", function () {
+    const wasSpeaking = playing && !lineDone;
+    if (wasSpeaking) holdPlace();                    // note the word we're on, at the old speed
     speed = +speedSel.value;
     save("podcast-speed", speed);
     refreshStamps();
-    if (playing && !lineDone) { cancelSpeech(); speakNext(); }   // restart the current line at the new speed
+    if (wasSpeaking) { cancelSpeech(); speakNext(); }   // continue from that word at the new speed
 });
 
 // ======================================================================
