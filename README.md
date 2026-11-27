@@ -4,7 +4,9 @@
 **GU username:** marcusheppner
 **Course:** BMIS 235 · Final
 
-Live site: https://marcusheppner.github.io/bmis235-html-4/
+Live site (Cloudflare): PASTE-YOUR-PAGES.DEV-LINK-HERE
+
+Backup (GitHub Pages): https://marcusheppner.github.io/bmis235-html-4/
 
 ## What it teaches
 How to bring images, videos and interactive tools (like a Google Map) into a web page,
@@ -34,16 +36,50 @@ syntax; explain who controls each; and find and fix errors in the pencil editor.
 ## My path
 Path 2: Full build
 
+## Built for how I learn
+I learn best by doing, with something to listen to alongside it. So the site has three ways in:
+- **Step-by-step guides** (Guide page), each with a "spotting errors" checklist for the pencil editor.
+- **Audio lessons** (Podcast page), so I can listen and follow along with the transcript.
+- **Hands-on practice** (Scenarios page): I fix real broken code, update the preview to see what changed, then check my work. Hints come one at a time before the answer, and a "How to use this page" box explains every button.
+- **A quiz with progress tracking** that points back to the guide section for anything I miss.
+
+## Classmate test + one fix
+**Who tested it:** my brother tried the Podcast, Scenarios and Quiz on the live site.
+
+**What he found:** in the jump-link scenario ("The menu that won't jump"), clicking the picture in
+the preview opened a second copy of the Embedding 101 home page in a new tab instead of jumping
+to the cooking video. His link was missing the `#`, so the preview treated it as a link to a
+different page.
+
+**The fix:** the preview now stays put and explains the mistake: a link without `#` gets a note
+saying it points to another page and that jump links start with `#`; a link whose id doesn't
+match gets a "nothing to jump to" note; and a correct link scrolls to the video inside the preview
+box only, without scrolling the whole page.
+(Commits: "Scenario preview: explain broken jump links instead of opening a new tab" and
+"Scenario preview: jump links scroll only inside the preview".)
+
+**Another bug I found myself:** the podcast's skip ±15 seconds buttons only moved about 7–8
+seconds. Now they skip to the right spot.
+
 ## By hand vs by AI
-**I made:** the teaching plan (which HTML-2 skills to teach, in what order, and for whom); the
-site structure (guide, podcasts, scenarios, quiz, progress) and what each part should do; the
-decisions about what to cut or change while building; and `gallery.html`, which I wrote by hand
-in the pencil editor with my own images, videos and map. <!-- update once your gallery is done -->
+**I made:**
+- The teaching plan: which HTML-2 skills to teach, in what order, and for whom.
+- The site structure (Guide, Podcast, Scenarios, My Gallery, Quiz) and what each part should do,
+  plus the decisions about what to cut or change while building.
+- `gallery.html`, my example embed page, written by hand in the GitHub pencil editor with my own
+  images (`burrow.jpeg`, `lamb.jpg`), jump links, YouTube videos and a Google Map.
+- The site's look: I changed `styles.css` myself to Gonzaga navy and red (#041E42, #C8102E), and
+  changed the fonts and corner rounding.
+- The testing, and every bug report and change request (see below).
 
-**AI made:** the HTML, CSS and JavaScript for the Guide, Podcast, Scenarios and Quiz pages, the
-podcast scripts, the scenarios and the quiz questions (Claude, via Claude Code).
+**AI made:** the HTML, CSS and JavaScript for the Guide, Podcast, Scenarios, Quiz and My Gallery
+pages; the podcast scripts, scenarios and quiz questions; and the code for the bug fixes I asked
+for (Claude, via Claude Code).
 
-**I checked it by:** <!-- only list what you actually do -->
-comparing every code example against my working HTML-2 page; completing every scenario and
-quiz question myself; playing each podcast; testing every embed and the dark mode demo on the
-live site; and testing on my phone and laptop.
+**I checked it by:**
+- Going through the Podcast (playing episodes, using skip, speed and the transcript), the
+  Scenarios (fixing them and using the check, hint and reset buttons) and the Quiz myself on the
+  live site.
+- Having my brother test the same three pages as a classmate would.
+- Reporting the bugs we found (podcast skips moving only 7–8 seconds, and the scenario jump link
+  opening the home page), then retesting after each fix to confirm it worked.
