@@ -70,6 +70,6 @@ seconds. Now they skip to the right spot.
 pages, the podcast scripts, scenarios and quiz questions, and the code for the bug fixes I
 requested (Claude Code).
 
-**I checked it by:** testing the Podcast, Scenarios and Quiz myself on the live site; having my
+**I checked it by:** testing the Podcast, Scenarios and Quiz myself on the live site, on my laptop and my phone; having my
 brother test them as a classmate; and retesting after each bug fix (podcast skips moving only
 7–8 seconds, and the scenario jump link opening the home page).
