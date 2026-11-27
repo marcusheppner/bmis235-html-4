@@ -641,3 +641,9 @@ details.guide[open] summary::after { content: "\2013"; }
 
 /* My Gallery: the embedded hand-built page */
 .gallery-frame { width: 100%; height: 1800px; border: 1px solid var(--gold); background: #fff; display: block; }
+
+/* Scenarios: "How to use this page" box */
+details.how-to { margin: 16px 0; }
+details.how-to summary { font-size: 18px; }
+.how-steps { margin: 0; padding: 0 22px 16px 40px; font-family: var(--sans); font-size: 15px; line-height: 1.55; }
+.how-steps li { margin-bottom: 6px; }
