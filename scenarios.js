@@ -30,16 +30,26 @@ function renderPicker() {
 }
 
 // The preview shows your code as a tiny page. A <base> tag lets relative image paths like
-// images/sunset.svg load, but it would also make "#name" links point at the site's home page.
-// So a small script handles links inside the preview the way a real page would:
-//   - "#name" scrolls to the element with that id (and does nothing if there isn't one,
-//     just like a broken jump link on a real page)
-//   - other links open in a new tab instead of replacing the preview
-const PREVIEW_LINKS = "<script>document.addEventListener('click',function(e){" +
-    "var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href');" +
-    "if(h.charAt(0)==='#'){e.preventDefault();if(h==='#top'){window.scrollTo(0,0);return;}" +
-    "var t=document.getElementById(h.slice(1));if(t)t.scrollIntoView({behavior:'smooth'});}" +
-    "else{a.target='_blank';a.rel='noopener';}});<\/script>";
+// images/sunset.svg load, but it would also make links point at this site. So a small script
+// handles links inside the preview, and explains what a real page would do:
+//   - "#name"           scrolls to the element with that id; if there isn't one, it says so
+//                       (on a real page, nothing would happen)
+//   - "name" (no #)     says it's a link to another page, not a jump link
+//   - "https://..."     opens in a new tab
+const PREVIEW_LINKS = "<style>#pv-note{position:fixed;left:8px;right:8px;bottom:8px;background:#041E42;color:#fff;" +
+    "font:14px Arial,sans-serif;padding:10px 12px;border-left:4px solid #C8102E;display:none;z-index:9}</style>" +
+    "<script>function pvNote(m){var n=document.getElementById('pv-note');if(!n){n=document.createElement('div');" +
+    "n.id='pv-note';document.body.appendChild(n);}n.textContent=m;n.style.display='block';" +
+    "clearTimeout(window.pvT);window.pvT=setTimeout(function(){n.style.display='none';},6000);}" +
+    "document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;" +
+    "var h=(a.getAttribute('href')||'').trim();" +
+    "if(/^https?:/i.test(h)){a.target='_blank';a.rel='noopener';return;}" +
+    "e.preventDefault();" +
+    "if(h.charAt(0)==='#'){if(h==='#top'){window.scrollTo(0,0);return;}" +
+    "var t=document.getElementById(h.slice(1));" +
+    "if(t){t.scrollIntoView({behavior:'smooth'});}else{pvNote('Nothing to jump to: no element on this page has id=\"'+h.slice(1)+'\". On a real page, clicking would do nothing.');}" +
+    "}else{pvNote('This link goes to another page called \"'+h+'\", not a spot on this page. Jump links start with # (href=\"#name\").');}" +
+    "});<\/script>";
 
 function runPreview() {
     const base = location.href.replace(/[^/]*$/, "");
