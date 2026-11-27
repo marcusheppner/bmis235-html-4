@@ -29,11 +29,22 @@ function renderPicker() {
     });
 }
 
-// The preview shows your code as a tiny page. Relative image paths like images/sunset.svg still work.
+// The preview shows your code as a tiny page. A <base> tag lets relative image paths like
+// images/sunset.svg load, but it would also make "#name" links point at the site's home page.
+// So a small script handles links inside the preview the way a real page would:
+//   - "#name" scrolls to the element with that id (and does nothing if there isn't one,
+//     just like a broken jump link on a real page)
+//   - other links open in a new tab instead of replacing the preview
+const PREVIEW_LINKS = "<script>document.addEventListener('click',function(e){" +
+    "var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href');" +
+    "if(h.charAt(0)==='#'){e.preventDefault();if(h==='#top'){window.scrollTo(0,0);return;}" +
+    "var t=document.getElementById(h.slice(1));if(t)t.scrollIntoView({behavior:'smooth'});}" +
+    "else{a.target='_blank';a.rel='noopener';}});<\/script>";
+
 function runPreview() {
     const base = location.href.replace(/[^/]*$/, "");
-    preview.srcdoc = '<!DOCTYPE html><html><head><base href="' + base + '"><style>body{font-family:Georgia,serif;margin:12px;}iframe{max-width:100%;}</style></head><body>' +
-        editor.value + "</body></html>";
+    preview.srcdoc = '<!DOCTYPE html><html><head><base href="' + base + '"><style>body{font-family:Georgia,serif;margin:12px;}iframe{max-width:100%;}</style>' +
+        PREVIEW_LINKS + "</head><body>" + editor.value + "</body></html>";
 }
 
 function open(s) {
