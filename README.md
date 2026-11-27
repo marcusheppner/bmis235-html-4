@@ -4,7 +4,7 @@
 **GU username:** marcusheppner
 **Course:** BMIS 235 · Final
 
-Live site (Cloudflare): PASTE-YOUR-PAGES.DEV-LINK-HERE
+Live site (Cloudflare): https://bmis235-html-4-html-2-guide.pages.dev/
 
 Backup (GitHub Pages): https://marcusheppner.github.io/bmis235-html-4/
 
