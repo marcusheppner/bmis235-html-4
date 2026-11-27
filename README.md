@@ -65,12 +65,13 @@ seconds. Now they skip to the right spot.
 **I made:**
 - The teaching plan: which HTML-2 skills to teach, in what order, and for whom.
 - The site structure (Guide, Podcast, Scenarios, My Gallery, Quiz) and what each part should do,
-  plus the decisions about what to cut or change while building.
+  plus the decisions about what to cut or change while building. For example, I put My Gallery
+  before the Quiz in the menu and asked for "How to use this page" directions on the Scenarios page.
 - `gallery.html`, my example embed page, written by hand in the GitHub pencil editor with my own
   images (`burrow.jpeg`, `lamb.jpg`), jump links, YouTube videos and a Google Map.
-- The site's look: I changed `styles.css` myself to Gonzaga navy and red (#041E42, #C8102E), and
-  changed the fonts and corner rounding.
-- The testing, and every bug report and change request (see below).
+- The site's look: I edited `styles.css` myself to use Gonzaga navy and red (#041E42, #C8102E),
+  a navy glow in the page header, new fonts (Montserrat and Source Sans 3) and rounder corners.
+- The testing, and every bug report and change request (see "I checked it by").
 
 **AI made:** the HTML, CSS and JavaScript for the Guide, Podcast, Scenarios, Quiz and My Gallery
 pages; the podcast scripts, scenarios and quiz questions; and the code for the bug fixes I asked
