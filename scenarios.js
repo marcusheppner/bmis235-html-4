@@ -47,7 +47,7 @@ const PREVIEW_LINKS = "<style>#pv-note{position:fixed;left:8px;right:8px;bottom:
     "e.preventDefault();" +
     "if(h.charAt(0)==='#'){if(h==='#top'){window.scrollTo(0,0);return;}" +
     "var t=document.getElementById(h.slice(1));" +
-    "if(t){t.scrollIntoView({behavior:'smooth'});}else{pvNote('Nothing to jump to: no element on this page has id=\"'+h.slice(1)+'\". On a real page, clicking would do nothing.');}" +
+    "if(t){window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-8,behavior:'smooth'});}else{pvNote('Nothing to jump to: no element on this page has id=\"'+h.slice(1)+'\". On a real page, clicking would do nothing.');}" +
     "}else{pvNote('This link goes to another page called \"'+h+'\", not a spot on this page. Jump links start with # (href=\"#name\").');}" +
     "});<\/script>";
 
