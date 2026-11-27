@@ -62,25 +62,14 @@ box only, without scrolling the whole page.
 seconds. Now they skip to the right spot.
 
 ## By hand vs by AI
-**I made:**
-- The teaching plan: which HTML-2 skills to teach, in what order, and for whom.
-- The site structure (Guide, Podcast, Scenarios, My Gallery, Quiz) and what each part should do,
-  plus the decisions about what to cut or change while building. For example, I put My Gallery
-  before the Quiz in the menu and asked for "How to use this page" directions on the Scenarios page.
-- `gallery.html`, my example embed page, written by hand in the GitHub pencil editor with my own
-  images (`burrow.jpeg`, `lamb.jpg`), jump links, YouTube videos and a Google Map.
-- The site's look: I edited `styles.css` myself to use Gonzaga navy and red (#041E42, #C8102E),
-  a navy glow in the page header, new fonts (Montserrat and Source Sans 3) and rounder corners.
-- The testing, and every bug report and change request (see "I checked it by").
+**I made:** the teaching plan and site structure (Guide, Podcast, Scenarios, My Gallery, Quiz);
+`gallery.html` by hand in the pencil editor (my own images, jump links, videos and map); and the
+`styles.css` look (Gonzaga navy #041E42 and red #C8102E, header glow, fonts, rounded corners).
 
 **AI made:** the HTML, CSS and JavaScript for the Guide, Podcast, Scenarios, Quiz and My Gallery
-pages; the podcast scripts, scenarios and quiz questions; and the code for the bug fixes I asked
-for (Claude, via Claude Code).
+pages, the podcast scripts, scenarios and quiz questions, and the code for the bug fixes I
+requested (Claude Code).
 
-**I checked it by:**
-- Going through the Podcast (playing episodes, using skip, speed and the transcript), the
-  Scenarios (fixing them and using the check, hint and reset buttons) and the Quiz myself on the
-  live site.
-- Having my brother test the same three pages as a classmate would.
-- Reporting the bugs we found (podcast skips moving only 7–8 seconds, and the scenario jump link
-  opening the home page), then retesting after each fix to confirm it worked.
+**I checked it by:** testing the Podcast, Scenarios and Quiz myself on the live site; having my
+brother test them as a classmate; and retesting after each bug fix (podcast skips moving only
+7–8 seconds, and the scenario jump link opening the home page).
